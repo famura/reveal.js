@@ -1,25 +1,64 @@
 <!doctype html>
-<html>
+
+<html lang="en">
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<!-- Set basic information -->
+		<title>HRI Advisory Meeting - Summer 2019</title>
+		<meta name="author" content="Fabio Muratore">
+		<meta name="description" content="HRI EGN Advisory Meeting Winter 2020">
 
+		<!-- Load a specific math font for MathJax (load this before reveal) -->
+		<script type="text/x-mathjax-config">
+			MathJax.Hub.Config({
+				"HTML-CSS" : {
+					availableFonts : ["TeX"],
+					preferredFont : "TeX",
+					webFont : "TeX",
+					imageFont : null
+				}
+			});
+		</script>
+
+		<!-- Link core reveal css files -->
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
 		<link rel="stylesheet" href="dist/theme/black.css" id="theme">
 
 		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme"> <!-- alternatively zenburn -->
 	</head>
+
+	<!-- ========================================================================================================== -->
+
 	<body>
 		<div class="reveal">
 			<div class="slides">
+
+			<!-- ================================================================================================== -->
+
+
 				<section>Slide 1</section>
 				<section>Slide 2</section>
+
+
+				<section>
+					<p> Dynamical system with potential capacity C </p>
+					\[
+					\dot{p} = \frac{1}{\tau} \left( s + p \left(1 - \frac{p}{C} \right) \left(1 + \frac{p}{C} \right) \right)
+					\]
+					<p> Dynamical system with potential <span class="fMRTorange"> and </span> stimuli capacity C </p>
+					\[
+					\dot{p} = \frac{1}{\tau} \left( (s + p) \left(1 - \frac{p}{C} \right) \left(1 + \frac{p}{C} \right) \right)
+					\]
+				</section>
+
 			</div>
 		</div>
+
+		<!-- ====================================================================================================== -->
 
 		<script src="dist/reveal.js"></script>
 		<script src="plugin/notes/notes.js"></script>
@@ -31,9 +70,44 @@
 			// - https://revealjs.com/config/
 			Reveal.initialize({
 				hash: true,
+				controls: true, // video controls
+				progress: true, // progress bar
+				// history: true,
+				// width: '60%',  // weird scaling of the textwidth
+				center: true,  // center vertically
+				transition: 'slide', // https://revealjs.com/transitions/
+				slideNumber: "c",  // https://revealjs.com/slide-numbers/
+				plugins: [ RevealMarkdown, RevealHighlight ], // https://revealjs.com/plugins/
+			
+				math: {
+					// mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+					mathjax: 'plugin/math/MathJax/es5/latest.js',
+					config: 'TeX-AMS_HTML-full', // https://docs.mathjax.org/en/v2.7-latest/config-files.html
+				},
 
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+				dependencies: 
+				[
+					{ src: 'plugin/math/math.js', async: true }, // loads MathJax from the internet if not specified above (math: { ... mathjax: ... ) )
+
+					// Header-Footer plugin
+					{
+						src: 'plugin/header-footer/header-footer.js', async: true, callback: function () {
+							slide_header.initialize({
+								header: {
+									logoRight: './content/images/TUD--logo_cropped_inverted_transparent.png',
+									logoLeft: './content/images/HRI--logo_cropped_inverted_transparent.png',
+									background: 'rgba(170, 34, 51, 0)' // = #a23
+								},
+								footer: {
+									background: 'rgba(170, 34, 51, 0)', // = #a23
+									// logoRight: './content/images/TUD--logo_cropped_inverted_transparent.png',
+									// logoLeft: './content/images/HRI--logo_cropped_inverted_transparent.png',
+									text: "Fabio Muratore &ensp; | &ensp; Honda Research Institute Europe &ensp; | &ensp; TU Darmstadt 	&ndash; Intelligent Autonomous Systems &ensp; | &ensp; 11.10.2019" // initial text for the footer
+								}
+							});
+						}
+					}
+				]
 			});
 		</script>
 	</body>
