@@ -1,4 +1,14 @@
 /*********************************************
+ * Font
+ *********************************************/
+.reveal {
+  font-family: Ubuntu, "sans-serif";
+  font-size: 36px;
+  font-weight: normal;
+  color: #eee;
+}
+
+/*********************************************
  * Colors
  *********************************************/
 .famuraorange {
@@ -6,7 +16,11 @@
 }
 
 .famurared {
-  color: #cc3a1d
+  color: #cc3a1d /* #e65231 */
+}
+
+.famuragreen {
+  color: #bdecb6 /* #cfffe5 */
 }
 
 .famurawhite {
@@ -54,12 +68,12 @@
 /*********************************************
  * Multiple Column Tables
  *********************************************/
-.column2 {
+.reveal .column2 {
   float: left;
   width: 50%;
 }
 
-.column3 {
+.reveal .column3 {
   float: left;
   width: 33.33%;
 }
@@ -74,6 +88,32 @@
 /*********************************************
  * Global Center Class
  *********************************************/
- .center {
-   text-align: center;
- }
+ /*.center {*/
+ /*  text-align: center;*/
+ /*}*/
+
+/*********************************************
+ * In Line Descriptive List
+ * from https://stackoverflow.com/questions/1713048/how-to-style-dt-and-dd-so-they-are-on-the-same-line
+ *********************************************/
+.reveal dl {
+  display: grid;
+  grid-template-columns: max-content auto;
+}
+.reveal dt {
+  grid-column-start: 1;
+}
+.reveal dd {
+  grid-column-start: 2;
+}
+
+/*********************************************
+ * Arranging
+ * from https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+ *********************************************/
+.reveal .flex-container {
+  display: flex; /* first create a flex layout context */
+  flex-flow: row nowrap; /* define the flow direction and if we allow the items to wrap */
+  align-items: center;  /* vertically alignment */
+  justify-content: space-between; /* define how is distributed the remaining space */
+}
