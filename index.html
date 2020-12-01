@@ -9,7 +9,7 @@
     <!-- Set presentation specific meta-information -->
     <meta name="author" content="Fabio Muratore">
     <meta name="description" content="HRI EGN Advisory Meeting Winter 2020">
-    <title>HRI Advisory Meeting - Winter 2020</title>
+    <title> HRI Advisory Meeting - Winter 2020 </title>
     
     <!-- Load a specific math font for MathJax (load this before reveal) -->
 <!--    <script type="text/x-mathjax-config">-->
@@ -43,7 +43,7 @@
     
     <!-- =========================================================================================================== -->
     <div class="slides">
-        <!-- =========================================================================================================== -->
+    <!-- =========================================================================================================== -->
         
         <section style="text-align: center" data-state="no-slide-footer">
             <h3 class="title"> HRI Advisory Meeting <br> Summer 2019 </h3>
@@ -73,8 +73,8 @@
         <section>
             <h4 class="title"> Bayesian Domain Randomization (BayRn) </h4>
             <dl>
-                <dt> goal </dt>
-                <dd> obtain a transferable policy from simulations </dd>
+                <dt data-fragment-index="1"> goal </dt>  <!-- @ TAMAS: it is a bit annoying that for the dl/dt/dd environment, we need to set the data-fragment-index, otherwise dt and dd do not appear at the same time. I sthere any bettwer way? -->
+                <dd data-fragment-index="1"> obtain a transferable policy from simulations </dd>
                 <dt> idea </dt>
                 <dd> learn connection between return and domain distribution parameters using a GP </dd>
                 <dt> features </dt>
@@ -91,31 +91,86 @@
     
         <section>
             <h4 class="title"> A Proper Framework for <br> RL from Simulations </h4>
-            <div class="flex-container">
+            <div class="flex-container-row ">
                 <a href="https://github.com/famura/SimuRLacra">
-                    <img src="content/images/SimuRLacra--logo.png" width="150px">
+                    <img src="content/images/SimuRLacra--logo.png" alt="SimuRLacra logo" width="200">  <!-- @ TAMAS: did I mess up the image scaling? -->
                 </a>
                 <ul>
                     <li> focus on making simulations <span class="famuraorange"> randomizable </span> </li>
                     <li> wraps <a href="https://github.com/HRI-EU/Rcs">Rcs</a>, MuJoCo, and OpenAI Gym </li>
                     <li> "cleanest research code I've seen" Pascal </li>
-                    <li> currently used by students &amp; Joao </li>
+                    <li> currently used by students </li>
                 </ul>
             </div>
+        </section>
     
+        <!-- 2 x 2 grid fading in from the bottom 1 by 1 -->
+        <!-- I want it to look like this but with out specifying exact sizes for the "boxes" https://codepen.io/MattWindle/pen/perZRG -->
+        <!-- This didnt work -->
+<!--        <section>-->
+<!--        <div class="flex-container-col">-->
+<!--            <div class="flex-container-row">-->
+<!--                <div class="box"> IP 1 <br> simulation-based inference </div>-->
+<!--                <div class="box">C</div>-->
+<!--            </div>-->
+<!--            <div class="flex-container-row">-->
+<!--                <div class="box">B</div>-->
+<!--                <div class="box">D</div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        </section>-->
+        
+        <section id="students">
+            <h4 class="title"> Student Supervision </h4>
+            <div class="r-stack">
+                <p class="fragment fade-up"> <span class="fragment fade-out">IP 1</span> </p>
+                <p class="fragment fade-up"> <span class="fragment fade-out">IP 2</span> </p>
+                <p class="fragment fade-up"> <span class="fragment fade-out">Bachelorpraktikum</span> </p>
+                <p class="fragment fade-up"> Master's theses </p>
+            </div>
+        </section>
     
-            
+        <section>
+            <section>
+            <h4 class="title"> Sim-to-Real for Sequential Tasks </h4>
+            <dl>
+                <dt class="fragment fade-in" data-fragment-index="1"> current state </dt>
+                    <dd class="fragment fade-in" data-fragment-index="1">
+                        paused for reworking the <a href="content/papers/Muratore_EGP_2020--BayRn.pdf">BayRn journal</a> <br>
+                        implemented potential-based NNs (c.f., <a href="content/papers/Amari_1977--NeuralFields.pdf">Amari 1977</a>)
+                    </dd>
+                <dt class="fragment fade-in" data-fragment-index="2"> next steps </dt>
+                    <dd class="fragment fade-in" data-fragment-index="2">
+                        starting with a known / simple task (e.g., box lifting) <br>
+                        go to the robot quickly
+                    </dd>
+            </dl>
+            </section>
+            <section>
+                <h4> Neural Fields Potential Dynamics </h4> <!-- TODO -->
+                \[\begin{aligned}
+                \dot{x} &amp; = \sigma(y-x) \\
+                \dot{y} &amp; = \rho x - y - xz \\
+                \dot{z} &amp; = -\beta z + xy
+                \end{aligned} \]
+            </section>
+        </section>
+    
+        <section>
+            <h4 class="title"> Extension </h4>
+            <dl>
+                <dt class="fragment fade-in" data-fragment-index="1"> new deadline </dt>
+                    <dd class="fragment fade-in" data-fragment-index="1">
+                        September 30<sup>th</sup> 2020 <!-- @ TAMAS: this is not weirdly aligned (verical); dl mabye the wrong environment? the flexbox is a bit annoying though -->
+                    </dd>
+                <dt class="fragment fade-in" data-fragment-index="2"> desired output </dt>
+                    <dd class="fragment fade-in" data-fragment-index="2">
+                        journal paper on potential-based NNs for robotics
+                    </dd>
+                    <dd class="fragment fade-in" data-fragment-index="3"> conference paper from <a href="#/students/1">SBI IP</a> </dd>
+            </dl>
         </section>
         
-        <section>
-            <h2> The Lorenz Equations </h2>
-            \[\begin{aligned}
-            \dot{x} &amp; = \sigma(y-x) \\
-            \dot{y} &amp; = \rho x - y - xz \\
-            \dot{z} &amp; = -\beta z + xy
-            \end{aligned} \]
-        </section>
-    
     </div>
 </div>
 
@@ -134,7 +189,7 @@
         // hash: true,
         controls: true, // video controls
         progress: true, // progress bar
-        // history: true,
+        history: true, // to stay on the same slide after reloading
         // width: '60%',  // weird scaling of the textwidth
         // center: true,  // center vertically
         transition: 'slide', // https://revealjs.com/transitions/
