@@ -1,18 +1,18 @@
 <!doctype html>
 
 <html lang="en">
-	<head>
-		<!-- Set basic information -->
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-		
-		<!-- Set presentation specific meta-information -->
-		<meta name="author" content="Fabio Muratore">
-		<meta name="description" content="HRI EGN Advisory Meeting Winter 2020">
-		<title>HRI Advisory Meeting - Winter 2020</title>
+<head>
+    <!-- Set basic information -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<!-- Load a specific math font for MathJax (load this before reveal) -->
-		<script type="text/x-mathjax-config">
+    <!-- Set presentation specific meta-information -->
+    <meta name="author" content="Fabio Muratore">
+    <meta name="description" content="HRI EGN Advisory Meeting Winter 2020">
+    <title>HRI Advisory Meeting - Winter 2020</title>
+
+    <!-- Load a specific math font for MathJax (load this before reveal) -->
+    <script type="text/x-mathjax-config">
 			MathJax.Hub.Config({
 				"HTML-CSS" : {
 					availableFonts : ["TeX"],
@@ -21,110 +21,129 @@
 					imageFont : null
 				}
 			});
-		</script>
-
-		<!-- Link core reveal css files -->
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/blood.css" id="theme">
-
-		<!-- Link custom css fie -->
-		<link rel="stylesheet" href="dist/theme/famura.css">
-
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme"> <!-- alternatively zenburn -->
-	</head>
-
-	<!-- ========================================================================================================== -->
-
-	<body>
-		<div class="reveal">
-			<div class="slides">
-
-			<!-- ================================================================================================== -->
-
-			<section style="text-align: center" data-state="no-slide-footer">
-				<h4 class="famuraorange"> HRI Advisory Meeting <br> Summer 2019 </h4>
-				<p> <b>Fabio Muratore</b> </p>
-				<div style="text-align: left; padding-left: 4em; text-indent: -4em">
-					<p>
-						<b>Project:</b> Motor Dreaming &ndash; A New Approach Towards Model-Based Skill Learning
-					</p>
-					<p>
-						<b>Supervisors:</b> Dr. Michael Gienger & Prof. Jan Peters
-					</p>
-					<p>
-						<b>Advisor:</b> Dr. Markus Olhofer
-					</p>
-				</div>
-			</section>
 
 
-				<section>
-					<p> Dynamical system with potential capacity C </p>
-					\[
-					\dot{p} = \frac{1}{\tau} \left( s + p \left(1 - \frac{p}{C} \right) \left(1 + \frac{p}{C} \right) \right)
-					\]
-					<p> Dynamical system with potential <span class="famuraorange"> and </span> stimuli capacity C </p>
-					\[
-					\dot{p} = \frac{1}{\tau} \left( (s + p) \left(1 - \frac{p}{C} \right) \left(1 + \frac{p}{C} \right) \right)
-					\]
-				</section>
+    </script>
 
-			</div>
-		</div>
+    <!-- Link core reveal css files -->
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/blood.css" id="theme">
 
-		<!-- ====================================================================================================== -->
+    <!-- Link custom css fie -->
+    <link rel="stylesheet" href="dist/theme/famura.css">
 
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
-				controls: true, // video controls
-				progress: true, // progress bar
-				// history: true,
-				// width: '60%',  // weird scaling of the textwidth
-				center: true,  // center vertically
-				transition: 'slide', // https://revealjs.com/transitions/
-				slideNumber: "c",  // https://revealjs.com/slide-numbers/
-				plugins: [ RevealMarkdown, RevealHighlight ], // https://revealjs.com/plugins/
-			
-				// math: {
-				// 	// mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
-				// 	mathjax: 'plugin/math/MathJax/es5/latest.js',
-				// 	config: 'TeX-AMS_HTML-full', // https://docs.mathjax.org/en/v2.7-latest/config-files.html
-				// },
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme"> <!-- alternatively zenburn -->
+</head>
 
-				dependencies: 
-				[
-					{ src: 'plugin/math/math.js', async: true }, // loads MathJax from the internet if not specified above (math: { ... mathjax: ... ) )
+<!-- =============================================================================================================== -->
+<body>
+<!-- =============================================================================================================== -->
 
-					// Header-Footer plugin
-					{
-						src: 'plugin/header-footer/header-footer.js', async: true, callback: function () {
-							slide_header.initialize({
-								header: {
-									logoRight: './content/images/TUD--logo_cropped_inverted_transparent.png',
-									logoLeft: './content/images/HRI--logo_cropped_inverted_transparent.png',
-									background: 'rgba(170, 34, 51, 0)' // = #a23
-								},
-								footer: {
-									background: 'rgba(170, 34, 51, 0)', // = #a23
-									// logoRight: './content/images/TUD--logo_cropped_inverted_transparent.png',
-									// logoLeft: './content/images/HRI--logo_cropped_inverted_transparent.png',
-									text: "Fabio Muratore &ensp; | &ensp; Honda Research Institute Europe &ensp; | &ensp; TU Darmstadt 	&ndash; Intelligent Autonomous Systems &ensp; | &ensp; 04.12.2020" // initial text for the footer
-								}
-							});
-						}
-					}
-				]
-			});
-		</script>
-	</body>
+<div class="reveal">
+
+    <!-- =========================================================================================================== -->
+    <div class="slides">
+    <!-- =========================================================================================================== -->
+
+        <section style="text-align: center" data-state="no-slide-footer">
+            <h4 class="title"> HRI Advisory Meeting <br> Summer 2019 </h4>
+            <p><b>Fabio Muratore</b></p>
+            <div style="text-align: left; padding-left: 4em; text-indent: -4em">
+                <p>
+                    <b>Project:</b> Motor Dreaming &ndash; A New Approach Towards Model-Based Skill Learning
+                </p>
+                <p>
+                    <b>Supervisors:</b> Dr. Michael Gienger & Prof. Jan Peters
+                </p>
+                <p>
+                    <b>Advisor:</b> Dr. Markus Olhofer
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>The Lorenz Equations</h2>
+            \[\begin{aligned}
+            \dot{x} &amp; = \sigma(y-x) \\
+            \dot{y} &amp; = \rho x - y - xz \\
+            \dot{z} &amp; = -\beta z + xy
+            \end{aligned} \]
+        </section>
+
+        <section>
+            <p> Dynamical system with potential capacity C </p>
+            \[
+            \dot{p} = \frac{1}{\tau} \left( s + p \left(1 - \frac{p}{C} \right) \left(1 + \frac{p}{C} \right) \right)
+            \]
+            <p> Dynamical system with potential <span class="famuraorange"> and </span> stimuli capacity C </p>
+            \[
+            \dot{p} = \frac{1}{\tau} \left( (s + p) \left(1 - \frac{p}{C} \right) \left(1 + \frac{p}{C} \right) \right)
+            \]
+        </section>
+
+    </div>
+</div>
+
+<!-- =============================================================================================================== -->
+
+<script src="dist/reveal.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script src="plugin/markdown/markdown.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script src="plugin/math/math.js"></script>
+<script>
+    // More info about initialization & config:
+    // - https://revealjs.com/initialization/
+    // - https://revealjs.com/config/
+    Reveal.initialize({
+        // hash: true,
+        controls: true, // video controls
+        progress: true, // progress bar
+        // history: true,
+        // width: '60%',  // weird scaling of the textwidth
+        // center: true,  // center vertically
+        transition: 'slide', // https://revealjs.com/transitions/
+        slideNumber: "c",  // https://revealjs.com/slide-numbers/
+        math: {
+            mathjax: 'https://cdn.jsdelivr.net/gh/mathjax/mathjax@2.7.8/MathJax.js',
+            // mathjax: 'plugin/math/MathJax/es5/latest.js',
+            config: 'TeX-AMS_HTML-full', // https://docs.mathjax.org/en/v2.7-latest/config-files.html
+            // Pass other options into `MathJax.Hub.Config()`
+            TeX: {
+                Macros: {RR: "{\\bf R}"}
+            },
+            plugins: [RevealMath, RevealHighlight], // https://revealjs.com/plugins/
+        },
+
+        dependencies:
+            [
+                // { src: 'plugin/math/math.js', async: true }, // loads MathJax from the internet if not specified above (math: { ... mathjax: ... ) )
+
+                // Header-Footer plugin
+                {
+                    src: 'plugin/header-footer/header-footer.js', async: true, callback: function () {
+                        slide_header.initialize({
+                            header: {
+                                logoRight: './content/images/TUD--logo_cropped_inverted_transparent.png',
+                                logoLeft: './content/images/HRI--logo_cropped_inverted_transparent.png',
+                                background: 'rgba(170, 34, 51, 0)' // = #a23
+                            },
+                            footer: {
+                                background: 'rgba(170, 34, 51, 0)', // = #a23
+                                // logoRight: './content/images/TUD--logo_cropped_inverted_transparent.png',
+                                // logoLeft: './content/images/HRI--logo_cropped_inverted_transparent.png',
+                                text: "Fabio Muratore &ensp; | &ensp; Honda Research Institute Europe &ensp; | &ensp; TU Darmstadt 	&ndash; Intelligent Autonomous Systems &ensp; | &ensp; 04.12.2020" // initial text for the footer
+                            }
+                        });
+                    }
+                }
+            ]
+    }); // end Reveal.initialize()
+</script>
+
+<!-- =============================================================================================================== -->
+
+</body>
 </html>

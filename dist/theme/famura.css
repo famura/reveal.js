@@ -2,7 +2,7 @@
  * Colors
  *********************************************/
 .famuraorange {
-  color: #FF5500
+  color: #ff5500
 }
 
 .famurared {
@@ -11,6 +11,13 @@
 
 .famurawhite {
   color: #f3f3f3
+}
+
+/*********************************************
+ * Title
+ *********************************************/
+.reveal .title {
+  color: #FF5500
 }
 
 /*********************************************
@@ -23,7 +30,7 @@
 
 
 /*********************************************
- * Fragemented Slides
+ * Fragmented Slides
  *********************************************/
 .reveal .slides section .fragment.step-fade-in-then-out {
   opacity: 0;
@@ -31,7 +38,6 @@
 .reveal .slides section .fragment.step-fade-in-then-out.current-fragment {
   opacity: 1;
   display: inline; }
-
 
 /*********************************************
  * References
