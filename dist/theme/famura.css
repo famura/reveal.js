@@ -1,0 +1,73 @@
+/*********************************************
+ * Colors
+ *********************************************/
+.famuraorange {
+  color: #FF5500
+}
+
+.famurared {
+  color: #cc3a1d
+}
+
+.famurawhite {
+  color: #f3f3f3
+}
+
+/*********************************************
+ * Slide Number
+ *********************************************/
+.reveal .slide-number {
+  font-size: 22pt;
+  color: #a23;
+}
+
+
+/*********************************************
+ * Fragemented Slides
+ *********************************************/
+.reveal .slides section .fragment.step-fade-in-then-out {
+  opacity: 0;
+  display: none; }
+.reveal .slides section .fragment.step-fade-in-then-out.current-fragment {
+  opacity: 1;
+  display: inline; }
+
+
+/*********************************************
+ * References
+ *********************************************/
+.reveal .references {
+  /* float: inherit; */
+  clear: both;
+  padding-top: 5vh;
+  vertical-align: bottom !important;
+  /* bottom: 0px !important; */
+  font-size: 22px;
+}
+
+/*********************************************
+ * Multiple Column Tables
+ *********************************************/
+.column2 {
+  float: left;
+  width: 50%;
+}
+
+.column3 {
+  float: left;
+  width: 33.33%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/*********************************************
+ * Global Center Class
+ *********************************************/
+ .center {
+   text-align: center;
+ }
