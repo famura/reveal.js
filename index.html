@@ -72,9 +72,11 @@
         
         <section>
             <h4 class="title"> Bayesian Domain Randomization (BayRn) </h4>
-            <dl>
-                <dt data-fragment-index="1"> goal </dt>  <!-- @ TAMAS: it is a bit annoying that for the dl/dt/dd environment, we need to set the data-fragment-index, otherwise dt and dd do not appear at the same time. I sthere any bettwer way? -->
-                <dd data-fragment-index="1"> obtain a transferable policy from simulations </dd>
+            <dl class="fragment">
+              <dt> goal </dt>  <!-- @ FABIO: fragments will affect an element AND all its children, so to step several at once try to put them in a hierarchy under some fragmented element. If you have two elements which NEED to be separated (e.g. two independent lists you want in sync) then unfortunately you need to specify the fragment index. -->
+                <dd> obtain a transferable policy from simulations </dd>
+            </dl>
+            <dl class="fragment">
                 <dt> idea </dt>
                 <dd> learn connection between return and domain distribution parameters using a GP </dd>
                 <dt> features </dt>
@@ -92,9 +94,14 @@
         <section>
             <h4 class="title"> A Proper Framework for <br> RL from Simulations </h4>
             <div class="flex-container-row ">
+              <div style="max-width: 25%">
                 <a href="https://github.com/famura/SimuRLacra">
-                    <img src="content/images/SimuRLacra--logo.png" alt="SimuRLacra logo" width="200">  <!-- @ TAMAS: did I mess up the image scaling? -->
+                    <img src="content/images/SimuRLacra--logo.png" alt="SimuRLacra logo" style="display:block">  <!-- @ TAMAS: did I mess up the image scaling? 
+                                                                                                                     @ FABIO: Not 100% what's wrong, but here's a guess at a solution for what I think might
+                                                                                                                     be your complaint (in-line CSS should probably be converted to classes for  
+                                                                                                                     reuse later, etc etc -->
                 </a>
+              </div>
                 <ul>
                     <li> focus on making simulations <span class="famuraorange"> randomizable </span> </li>
                     <li> wraps <a href="https://github.com/HRI-EU/Rcs">Rcs</a>, MuJoCo, and OpenAI Gym </li>
@@ -159,9 +166,13 @@
         <section>
             <h4 class="title"> Extension </h4>
             <dl>
-                <dt class="fragment fade-in" data-fragment-index="1"> new deadline </dt>
+              <dt class="fragment fade-in" data-fragment-index="1" style="display: grid; align-content: end;"> new deadline </dt> <!-- slight hack -->
                     <dd class="fragment fade-in" data-fragment-index="1">
-                        September 30<sup>th</sup> 2020 <!-- @ TAMAS: this is not weirdly aligned (verical); dl mabye the wrong environment? the flexbox is a bit annoying though -->
+                        September 30<sup>th</sup> 2020 <!-- @ TAMAS: this is not weirdly aligned (verical); dl mabye the wrong environment? the flexbox is a bit annoying though 
+                                                            @ FABIO: The issue is the <sup> tag: it caused the total vertical height of the text in this element to be larger than
+                                                                     the text in the ele to the left. Since both elements are the same height, the only way to make it fit was to move
+                                                                     it a little bit, because by default it is trying to ensure the TOPS of the glyphs in your text align with the top
+                                                                     of the container. You need to tell it to align the bottom instead.-->
                     </dd>
                 <dt class="fragment fade-in" data-fragment-index="2"> desired output </dt>
                     <dd class="fragment fade-in" data-fragment-index="2">
