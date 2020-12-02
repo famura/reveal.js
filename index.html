@@ -63,7 +63,7 @@
         <section>
             <h4 class="title"> Agenda </h4>
             <ol>
-                <li> reworked 2<sup>nd</sup> journal </li>
+                <li> publishing </li>
                 <li> open-sourced SimuRLacra </li>
                 <li> student supervision </li>
                 <li> sequential tasks </li>
@@ -72,11 +72,9 @@
         
         <section>
             <h4 class="title"> Bayesian Domain Randomization (BayRn) </h4>
-            <dl class="fragment">
-              <dt> goal </dt>  <!-- @ FABIO: fragments will affect an element AND all its children, so to step several at once try to put them in a hierarchy under some fragmented element. If you have two elements which NEED to be separated (e.g. two independent lists you want in sync) then unfortunately you need to specify the fragment index. -->
-                <dd> obtain a transferable policy from simulations </dd>
-            </dl>
-            <dl class="fragment">
+            <dl>
+                <dt data-fragment-index="1"> goal </dt>  <!-- @ TAMAS: it is a bit annoying that for the dl/dt/dd environment, we need to set the data-fragment-index, otherwise dt and dd do not appear at the same time. I sthere any bettwer way? -->
+                <dd data-fragment-index="1"> obtain a transferable policy from simulations </dd>
                 <dt> idea </dt>
                 <dd> learn connection between return and domain distribution parameters using a GP </dd>
                 <dt> features </dt>
@@ -87,8 +85,10 @@
             </dl>
         </section>
     
-        <section>
-            video
+        <section data-background-color="black">
+            <video controls autoplay muted>
+                <source src="content/videos/BayRn_sim2real.mp4" type="video/mp4"/>
+            </video>
         </section>
     
         <section>
@@ -96,10 +96,7 @@
             <div class="flex-container-row ">
               <div style="max-width: 25%">
                 <a href="https://github.com/famura/SimuRLacra">
-                    <img src="content/images/SimuRLacra--logo.png" alt="SimuRLacra logo" style="display:block">  <!-- @ TAMAS: did I mess up the image scaling? 
-                                                                                                                     @ FABIO: Not 100% what's wrong, but here's a guess at a solution for what I think might
-                                                                                                                     be your complaint (in-line CSS should probably be converted to classes for  
-                                                                                                                     reuse later, etc etc -->
+                    <img src="content/images/SimuRLacra--logo.png" alt="SimuRLacra logo" style="display:block">
                 </a>
               </div>
                 <ul>
@@ -111,29 +108,38 @@
             </div>
         </section>
     
-        <!-- 2 x 2 grid fading in from the bottom 1 by 1 -->
-        <!-- I want it to look like this but with out specifying exact sizes for the "boxes" https://codepen.io/MattWindle/pen/perZRG -->
-        <!-- This didnt work -->
-<!--        <section>-->
-<!--        <div class="flex-container-col">-->
-<!--            <div class="flex-container-row">-->
-<!--                <div class="box"> IP 1 <br> simulation-based inference </div>-->
-<!--                <div class="box">C</div>-->
-<!--            </div>-->
-<!--            <div class="flex-container-row">-->
-<!--                <div class="box">B</div>-->
-<!--                <div class="box">D</div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        </section>-->
+        <section>
+            <h4 class="title"> Side Projects </h4>
+        </section>
         
         <section id="students">
             <h4 class="title"> Student Supervision </h4>
             <div class="r-stack">
-                <p class="fragment fade-up"> <span class="fragment fade-out">IP 1</span> </p>
-                <p class="fragment fade-up"> <span class="fragment fade-out">IP 2</span> </p>
-                <p class="fragment fade-up"> <span class="fragment fade-out">Bachelorpraktikum</span> </p>
-                <p class="fragment fade-up"> Master's theses </p>
+                <div class="fragment fade-up">
+                    <div class="fragment fade-out">
+                        <p class="famuragreen"> IP 1 (3 students) </p>
+                        <p> creation of a physically-grounded randomized simulator via &#x2764; simulation-based inference &#x2764; </p>
+                    </div>
+                </div>
+                <div class="fragment fade-up">
+                    <div class="fragment fade-out">
+                        <p class="famuragreen"> IP 2 (4 students) </p>
+                        <p> implementation and evaluation of sim-to-real algorithms </p>
+                    </div>
+                </div>
+                <div class="fragment fade-up">
+                    <div class="fragment fade-out">
+                        <p class="famuragreen"> Bachelorpraktikum (5 students) </p>
+                        <p> 3D visualization for SimuRLacra </p>
+                    </div>
+                </div>
+                <div class="fragment fade-up">
+                    <div>
+                        <p class="famuragreen"> Master's Theses (2 students) </p>
+                        <p> Partially Supervised Deep Meta Reinforcement Learning for Sim2Real Transfer <span class="famuraorange"> (coorporation with IIT) </span> </p>
+                        <p> Reinforcement Learning in Decentralized Multi-Goal Multi-Agent Settings <span class="famuraorange"> (coorporation with HRI) </span> </p>
+                    </div>
+                </div>
             </div>
         </section>
     
@@ -154,12 +160,13 @@
             </dl>
             </section>
             <section>
-                <h4> Neural Fields Potential Dynamics </h4> <!-- TODO -->
-                \[\begin{aligned}
-                \dot{x} &amp; = \sigma(y-x) \\
-                \dot{y} &amp; = \rho x - y - xz \\
-                \dot{z} &amp; = -\beta z + xy
-                \end{aligned} \]
+                <h4> Neural Fields Potential Dynamics </h4>  <!-- @ TAMAS: why is this equation not centered horizontally? -->
+                \[
+                \begin{aligned}
+                \tau \dot{u} &= o^{\textsf{T}} W + (h-u) + \kappa(h-u)^3 \int_{-\infty}^{\infty} w(u, u^\prime) f(u) \diff u^\prime \\
+                f(u) &= \frac{1}{1 + e^{\beta(u - u_0)}}
+                \end{aligned}
+                \]
             </section>
         </section>
     
@@ -168,17 +175,12 @@
             <dl>
               <dt class="fragment fade-in" data-fragment-index="1" style="display: grid; align-content: end;"> new deadline </dt> <!-- slight hack -->
                     <dd class="fragment fade-in" data-fragment-index="1">
-                        September 30<sup>th</sup> 2020 <!-- @ TAMAS: this is not weirdly aligned (verical); dl mabye the wrong environment? the flexbox is a bit annoying though 
-                                                            @ FABIO: The issue is the <sup> tag: it caused the total vertical height of the text in this element to be larger than
-                                                                     the text in the ele to the left. Since both elements are the same height, the only way to make it fit was to move
-                                                                     it a little bit, because by default it is trying to ensure the TOPS of the glyphs in your text align with the top
-                                                                     of the container. You need to tell it to align the bottom instead.-->
+                        September 30<sup>th</sup> 2021
                     </dd>
                 <dt class="fragment fade-in" data-fragment-index="2"> desired output </dt>
-                    <dd class="fragment fade-in" data-fragment-index="2">
-                        journal paper on potential-based NNs for robotics
-                    </dd>
-                    <dd class="fragment fade-in" data-fragment-index="3"> conference paper from <a href="#/students/1">SBI IP</a> </dd>
+                    <dd class="fragment fade-in" data-fragment-index="2"> <span class="fragment highlight-blue" data-fragment-index="5"> journal paper on potential-based NNs for sequential robotic tasks </span> </dd>
+                    <dd class="fragment fade-in" data-fragment-index="3"> conference paper from <a href="#/students/1">SBI project</a> </dd>
+                    <dd class="fragment fade-in" data-fragment-index="4"> <span class="fragment highlight-blue" data-fragment-index="5"> survey on sim-to-real for robotics from <a href="#/students/2">SBI project</a> </span> </dd>
             </dl>
         </section>
         
@@ -211,7 +213,7 @@
             config: 'TeX-AMS_HTML-full', // https://docs.mathjax.org/en/v2.7-latest/config-files.html
             // Pass other options into `MathJax.Hub.Config()`
             TeX: {
-                Macros: {RR: "{\\bf R}"}
+                Macros: {RR: "{\\bf R}", diff: "\\mathrm{d}"}
             },
         },
         plugins: [RevealMath, RevealHighlight], // https://revealjs.com/plugins/
