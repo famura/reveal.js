@@ -73,13 +73,14 @@
         <section>
             <h4 class="title"> Bayesian Domain Randomization (BayRn) </h4>
             <dl>
-                <dt data-fragment-index="1"> goal </dt>  <!-- @ TAMAS: it is a bit annoying that for the dl/dt/dd environment, we need to set the data-fragment-index, otherwise dt and dd do not appear at the same time. I sthere any bettwer way? -->
-                <dd data-fragment-index="1"> obtain a transferable policy from simulations </dd>
-                <dt> idea </dt>
-                <dd> learn connection between return and domain distribution parameters using a GP </dd>
-                <dt> features </dt>
-                <dd> <span class="famuragreen"> no observations necessary (aside from return) <br>
-                     models the uncertainty </span> <br>
+                <!-- @ TAMAS: it is a bit annoying that for the dl/dt/dd environment, we need to set the data-fragment-index, otherwise dt and dd do not appear at the same time. Is there any better way? -->
+                <dt class="fragment" data-fragment-index="1"> goal </dt>
+                <dd class="fragment" data-fragment-index="1"> obtain a transferable policy from simulations </dd>
+                <dt class="fragment" data-fragment-index="2"> idea </dt>
+                <dd class="fragment" data-fragment-index="2"> learn connection between return and domain distribution parameters using a GP </dd>
+                <dt class="fragment" data-fragment-index="3"> features </dt>
+                <dd class="fragment" data-fragment-index="3">
+                    <span class="famuragreen"> no observations necessary (aside from return) <br> models the uncertainty </span> <br>
                     <span class="famurared"> not scalable to many domain parameters </span>
                 </dd>
             </dl>
@@ -89,6 +90,12 @@
             <video controls autoplay muted>
                 <source src="content/videos/BayRn_sim2real.mp4" type="video/mp4"/>
             </video>
+        </section>
+
+        <section>
+            <h4 class="title"> Side Projects </h4>
+            <p> supporting Joao on his measure value derivatives paper </p>
+            <p> supporting Michael on his robust value iteration paper </p>
         </section>
     
         <section>
@@ -107,10 +114,6 @@
                 </ul>
             </div>
         </section>
-    
-        <section>
-            <h4 class="title"> Side Projects </h4>
-        </section>
         
         <section id="students">
             <h4 class="title"> Student Supervision </h4>
@@ -118,7 +121,7 @@
                 <div class="fragment fade-up">
                     <div class="fragment fade-out">
                         <p class="famuragreen"> IP 1 (3 students) </p>
-                        <p> creation of a physically-grounded randomized simulator via &#x2764; simulation-based inference &#x2764; </p>
+                        <p> creation of a physically-grounded randomized simulator via &#x2764; likelihood-free inference &#x2764; </p>
                     </div>
                 </div>
                 <div class="fragment fade-up">
@@ -160,11 +163,12 @@
             </dl>
             </section>
             <section>
+                \[\enquote{ass}\] <!-- @TAMAS: this does not work, even though I configured mathjex to load the csquotes package (see https://docs.mathjax.org/en/latest/options/index.html)-->
                 <h4> Neural Fields Potential Dynamics </h4>  <!-- @ TAMAS: why is this equation not centered horizontally? -->
                 \[
                 \begin{aligned}
                 \tau \dot{u} &= o^{\textsf{T}} W + (h-u) + \kappa(h-u)^3 \int_{-\infty}^{\infty} w(u, u^\prime) f(u) \diff u^\prime \\
-                f(u) &= \frac{1}{1 + e^{\beta(u - u_0)}}
+                f(u) &= \frac{1}{1 + e^{\beta(u_0 - u)}}
                 \end{aligned}
                 \]
             </section>
@@ -179,8 +183,9 @@
                     </dd>
                 <dt class="fragment fade-in" data-fragment-index="2"> desired output </dt>
                     <dd class="fragment fade-in" data-fragment-index="2"> <span class="fragment highlight-blue" data-fragment-index="5"> journal paper on potential-based NNs for sequential robotic tasks </span> </dd>
-                    <dd class="fragment fade-in" data-fragment-index="3"> conference paper from <a href="#/students/1">SBI project</a> </dd>
-                    <dd class="fragment fade-in" data-fragment-index="4"> <span class="fragment highlight-blue" data-fragment-index="5"> survey on sim-to-real for robotics from <a href="#/students/2">SBI project</a> </span> </dd>
+                    <dd class="fragment fade-in" data-fragment-index="3"> conference paper from <a href="#/students/1">LFI project</a> </dd>
+                    <dd class="fragment fade-in" data-fragment-index="4"> <span class="fragment highlight-blue" data-fragment-index="5"> survey on sim-to-real for robotics based on <a href="#/students/2">other IP project</a> </span> </dd>
+<!--                @TAMAS: the blue is not overrising -->
             </dl>
         </section>
         
@@ -213,7 +218,8 @@
             config: 'TeX-AMS_HTML-full', // https://docs.mathjax.org/en/v2.7-latest/config-files.html
             // Pass other options into `MathJax.Hub.Config()`
             TeX: {
-                Macros: {RR: "{\\bf R}", diff: "\\mathrm{d}"}
+                packages: {'[+]': ['csquotes']},  <!-- @TAMAS: mathjax: lower case, reaveal: upper case-->
+                Macros: {RR: "{\\bf R}", diff: "\\mathrm{d}"},
             },
         },
         plugins: [RevealMath, RevealHighlight], // https://revealjs.com/plugins/
