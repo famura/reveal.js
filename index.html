@@ -164,11 +164,11 @@
                 <dt class="fragment fade-in" data-fragment-index="1"> current state </dt>
                     <dd class="fragment fade-in" data-fragment-index="1">
                         paused for reworking the <a href="content/papers/Muratore_EGP_2020--BayRn.pdf">BayRn journal</a> <br>
-                        implemented potential-based NNs (c.f., <a href="content/papers/Amari_1977--NeuralFields.pdf">Amari 1977</a>)
+                        implemented potential-based NNs <br> (c.f., <a href="content/papers/Amari_1977--NeuralFields.pdf">Amari 1977</a>)
                     </dd>
                 <dt class="fragment fade-in" data-fragment-index="2"> next steps </dt>
                     <dd class="fragment fade-in" data-fragment-index="2">
-                        starting with a known / simple task (e.g., box lifting) <br>
+                        starting with a known / simple task <br>  (e.g., box lifting) <br>
                         go to a physical robot quickly
                     </dd>
             </dl>
@@ -177,8 +177,8 @@
                 <img src="content/images/sketch_ADN.png" alt="sketch" style="height:450px">
             </section>
             <section>
-                \[\enquote{test}\] <!-- @TAMAS: this does not work, even though I configured mathjex to load the csquotes package (see https://docs.mathjax.org/en/latest/options/index.html)-->
-                <h4> Neural Fields Potential Dynamics </h4>  <!-- @ TAMAS: why is this equation not centered horizontally? -->
+                \[\enquote{test}\] <!-- @TAMAS: this does not work, even though I configured mathjax to load the csquotes package (see https://docs.mathjax.org/en/latest/options/index.html)-->
+                <h4> Neural Fields Potential Dynamics </h4>
                 \[
                 \begin{aligned}
                 \tau \dot{p} &= o^{\textsf{T}} W + (h-p) + \kappa(h-p)^3 \int_{-\infty}^{\infty} w(p, p^\prime) f(p) \diff p^\prime \\
@@ -227,12 +227,15 @@
         slideNumber: "c",  // https://revealjs.com/slide-numbers/
         math: {
             mathjax: 'https://cdn.jsdelivr.net/gh/mathjax/mathjax@2.7.8/MathJax.js',
-            // mathjax: 'plugin/math/MathJax/es5/latest.js',
+            // mathjax: 'plugin/math/MathJax/es5/tex-svg-full.js',
             config: 'TeX-AMS_HTML-full', // https://docs.mathjax.org/en/v2.7-latest/config-files.html
             // Pass other options into `MathJax.Hub.Config()`
             TeX: {
                 packages: {'[+]': ['csquotes']},  <!-- @TAMAS: mathjax: lower case, reaveal: upper case-->
                 Macros: {RR: "{\\bf R}", diff: "\\mathrm{d}"},
+            },
+            "HTML-CSS": { // https://docs.mathjax.org/en/v2.7-latest/options/output-processors/HTML-CSS.html#configure-html-css
+                scale: 80, // adjusts the container of mathjax equations
             },
         },
         plugins: [RevealMath, RevealHighlight], // https://revealjs.com/plugins/
