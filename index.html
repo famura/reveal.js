@@ -75,9 +75,9 @@
             <dl>
                 <!-- @ TAMAS: it is a bit annoying that for the dl/dt/dd environment, we need to set the data-fragment-index, otherwise dt and dd do not appear at the same time. Is there any better way? -->
                 <dt class="fragment" data-fragment-index="1"> goal </dt>
-                <dd class="fragment" data-fragment-index="1"> obtain a transferable policy from simulations </dd>
+                <dd class="fragment" data-fragment-index="1"> learn a transferable policy from simulations </dd>
                 <dt class="fragment" data-fragment-index="2"> idea </dt>
-                <dd class="fragment" data-fragment-index="2"> learn connection between return and domain distribution parameters using a GP </dd>
+                <dd class="fragment" data-fragment-index="2"> model connection between return and domain distribution parameters using a GP </dd>
                 <dt class="fragment" data-fragment-index="3"> features </dt>
                 <dd class="fragment" data-fragment-index="3">
                     <span class="famuragreen"> no observations necessary (aside from return) <br> models the uncertainty </span> <br>
@@ -87,7 +87,7 @@
         </section>
     
         <section data-background-color="black">
-            <video controls autoplay muted>
+            <video autoplay muted controls>
                 <source src="content/videos/BayRn_sim2real.mp4" type="video/mp4"/>
             </video>
         </section>
@@ -107,9 +107,9 @@
                 </a>
               </div>
                 <ul>
-                    <li> focus on making simulations <span class="famuraorange"> randomizable </span> </li>
-                    <li> wraps <a href="https://github.com/HRI-EU/Rcs">Rcs</a>, MuJoCo, and OpenAI Gym </li>
-                    <li> "cleanest research code I've seen" Pascal </li>
+                    <li> focus on making simulations <span class="famurablue"> randomizable </span> </li>
+                    <li> wraps <a href="https://github.com/HRI-EU/Rcs">Rcs</a>, <a href="https://github.com/openai/mujoco-py">MuJoCo</a>, and <a href="https://github.com/openai/gym">OpenAI Gym</a> </li>
+                    <li> "cleanest research code I've seen" &ndash; Pascal </li>
                     <li> currently used by students </li>
                 </ul>
             </div>
@@ -139,8 +139,8 @@
                 <div class="fragment fade-up">
                     <div>
                         <p class="famuragreen"> Master's Theses (2 students) </p>
-                        <p> Partially Supervised Deep Meta Reinforcement Learning for Sim2Real Transfer <span class="famuraorange"> (coorporation with IIT) </span> </p>
-                        <p> Reinforcement Learning in Decentralized Multi-Goal Multi-Agent Settings <span class="famuraorange"> (coorporation with HRI) </span> </p>
+                        <p> Partially Supervised Deep Meta Reinforcement Learning for Sim2Real Transfer <span class="famuraorange"> (IIT) </span> </p>
+                        <p> Reinforcement Learning in Decentralized Multi-Goal Multi-Agent Settings <span class="famuraorange"> (HRI) </span> </p>
                     </div>
                 </div>
             </div>
@@ -158,12 +158,12 @@
                 <dt class="fragment fade-in" data-fragment-index="2"> next steps </dt>
                     <dd class="fragment fade-in" data-fragment-index="2">
                         starting with a known / simple task (e.g., box lifting) <br>
-                        go to the robot quickly
+                        go to a physical robot quickly
                     </dd>
             </dl>
             </section>
             <section>
-                \[\enquote{ass}\] <!-- @TAMAS: this does not work, even though I configured mathjex to load the csquotes package (see https://docs.mathjax.org/en/latest/options/index.html)-->
+                \[\enquote{test}\] <!-- @TAMAS: this does not work, even though I configured mathjex to load the csquotes package (see https://docs.mathjax.org/en/latest/options/index.html)-->
                 <h4> Neural Fields Potential Dynamics </h4>  <!-- @ TAMAS: why is this equation not centered horizontally? -->
                 \[
                 \begin{aligned}
@@ -204,10 +204,9 @@
     // - https://revealjs.com/initialization/
     // - https://revealjs.com/config/
     Reveal.initialize({
-        // hash: true,
         controls: true, // video controls
         progress: true, // progress bar
-        history: true, // to stay on the same slide after reloading
+        history: true, // push each slide change to the browser history, implies hash: true
         // width: '60%',  // weird scaling of the textwidth
         // center: true,  // center vertically
         transition: 'slide', // https://revealjs.com/transitions/
