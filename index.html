@@ -64,9 +64,9 @@
             <h4 class="title"> Agenda </h4>
             <ol>
                 <li> publishing </li>
-                <li> open-sourced SimuRLacra </li>
+                <li> SimuRLacra </li>
                 <li> student supervision </li>
-                <li> sequential tasks </li>
+                <li> outlook </li>
             </ol>
         </section>
         
@@ -107,10 +107,10 @@
                 </a>
               </div>
                 <ul>
-                    <li> focus on making simulations <span class="famurablue"> randomizable </span> </li>
-                    <li> wraps <a href="https://github.com/HRI-EU/Rcs">Rcs</a>, <a href="https://github.com/openai/mujoco-py">MuJoCo</a>, and <a href="https://github.com/openai/gym">OpenAI Gym</a> </li>
-                    <li> "cleanest research code I've seen" &ndash; Pascal </li>
-                    <li> currently used by students </li>
+                    <li class="fragment"> focus on making simulations <span class="famurablue"> randomizable </span> </li>
+                    <li class="fragment"> wraps <a href="https://github.com/HRI-EU/Rcs">Rcs</a>, <a href="https://github.com/openai/mujoco-py">MuJoCo</a>, and <a href="https://github.com/openai/gym">OpenAI Gym</a> </li>
+                    <li class="fragment"> "cleanest research code I've seen" &ndash; Pascal </li>
+                    <li class="fragment"> currently used by students </li>
                 </ul>
             </div>
         </section>
@@ -145,6 +145,17 @@
                 </div>
             </div>
         </section>
+        
+        <section>
+            <h4 class="title"> Creating Stochastic Simulators with LFI </h4>
+            <ul>
+                <li class="fragment"> current approaches assume a parametric distribution </li>
+                <li class="fragment"> recent ground-breaking advances in likelihood-free inference research </li>
+                <li class="fragment"> neural flows can approximate densities </li>
+                <li class="fragment famuragreen"> <b>my idea</b> randomized simulator based on recorded trajectories and minimal assumptions </li>
+            </ul>
+            
+        </section>
     
         <section>
             <section>
@@ -162,13 +173,16 @@
                     </dd>
             </dl>
             </section>
+            <section data-background-color="white">
+                <img src="content/images/sketch_ADN.png" alt="sketch" style="height:450px">
+            </section>
             <section>
                 \[\enquote{test}\] <!-- @TAMAS: this does not work, even though I configured mathjex to load the csquotes package (see https://docs.mathjax.org/en/latest/options/index.html)-->
                 <h4> Neural Fields Potential Dynamics </h4>  <!-- @ TAMAS: why is this equation not centered horizontally? -->
                 \[
                 \begin{aligned}
-                \tau \dot{u} &= o^{\textsf{T}} W + (h-u) + \kappa(h-u)^3 \int_{-\infty}^{\infty} w(u, u^\prime) f(u) \diff u^\prime \\
-                f(u) &= \frac{1}{1 + e^{\beta(u_0 - u)}}
+                \tau \dot{p} &= o^{\textsf{T}} W + (h-p) + \kappa(h-p)^3 \int_{-\infty}^{\infty} w(p, p^\prime) f(p) \diff p^\prime \\
+                f(p) &= \frac{1}{1 + e^{\beta(p_0 - p)}}
                 \end{aligned}
                 \]
             </section>
