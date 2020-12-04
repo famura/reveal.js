@@ -151,7 +151,7 @@
             <ul>
                 <li class="fragment"> current approaches assume a parametric distribution </li>
                 <li class="fragment"> recent ground-breaking advances in likelihood-free inference research </li>
-                <li class="fragment"> neural flows can approximate densities </li>
+                <li class="fragment"> neural flows can approximate the <a href="content/papers/Papamakarios_SM--SequentialNeuralLikelihood-FastLikelihoodFreeInferenceWithAutoregressiveFlows.pdf">likelihood</a> $p(x | \xi)$ or the <a href="content/papers/Greenberg_NM--AutomaticPosteriorTransformationForLikelihoodFreeInference.pdf">posterior</a> $p(\xi | x)$ </li>
                 <li class="fragment famuragreen"> <b>my idea</b> randomized simulator based on recorded trajectories and minimal assumptions </li>
             </ul>
             
@@ -177,7 +177,6 @@
                 <img src="content/images/sketch_ADN.png" alt="sketch" style="height:450px">
             </section>
             <section>
-                \[\enquote{test}\] <!-- @TAMAS: this does not work, even though I configured mathjax to load the csquotes package (see https://docs.mathjax.org/en/latest/options/index.html)-->
                 <h4> Neural Fields Potential Dynamics </h4>
                 \[
                 \begin{aligned}
@@ -199,7 +198,7 @@
                     <!-- @TAMAS: (1) the blue is not overriding the red from the <a> tag, (2) how can I get my custom famurablue into the highlighting -->
                     <dd class="fragment fade-in" data-fragment-index="2"> <span class="fragment highlight-blue" data-fragment-index="5"> journal paper on potential-based NNs for sequential robotic tasks </span> </dd>
                     <dd class="fragment fade-in" data-fragment-index="3"> conference paper from <a href="#/students/1">LFI project</a> </dd>
-                    <dd class="fragment fade-in" data-fragment-index="4"> <span class="fragment highlight-blue" data-fragment-index="5"> survey on sim-to-real for robotics based on <a href="#/students/2">other IP project</a> </span> </dd>
+                    <dd class="fragment fade-in" data-fragment-index="4"> <span class="fragment highlight-blue" data-fragment-index="5"> survey on sim-to-real for robotics based on the <a href="#/students/2">other IP project</a> </span> </dd>
             </dl>
         </section>
         
@@ -227,10 +226,11 @@
         slideNumber: "c",  // https://revealjs.com/slide-numbers/
         math: {
             mathjax: 'https://cdn.jsdelivr.net/gh/mathjax/mathjax@2.7.8/MathJax.js',
-            // mathjax: 'plugin/math/MathJax/es5/tex-svg-full.js',
+            // mathjax: 'plugin/math/MathJax/es5/tex-chtml-full.js',
             config: 'TeX-AMS_HTML-full', // https://docs.mathjax.org/en/v2.7-latest/config-files.html
             // Pass other options into `MathJax.Hub.Config()`
             TeX: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],  <!-- @TAMAS: inline symbols are not working for local mathjax-->
                 packages: {'[+]': ['csquotes']},  <!-- @TAMAS: mathjax: lower case, reaveal: upper case-->
                 Macros: {RR: "{\\bf R}", diff: "\\mathrm{d}"},
             },
