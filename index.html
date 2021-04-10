@@ -248,8 +248,8 @@
             config: 'TeX-AMS_HTML-full', // https://docs.mathjax.org/en/v2.7-latest/config-files.html
             // Pass other options into `MathJax.Hub.Config()`
             TeX: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],  <!-- @TAMAS: inline symbols are not working for local mathjax-->
-                packages: {'[+]': ['csquotes']},  <!-- @TAMAS: mathjax: lower case, reaveal: upper case-->
+                inlineMath: [['$', '$'], ['\\(', '\\)']], // @TAMAS: inline symbols are not working for local mathjax
+                packages: {'[+]': ['csquotes']}, // @TAMAS: mathjax: lower case, reaveal: upper case
                 Macros: {RR: "{\\bf R}", diff: "\\mathrm{d}"},
             },
             "HTML-CSS": { // https://docs.mathjax.org/en/v2.7-latest/options/output-processors/HTML-CSS.html#configure-html-css
