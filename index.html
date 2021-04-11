@@ -8,8 +8,8 @@
     
     <!-- Set presentation specific meta-information -->
     <meta name="author" content="Fabio Muratore">
-    <meta name="description" content="HRI EGN Advisory Meeting Winter 2020">
-    <title> HRI Advisory Meeting - Winter 2020 </title>
+    <meta name="description" content="ICRA 2021">
+    <title> Data-efficient Domain Randomization with Bayesian Optimization - ICRA 2021 </title>
     
     <!-- Load a specific math font for MathJax (load this before reveal) -->
 <!--    <script type="text/x-mathjax-config">-->
@@ -49,40 +49,12 @@
     <!-- =========================================================================================================== -->
         
         <section style="text-align: center" data-state="no-slide-footer">
-            <h3 class="title"> HRI Advisory Meeting <br> Summer 2019 </h3>
-            <p> <b>Fabio Muratore</b> </p>
-            <div>
-                <dl>
-                    <dt> Project </dt>
-                    <dd> Motor Dreaming &ndash; A New Approach Towards Model-Based Skill Learning </dd>
-                    <dt> Supervisors </dt>
-                    <dd> Dr. Michael Gienger & Prof. Jan Peters </dd>
-                    <dt> Advisor </dt>
-                    <dd> Dr. Markus Olhofer </dd>
-                </dl>
-            </div>
-        </section>
-
-        <section>
-            <div class="fig-container"
-                 data-fig-id="fig-collision-detection"
-                 data-file="plugin/d3js/demo/Collision-Detection.html"></div>
-        </section>
-
-        <section>
-            <div class="fig-container"
-                 data-fig-id="fig-collision-detection"
-                 data-file="diagram.html"></div> <!--local version (not working) at content/diagrams/-->
-        </section>
-        
-        <section>
-            <h4 class="title"> Agenda </h4>
-            <ol>
-                <li> publishing </li>
-                <li> SimuRLacra </li>
-                <li> student supervision </li>
-                <li> outlook </li>
-            </ol>
+            <h3 class="title"> Data-efficient <br> Domain Randomization <br> with <br> Bayesian Optimization </h3>
+            <p> <b> Fabio Muratore<sup>1,2</sup>, Christian Eilers<sup>1,2</sup>, <br> Michael Gienger<sup>2</sup>, Jan Peters<sup>1</sup> </b> </p>
+            <p>
+                <sup>1</sup> Technical University of Darmstadt <br>
+                <sup>2</sup> Honda Research Institute Europe
+            </p>
         </section>
         
         <section>
@@ -100,10 +72,43 @@
                 </dd>
             </dl>
         </section>
+
+        <section>
+            <h4 class="title"> Problem Statement and Notation </h4>
+            <div style="text-align: left">
+            <p> Time-discrete stochastic dynamical system </p>
+            \[
+            s_{t+1} \sim \mathcal{P} \left(s_{t+1} \big| s_t, a_t, {\color{red} \xi} \right), \ 
+            s_0 \sim\mu_0 \left( s_0, {\color{red} \xi} \right), \ 
+            a_t \sim \pi\left( s_t; \theta \right), \ 
+            {\color{red} \xi} \sim {\color{red} {\nu \left( \xi; \phi \right)}}
+            \]
+            <p> Expected return for one domain </p>
+            \[
+            J(\theta, {\color{red}\xi}, s_0) = \mathbb{E}_{\tau \sim p(\tau)} \left[ \sum\nolimits_{t=0}^{T-1} \gamma^t r(s_t, a_t) \Big| \theta, {\color{red}\xi}, s_0 \right]
+            \]
+            <p> Augmentation of the standard RL objective </p>
+            $$
+            \theta^\star = \arg\!\max_{\theta\in\Theta} \ {\color{red}{\mathbb{E}_{\xi \sim \nu(\xi;\phi)}}} \left[ \mathbb{E}_{s_0 \sim \mu_0({\color{red}\xi}; s_0)} \left[ J(\theta, {\color{red}\xi}, s_0) \right] \right]
+            $$
+            </div>
+        </section>
     
         <section data-background-color="black">
             <video autoplay muted controls>
-                <source src="content/videos/BayRn_sim2real.mp4" type="video/mp4"/>
+                <source src="content/videos/WAM_MuJoCo_not_transferable.mp4" type="video/mp4"/>
+            </video>
+            <video autoplay muted controls>
+                <source src="content/videos/WAM_MuJoCo_transferable.mp4" type="video/mp4"/>
+            </video>
+            <video autoplay muted controls>
+                <source src="content/videos/WAM_fail.mp4" type="video/mp4"/>
+            </video>
+            <video autoplay muted controls>
+                <source src="content/videos/WAM_BayRn_iter_9.mp4" type="video/mp4"/>
+            </video>
+            <video autoplay muted controls>
+                <source src="content/videos/QQ_recover.mp4" type="video/mp4"/>
             </video>
         </section>
 
@@ -118,7 +123,7 @@
             <div class="flex-container-row ">
               <div style="max-width: 25%">
                 <a href="https://github.com/famura/SimuRLacra">
-                    <img src="content/images/SimuRLacra--logo.png" alt="SimuRLacra logo" style="display:block">
+                    <img src="content/images/SimuRLacra--logo.png" alt="SimuRLacra" style="display:block">
                 </a>
               </div>
                 <ul>
@@ -129,94 +134,28 @@
                 </ul>
             </div>
         </section>
-        
-        <section id="students">
-            <h4 class="title"> Student Supervision </h4>
-            <div class="r-stack">
-                <div class="fragment fade-up">
-                    <div class="fragment fade-out">
-                        <p class="famuragreen"> IP 1 (3 students) </p>
-                        <p> creation of a physically-grounded randomized simulator via &#x2764; likelihood-free inference &#x2764; </p>
-                    </div>
-                </div>
-                <div class="fragment fade-up">
-                    <div class="fragment fade-out">
-                        <p class="famuragreen"> IP 2 (4 students) </p>
-                        <p> implementation and evaluation of sim-to-real algorithms </p>
-                    </div>
-                </div>
-                <div class="fragment fade-up">
-                    <div class="fragment fade-out">
-                        <p class="famuragreen"> Bachelorpraktikum (5 students) </p>
-                        <p> 3D visualization for SimuRLacra </p>
-                    </div>
-                </div>
-                <div class="fragment fade-up">
-                    <div>
-                        <p class="famuragreen"> Master's Theses (2 students) </p>
-                        <p> Partially Supervised Deep Meta Reinforcement Learning for Sim2Real Transfer <span class="famurablue"> (IIT) </span> </p>
-                        <p> Reinforcement Learning in Decentralized Multi-Goal Multi-Agent Settings <span class="famurablue"> (HRI) </span> </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
+    
         <section>
-            <h4 class="title"> Creating Stochastic Simulators with LFI </h4>
-            <ul>
-                <li class="fragment"> current approaches assume a parametric distribution </li>
-                <li class="fragment"> recent ground-breaking advances in likelihood-free inference research </li>
-                <li class="fragment"> neural flows can approximate the <a href="content/papers/Papamakarios_SM--SequentialNeuralLikelihood-FastLikelihoodFreeInferenceWithAutoregressiveFlows.pdf">likelihood</a> $p(x | \xi)$ or the <a href="content/papers/Greenberg_NM--AutomaticPosteriorTransformationForLikelihoodFreeInference.pdf">posterior</a> $p(\xi | x)$ </li>
-                <li class="fragment famuragreen"> <b>my idea</b> randomized simulator based on recorded trajectories and minimal assumptions </li>
-            </ul>
+            <h4 class="title"> Bayesian Domain Randomization (BayRn) </h4>
+            <p> Bi-level optimization problem </p>
+            <dl>
+                <dt class="fragment fade-in" data-fragment-index="1" style="display: grid; align-content: end;"> upper level </dt>
+                      <dd class="fragment fade-in" data-fragment-index="1">
+                          \[
+                          {\color{red}{\phi^\star}} = \arg\!\max_{\phi\in\Phi} \ \mathbb{E}_{s_0 \sim \mu_0(s_0)} \big[ J^{\textrm{real}}\left( {\color{red} {\theta^\star}}, s_0\right) \big]
+                          \]
+                      </dd>
+                <dt class="fragment fade-in" data-fragment-index="2"> with </dt> 
+                <dt class="fragment fade-in" data-fragment-index="2"> lower level </dt>
+                <dd class="fragment fade-in" data-fragment-index="2">
+                    \[
+                    {\color{red}{\theta^\star(\phi)}} = \arg\! \max_{\theta\in\Theta} \ \mathbb{E}_{\xi \sim \nu(\xi;{\color{red}\phi})} \! \left[ \mathbb{E}_{s_0 \sim \mu_0(s_0;\xi)} \left[ J(\theta, \xi, s_0) \right] \right]
+                    \]
+                </dd>
+            </dl>
             
         </section>
-    
-        <section>
-            <section>
-            <h4 class="title"> Sim-to-Real for Sequential Tasks </h4>
-            <dl>
-                <dt class="fragment fade-in" data-fragment-index="1"> current state </dt>
-                    <dd class="fragment fade-in" data-fragment-index="1">
-                        paused for reworking the <a href="content/papers/Muratore_EGP_2020--BayRn.pdf">BayRn journal</a> <br>
-                        implemented potential-based NNs <br> (c.f., <a href="content/papers/Amari_1977--NeuralFields.pdf">Amari 1977</a>)
-                    </dd>
-                <dt class="fragment fade-in" data-fragment-index="2"> next steps </dt>
-                    <dd class="fragment fade-in" data-fragment-index="2">
-                        starting with a known / simple task <br>  (e.g., box lifting) <br>
-                        go to a physical robot quickly
-                    </dd>
-            </dl>
-            </section>
-            <section data-background-color="white">
-                <img src="content/images/sketch_ADN.png" alt="sketch" style="height:450px">
-            </section>
-            <section>
-                <h4> Neural Fields Potential Dynamics </h4>
-                \[
-                \begin{aligned}
-                \tau \dot{p} &= o^{\textsf{T}} W + (h-p) + \kappa(h-p)^3 \int_{-\infty}^{\infty} w(p, p^\prime) f(p) \diff p^\prime \\
-                f(p) &= \frac{1}{1 + e^{\beta(p_0 - p)}}
-                \end{aligned}
-                \]
-            </section>
-        </section>
-    
-        <section>
-            <h4 class="title"> Extension </h4>
-            <dl>
-              <dt class="fragment fade-in" data-fragment-index="1" style="display: grid; align-content: end;"> new deadline </dt>
-                    <dd class="fragment fade-in" data-fragment-index="1">
-                        September 30<sup>th</sup> 2021
-                    </dd>
-                <dt class="fragment fade-in" data-fragment-index="2"> desired output </dt>
-                    <!-- @TAMAS: (1) the blue is not overriding the red from the <a> tag, (2) how can I get my custom famurablue into the highlighting -->
-                    <dd class="fragment fade-in" data-fragment-index="2"> <span class="fragment highlight-blue" data-fragment-index="5"> journal paper on potential-based NNs for sequential robotic tasks </span> </dd>
-                    <dd class="fragment fade-in" data-fragment-index="3"> conference paper from <a href="#/students/1">LFI project</a> </dd>
-                    <dd class="fragment fade-in" data-fragment-index="4"> <span class="fragment highlight-blue" data-fragment-index="5"> survey on sim-to-real for robotics based on the <a href="#/students/2">other IP project</a> </span> </dd>
-            </dl>
-        </section>
-        
+
     </div>
 </div>
 
@@ -275,7 +214,7 @@
                                 background: 'rgba(170, 34, 51, 0)', // = #a23
                                 // logoRight: './content/images/TUD--logo_cropped_inverted_transparent.png',
                                 // logoLeft: './content/images/HRI--logo_cropped_inverted_transparent.png',
-                                text: "Fabio Muratore &ensp; | &ensp; Honda Research Institute Europe &ensp; | &ensp; Intelligent Autonomous Systems &ensp; | &ensp; 04.12.2020" // TU Darmstadt &ndash;
+                                text: "Fabio Muratore &ensp; | &ensp; Intelligent Autonomous Systems Group &ensp; | &ensp; Honda Research Institute Europe &ensp; | &ensp; XX.XX.2021"
                             }
                         });
                     }
