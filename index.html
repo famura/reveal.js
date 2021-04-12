@@ -60,7 +60,6 @@
         <section>
             <h4 class="title"> Bayesian Domain Randomization (BayRn) </h4>
             <dl>
-                <!-- @ TAMAS: it is a bit annoying that for the dl/dt/dd environment, we need to set the data-fragment-index, otherwise dt and dd do not appear at the same time. Is there any better way? -->
                 <dt class="fragment" data-fragment-index="1"> goal </dt>
                 <dd class="fragment" data-fragment-index="1"> learn a transferable policy from simulations </dd>
                 <dt class="fragment" data-fragment-index="2"> idea </dt>
@@ -78,10 +77,10 @@
             <div style="text-align: left">
             <p> Time-discrete stochastic dynamical system </p>
             \[
+            {\color{red} {\xi \sim \nu \left( \xi; \phi \right)}}, \ 
             s_{t+1} \sim \mathcal{P} \left(s_{t+1} \big| s_t, a_t, {\color{red} \xi} \right), \ 
             s_0 \sim\mu_0 \left( s_0, {\color{red} \xi} \right), \ 
-            a_t \sim \pi\left( s_t; \theta \right), \ 
-            {\color{red} \xi} \sim {\color{red} {\nu \left( \xi; \phi \right)}}
+            a_t \sim \pi\left( s_t; \theta \right)
             \]
             <p> Expected return for one domain </p>
             \[
@@ -95,21 +94,40 @@
         </section>
     
         <section data-background-color="black">
-            <video autoplay muted controls>
-                <source src="content/videos/WAM_MuJoCo_not_transferable.mp4" type="video/mp4"/>
-            </video>
-            <video autoplay muted controls>
-                <source src="content/videos/WAM_MuJoCo_transferable.mp4" type="video/mp4"/>
-            </video>
-            <video autoplay muted controls>
-                <source src="content/videos/WAM_fail.mp4" type="video/mp4"/>
-            </video>
-            <video autoplay muted controls>
-                <source src="content/videos/WAM_BayRn_iter_9.mp4" type="video/mp4"/>
-            </video>
-            <video autoplay muted controls>
-                <source src="content/videos/QQ_recover.mp4" type="video/mp4"/>
-            </video>
+            <div class="flex-container-row" style="width: 160%;">
+                <div class="captioned">
+                    <video autoplay muted controls width="480">
+                        <source src="content/videos/WAM_MuJoCo_not_transferable.mp4" type="video/mp4"/>
+                    </video>
+                    <div class="top-left-caption"> Learned in nominal</div>
+                </div>
+                <div class="captioned">
+                    <video autoplay muted controls width="480">
+                        <source src="content/videos/WAM_MuJoCo_transferable.mp4" type="video/mp4"/>
+                    </video>
+                    <p class="top-right-caption"> Learned in with BayRn</p>
+                </div>
+            </div>
+        </section>
+
+        <section data-background-color="black">
+            <div class="flex-container-row" style="width: 160%;">
+                    <video autoplay muted controls width="480">
+                        <source src="content/videos/nominal--WAM_fail.mp4" type="video/mp4"/>
+                    </video>
+                <video autoplay muted controls width="480">
+                    <source src="content/videos/BayRn--WAM_iter_9.mp4" type="video/mp4"/>
+                </video>
+            </div>
+        </section>
+
+        <section data-background-color="black">
+            <div class="captioned">
+                <video autoplay muted controls height="540">
+                    <source src="content/videos/BayRn--QQ_recover.mp4" type="video/mp4"/>
+                </video>
+                <div class="top-right-caption">Evaluating BayRn on the Furuta Pendulum</div>
+            </div>
         </section>
 
         <section>

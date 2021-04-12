@@ -3,7 +3,7 @@
  *********************************************/
 .reveal {
   font-family: Ubuntu, "sans-serif";
-  font-size: 36px;
+  font-size: 34px;
   font-weight: normal;
   color: #eee;
 }
@@ -40,10 +40,12 @@
 
 /*********************************************
  * Slide Number
+ * see ./css/reveal.scss
  *********************************************/
 .reveal .slide-number {
-  font-size: 22pt;
+  font-size: 3vh;
   color: #a23;
+	background-color: rgba(0, 0, 0, 0);
 }
 
 /*********************************************
@@ -135,3 +137,48 @@
   display:flex;
   align-items:center;
 }
+
+/*********************************************
+ * Container holding the image and the text *
+ * from https://www.w3schools.com/howto/howto_css_image_text.asp
+ *********************************************/
+ .reveal .captioned {
+  position: relative;
+  text-align: center;
+}
+
+.reveal .bottom-left-caption {
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
+  font-size: 22px;
+}
+
+.reveal .top-left-caption {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+  font-size: 22px;
+}
+
+.reveal .top-right-caption {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+  font-size: 22px;
+}
+
+.reveal .bottom-right-caption {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+  font-size: 22px;
+}
+
+.reveal .centered-caption {
+  position: absolute;
+  font-size: 22px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+} 
