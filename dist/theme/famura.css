@@ -1,6 +1,61 @@
 /*********************************************
- * Font
+ * Custom theme for reveal.js
+ * Author: Fabio Muratore http://github.com/famura
+ *
+ * Based on the blood theme from reveal.js
+ * Author: Walther http://github.com/Walther
  *********************************************/
+
+@import url(https://fonts.googleapis.com/css?family=Ubuntu:300,700,300italic,700italic);
+section.has-light-background,
+section.has-light-background h1,
+section.has-light-background h2,
+section.has-light-background h3,
+section.has-light-background h4,
+section.has-light-background h5,
+section.has-light-background h6 {
+  color: #222;
+}
+
+/*********************************************
+ * GLOBAL STYLES
+ *********************************************/
+:root {
+  --background-color: #222;
+  --main-font: Ubuntu, sans-serif;
+  --main-font-size: 40px;
+  --main-color: #eee;
+  --block-margin: 20px;
+  --heading-margin: 0 0 20px 0;
+  --heading-font: Ubuntu, sans-serif;
+  --heading-color: #eee;
+  --heading-line-height: 1.2;
+  --heading-letter-spacing: normal;
+  --heading-text-transform: uppercase;
+  --heading-text-shadow: 2px 2px 2px #222;
+  --heading-font-weight: normal;
+  --heading1-text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb,
+    0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, 0.1),
+    0 0 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3),
+    0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25),
+    0 20px 20px rgba(0, 0, 0, 0.15);
+  --heading1-size: 3.77em;
+  --heading2-size: 2.11em;
+  --heading3-size: 1.55em;
+  --heading4-size: 1em;
+  --code-font: monospace;
+  --link-color: #a23;
+  --link-color-hover: #dd5566;
+  --selection-background-color: #a23;
+  --selection-color: #fff;
+}
+
+.reveal-viewport {
+  background: #222;
+  background-color: #222;
+}
+
+/* Font */
 .reveal {
   font-family: Ubuntu, "sans-serif";
   font-size: 34px;
@@ -8,34 +63,366 @@
   color: #eee;
 }
 
+.reveal ::selection {
+  color: #fff;
+  background: #a23;
+  text-shadow: none;
+}
+
+.reveal ::-moz-selection {
+  color: #fff;
+  background: #a23;
+  text-shadow: none;
+}
+
+.reveal .slides section,
+.reveal .slides section > section {
+  line-height: 1.3;
+  font-weight: inherit;
+}
+
 /*********************************************
  * Colors
  *********************************************/
 .famuraorange {
-  color: #f6b26b /* #ff5500 */
+  color: #f6b26b; /* #ff5500 */
 }
 
 .famurared {
-  color: #cc3a1d /* #e65231 */
+  color: #cc3a1d; /* #e65231 */
 }
 
 .famuragreen {
-  color: #bdecb6 /* #cfffe5 */
+  color: #bdecb6; /* #cfffe5 */
 }
 
 .famurablue {
-  color: #87ceeb /* #9ed8f0 */
+  color: #87ceeb; /* #9ed8f0 */
 }
 
 .famurawhite {
-  color: #f3f3f3
+  color: #f3f3f3;
 }
 
 /*********************************************
  * Title
  *********************************************/
 .reveal .title {
-  color: #f6b26b /* #ff5500 */
+  color: #f6b26b; /* #ff5500 */
+  text-transform: uppercase;
+}
+
+/*********************************************
+* HEADERS
+*********************************************/
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  margin: 0 0 20px 0;
+  color: #f6b26b;
+  font-family: Ubuntu, "sans-serif";
+  font-weight: normal;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-shadow: 2px 2px 2px #222;
+  word-wrap: break-word;
+}
+
+.reveal h1 {
+  font-size: 3.77em;
+}
+
+.reveal h2 {
+  font-size: 2.11em;
+}
+
+.reveal h3 {
+  font-size: 1.55em;
+}
+
+.reveal h4 {
+  font-size: 1em;
+}
+
+.reveal h1 {
+  text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9,
+    0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2),
+    0 5px 10px rgba(0, 0, 0, 0.25), 0 20px 20px rgba(0, 0, 0, 0.15);
+}
+
+/*********************************************
+* OTHER
+*********************************************/
+.reveal p {
+  margin: 20px 0;
+  line-height: 1.3;
+}
+
+/* Remove trailing margins after titles */
+.reveal h1:last-child,
+.reveal h2:last-child,
+.reveal h3:last-child,
+.reveal h4:last-child,
+.reveal h5:last-child,
+.reveal h6:last-child {
+  margin-bottom: 0;
+}
+
+/* Ensure certain elements are never larger than the slide itself */
+.reveal img,
+.reveal video,
+.reveal iframe {
+  max-width: 95%;
+  max-height: 95%;
+}
+
+.reveal strong,
+.reveal b {
+  font-weight: bold;
+}
+
+.reveal em {
+  font-style: italic;
+}
+
+.reveal ol,
+.reveal dl,
+.reveal ul {
+  display: inline-block;
+  text-align: left;
+  margin: 0 0 0 1em;
+}
+
+.reveal ol {
+  list-style-type: decimal;
+}
+
+.reveal ul {
+  list-style-type: disc;
+}
+
+.reveal ul ul {
+  list-style-type: square;
+}
+
+.reveal ul ul ul {
+  list-style-type: circle;
+}
+
+.reveal ul ul,
+.reveal ul ol,
+.reveal ol ol,
+.reveal ol ul {
+  display: block;
+  margin-left: 40px;
+}
+
+.reveal dt {
+  font-weight: bold;
+}
+
+.reveal dd {
+  margin-left: 40px;
+}
+
+.reveal blockquote {
+  display: block;
+  position: relative;
+  width: 70%;
+  margin: 20px auto;
+  padding: 5px;
+  font-style: italic;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
+}
+
+.reveal blockquote p:first-child,
+.reveal blockquote p:last-child {
+  display: inline-block;
+}
+
+.reveal q {
+  font-style: italic;
+}
+
+.reveal pre {
+  display: block;
+  position: relative;
+  width: 90%;
+  margin: 20px auto;
+  text-align: left;
+  font-size: 0.55em;
+  font-family: monospace;
+  line-height: 1.2em;
+  word-wrap: break-word;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.reveal code {
+  font-family: monospace;
+  text-transform: none;
+}
+
+.reveal pre code {
+  display: block;
+  padding: 5px;
+  overflow: auto;
+  max-height: 400px;
+  word-wrap: normal;
+}
+
+.reveal table {
+  margin: auto;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.reveal table th {
+  font-weight: bold;
+}
+
+.reveal table th,
+.reveal table td {
+  text-align: left;
+  padding: 0.2em 0.5em 0.2em 0.5em;
+  border-bottom: 1px solid;
+}
+
+.reveal table th[align="center"],
+.reveal table td[align="center"] {
+  text-align: center;
+}
+
+.reveal table th[align="right"],
+.reveal table td[align="right"] {
+  text-align: right;
+}
+
+.reveal table tbody tr:last-child th,
+.reveal table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.reveal sup {
+  vertical-align: super;
+  font-size: smaller;
+}
+
+.reveal sub {
+  vertical-align: sub;
+  font-size: smaller;
+}
+
+.reveal small {
+  display: inline-block;
+  font-size: 0.6em;
+  line-height: 1.2em;
+  vertical-align: top;
+}
+
+.reveal small * {
+  vertical-align: top;
+}
+
+.reveal img {
+  margin: 20px 0;
+}
+
+/*********************************************
+* LINKS
+*********************************************/
+.reveal a {
+  color: #a23;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.reveal a:hover {
+  color: #dd5566;
+  text-shadow: none;
+  border: none;
+}
+
+.reveal .roll span:after {
+  color: #fff;
+  background: #6a1520;
+}
+
+/*********************************************
+* Frame helper
+*********************************************/
+.reveal .r-frame {
+  border: 4px solid #eee;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+.reveal a .r-frame {
+  transition: all 0.15s linear;
+}
+
+.reveal a:hover .r-frame {
+  border-color: #a23;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.55);
+}
+
+/*********************************************
+* NAVIGATION CONTROLS
+*********************************************/
+.reveal .controls {
+  color: #a23;
+}
+
+/*********************************************
+* PROGRESS BAR
+*********************************************/
+.reveal .progress {
+  background: rgba(0, 0, 0, 0.2);
+  color: #a23;
+}
+
+/*********************************************
+* PRINT BACKGROUND
+*********************************************/
+@media print {
+  .backgrounds {
+    background-color: #222;
+  }
+}
+
+.reveal p {
+  font-weight: 300;
+  text-shadow: 1px 1px #222;
+}
+
+section.has-light-background p,
+section.has-light-background h1,
+section.has-light-background h2,
+section.has-light-background h3,
+section.has-light-background h4 {
+  text-shadow: none;
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  font-weight: 700;
+}
+
+.reveal p code {
+  background-color: #23241f;
+  display: inline-block;
+  border-radius: 7px;
+}
+
+.reveal small code {
+  vertical-align: baseline;
 }
 
 /*********************************************
@@ -45,7 +432,7 @@
 .reveal .slide-number {
   font-size: 3vh;
   color: #a23;
-	background-color: rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, 0);
 }
 
 /*********************************************
@@ -53,10 +440,12 @@
  *********************************************/
 .reveal .slides section .fragment.step-fade-in-then-out {
   opacity: 0;
-  display: none; }
+  display: none;
+}
 .reveal .slides section .fragment.step-fade-in-then-out.current-fragment {
   opacity: 1;
-  display: inline; }
+  display: inline;
+}
 
 /*********************************************
  * References
@@ -93,9 +482,9 @@
 /*********************************************
  * Global Center Class
  *********************************************/
- /*.center {*/
- /*  text-align: center;*/
- /*}*/
+/*.center {*/
+/*  text-align: center;*/
+/*}*/
 
 /*********************************************
  * In Line Descriptive List
@@ -119,30 +508,30 @@
 .reveal .flex-container-row {
   display: flex; /* first create a flex layout context */
   flex-flow: row nowrap; /* define the flow direction and if we allow the items to wrap */
-  align-items: center;  /* vertically alignment */
+  align-items: center; /* vertically alignment */
   justify-content: space-around; /* define how is distributed the remaining space */
 }
 
 .reveal .flex-container-col {
   display: flex; /* first create a flex layout context */
   flex-flow: column nowrap; /* define the flow direction and if we allow the items to wrap */
-  align-items: center;  /* vertically alignment */
+  align-items: center; /* vertically alignment */
   justify-content: space-around; /* define how is distributed the remaining space */
 }
 
-.reveal .box{
-  background-color:#444444;
-  padding:20px;
-  border-radius:10px;
-  display:flex;
-  align-items:center;
+.reveal .box {
+  background-color: #444444;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
 }
 
 /*********************************************
  * Container holding the image and the text *
  * from https://www.w3schools.com/howto/howto_css_image_text.asp
  *********************************************/
- .reveal .captioned {
+.reveal .captioned {
   position: relative;
   text-align: center;
 }
@@ -181,4 +570,4 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-} 
+}
