@@ -1,0 +1,11 @@
+{
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": false,
+    "printWidth": 300,
+    "bracketSpacing": false,
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+      }
+  }
