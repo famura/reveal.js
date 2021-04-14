@@ -34,11 +34,7 @@ section.has-light-background h6 {
   --heading-text-transform: uppercase;
   --heading-text-shadow: 2px 2px 2px #222;
   --heading-font-weight: normal;
-  --heading1-text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb,
-    0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, 0.1),
-    0 0 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3),
-    0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25),
-    0 20px 20px rgba(0, 0, 0, 0.15);
+  --heading1-text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25), 0 20px 20px rgba(0, 0, 0, 0.15);
   --heading1-size: 3.77em;
   --heading2-size: 2.11em;
   --heading3-size: 1.55em;
@@ -113,7 +109,7 @@ section.has-light-background h6 {
 }
 
 /*********************************************
-* HEADERS
+* Header
 *********************************************/
 .reveal h1,
 .reveal h2,
@@ -131,27 +127,34 @@ section.has-light-background h6 {
   word-wrap: break-word;
 }
 
+/* For default HTML5 header sizes see https://html.spec.whatwg.org/multipage/rendering.html#sections-and-headings */
+/* Here, I shifted them by one, and extrapolated h1. */
 .reveal h1 {
-  font-size: 3.77em;
+  font-size: 2.85em;
 }
 
 .reveal h2 {
-  font-size: 2.11em;
+  font-size: 2em;
 }
 
 .reveal h3 {
-  font-size: 1.55em;
+  font-size: 1.5em;
 }
 
 .reveal h4 {
+  font-size: 1.17em;
+}
+
+.reveal h5 {
   font-size: 1em;
 }
 
+.reveal h6 {
+  font-size: 0.83em;
+}
+
 .reveal h1 {
-  text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9,
-    0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1),
-    0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2),
-    0 5px 10px rgba(0, 0, 0, 0.25), 0 20px 20px rgba(0, 0, 0, 0.15);
+  text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25), 0 20px 20px rgba(0, 0, 0, 0.15);
 }
 
 /*********************************************
@@ -333,7 +336,7 @@ section.has-light-background h6 {
 }
 
 /*********************************************
-* LINKS
+* Links
 *********************************************/
 .reveal a {
   color: #a23;
@@ -353,7 +356,7 @@ section.has-light-background h6 {
 }
 
 /*********************************************
-* Frame helper
+* Frame Helper
 *********************************************/
 .reveal .r-frame {
   border: 4px solid #eee;
@@ -370,14 +373,14 @@ section.has-light-background h6 {
 }
 
 /*********************************************
-* NAVIGATION CONTROLS
+* Navigation Controls
 *********************************************/
 .reveal .controls {
   color: #a23;
 }
 
 /*********************************************
-* PROGRESS BAR
+* Progress Bar
 *********************************************/
 .reveal .progress {
   background: rgba(0, 0, 0, 0.2);
@@ -385,7 +388,7 @@ section.has-light-background h6 {
 }
 
 /*********************************************
-* PRINT BACKGROUND
+* Print Background
 *********************************************/
 @media print {
   .backgrounds {

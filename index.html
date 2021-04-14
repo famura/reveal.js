@@ -65,6 +65,10 @@
         </section>
 
         <section>
+          <h4>Motivation</h4>
+        </section>
+
+        <section>
           <h4>Bayesian Domain Randomization (BayRn)</h4>
           <dl>
             <dt class="fragment" data-fragment-index="1">goal</dt>
@@ -72,31 +76,29 @@
             <dt class="fragment" data-fragment-index="2">idea</dt>
             <dd class="fragment" data-fragment-index="2">model connection between return and domain distribution parameters using a GP</dd>
             <dt class="fragment" data-fragment-index="3">features</dt>
-            <dd class="fragment" data-fragment-index="3">
-              <span class="famuragreen">
-                no observations necessary (aside from return) <br />
-                models the uncertainty
-              </span>
-              <br />
-              <span class="famurared"> not scalable to many domain parameters </span>
-            </dd>
           </dl>
         </section>
 
         <section>
           <h4>Problem Statement and Notation</h4>
           <div style="text-align: left">
-            <p>Time-discrete stochastic dynamical system</p>
-            \[ {\color{red} {\xi \sim \nu \left( \xi; \phi \right)}}, \ s_{t+1} \sim \mathcal{P} \left(s_{t+1} \big| s_t, a_t, {\color{red} \xi} \right), \ s_0 \sim\mu_0 \left( s_0, {\color{red} \xi} \right), \ a_t \sim \pi\left( s_t; \theta \right) \]
-            <p>Expected return for one domain</p>
-            \[ J(\theta, {\color{red}\xi}, s_0) = \mathbb{E}_{\tau \sim p(\tau)} \left[ \sum\nolimits_{t=0}^{T-1} \gamma^t r(s_t, a_t) \Big| \theta, {\color{red}\xi}, s_0 \right] \]
-            <p>Augmentation of the standard RL objective</p>
-            $$ \theta^\star = \arg\!\max_{\theta\in\Theta} \ {\color{red}{\mathbb{E}_{\xi \sim \nu(\xi;\phi)}}} \left[ \mathbb{E}_{s_0 \sim \mu_0({\color{red}\xi}; s_0)} \left[ J(\theta, {\color{red}\xi}, s_0) \right] \right] $$
+            <div class="fragment fade-in">
+              <p>Time-discrete stochastic dynamical system</p>
+              \[ {\color{red} {\xi \sim \nu \left( \xi; \phi \right)}}, \ s_{t+1} \sim \mathcal{P} \left(s_{t+1} \big| s_t, a_t, {\color{red} \xi} \right), \ s_0 \sim\mu_0 \left( s_0, {\color{red} \xi} \right), \ a_t \sim \pi\left( s_t; \theta \right) \]
+            </div>
+            <div class="fragment fade-in">
+              <p>Expected return for one domain</p>
+              \[ J(\theta, {\color{red}\xi}, s_0) = \mathbb{E}_{\tau \sim p(\tau)} \left[ \sum\nolimits_{t=0}^{T-1} \gamma^t r(s_t, a_t) \Big| \theta, {\color{red}\xi}, s_0 \right] \]
+            </div>
+            <div class="fragment fade-in">
+              <p>Augmentation of the standard RL objective</p>
+              $$ \theta^\star = \arg\!\max_{\theta\in\Theta} \ {\color{red}{\mathbb{E}_{\xi \sim \nu(\xi;\phi)}}} \left[ \mathbb{E}_{s_0 \sim \mu_0({\color{red}\xi}; s_0)} \left[ J(\theta, {\color{red}\xi}, s_0) \right] \right] $$
+            </div>
           </div>
         </section>
 
         <section>
-          <h4 class="title">Bayesian Domain Randomization (BayRn)</h4>
+          <h4>Bayesian Domain Randomization (BayRn)</h4>
           <p>Bi-level optimization problem</p>
           <dl>
             <dt class="fragment fade-in" data-fragment-index="1" style="display: grid; align-content: end">upper level</dt>
@@ -145,20 +147,20 @@
         </section>
 
         <section>
-          <h4 class="title">Bayesian Domain Randomization (BayRn)</h4>
+          <h4>Bayesian Domain Randomization (BayRn)</h4>
           <dl>
             <dt class="fragment" data-fragment-index="1">pros</dt>
             <dd class="fragment" data-fragment-index="1">
               <span class="famuragreen">
-                no observations necessary (aside from return) <br />
-                models the uncertainty
+                yields a probabilistic model of the uncertainty over domain parameters & <br />
+                works with very spare data (scalar returns)
               </span>
               <br />
             </dd>
             <dt class="fragment" data-fragment-index="2">cons</dt>
             <dd class="fragment" data-fragment-index="2">
               <span class="famurared">
-                scalability bounded by GP input dimension, i.e. <br />
+                scalability is bounded by GP input dimension, i.e. <br />
                 &#10886; 50 domain parameters will require tricks
               </span>
             </dd>
@@ -166,25 +168,21 @@
         </section>
 
         <section>
-          <h4 class="title">Open-Source Implementation</h4>
-          <div class="flex-container-row">
+          <h4>Implementation</h4>
+          <div class="flex-container-row" style="align-content: flex-start; justify-content: space-evenly">
             <div style="max-width: 25%">
               <a href="https://github.com/famura/SimuRLacra">
                 <img src="content/images/SimuRLacra--logo.png" alt="SimuRLacra" style="display: block" />
               </a>
             </div>
-            <ul>
-              <li class="fragment">
-                focus on making simulations
-                <span class="famurablue"> randomizable </span>
-              </li>
-              <li class="fragment">
-                wraps <a href="https://github.com/HRI-EU/Rcs">Rcs</a>, <a href="https://github.com/openai/mujoco-py">MuJoCo</a>, and
-                <a href="https://github.com/openai/gym">OpenAI Gym</a>
-              </li>
-              <li class="fragment">"cleanest research code I've seen" &ndash; Pascal</li>
-              <li class="fragment">currently used by students</li>
-            </ul>
+            <div>
+              <ul>
+                <li>github.com/famura</li>
+                <li>open-source</li>
+                <li>based on PyTorch</li>
+                <li>modular and tested code</li>
+              </ul>
+            </div>
           </div>
         </section>
       </div>
