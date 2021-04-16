@@ -72,10 +72,10 @@
           <h4>Bayesian Domain Randomization (BayRn)</h4>
           <dl>
             <dt class="fragment" data-fragment-index="1">goal</dt>
-            <dd class="fragment" data-fragment-index="1">learn policy from simulations that transfers to the real robot</dd>
+            <dd class="fragment" data-fragment-index="1">learn a policy in simulation such that transfers to the real robot</dd>
             <dt class="fragment" data-fragment-index="2">idea</dt>
             <dd class="fragment" data-fragment-index="2">model connection between return and domain distribution parameters using a GP</dd>
-            <dt class="fragment" data-fragment-index="3">features</dt>
+            <dd class="fragment" data-fragment-index="3">update the model based on sparse real-world data</dd>
           </dl>
         </section>
 
@@ -149,14 +149,9 @@
         <section>
           <h4>Bayesian Domain Randomization (BayRn)</h4>
           <dl>
-            <dt class="fragment" data-fragment-index="1">pros</dt>
-            <dd class="fragment" data-fragment-index="1">
-              <span class="famuragreen">
-                yields a probabilistic model of the uncertainty over domain parameters & <br />
-                works with very spare data (scalar returns)
-              </span>
-              <br />
-            </dd>
+            <dt>pros</dt>
+            <dd class="famuragreen">yields a probabilistic model of the uncertainty over domain parameters</dd>
+            <dd class="famuragreen fragment" data-fragment-index="1">works with very spare data (scalar returns)</dd>
             <dt class="fragment" data-fragment-index="2">cons</dt>
             <dd class="fragment" data-fragment-index="2">
               <span class="famurared">
@@ -184,6 +179,26 @@
               </ul>
             </div>
           </div>
+        </section>
+
+        <section data-background-image="content/images/Bayrn--WAM_bic_sequence.png" data-background-size="contain">
+          <h3 class="title">
+            Data-efficient <br />
+            Domain Randomization <br />
+            with <br />
+            Bayesian Optimization
+          </h3>
+          <p>
+            <b>
+              Fabio Muratore<sup>1,2</sup>, Christian Eilers<sup>1,2</sup>,
+              <br />
+              Michael Gienger<sup>2</sup>, Jan Peters<sup>1</sup>
+            </b>
+          </p>
+          <p>
+            <sup>1</sup> Technical University of Darmstadt <br />
+            <sup>2</sup> Honda Research Institute Europe
+          </p>
         </section>
       </div>
     </div>
