@@ -100,6 +100,22 @@
         <section>
           <h4>Bayesian Domain Randomization (BayRn)</h4>
           <p>Bi-level optimization problem</p>
+          <div class="flex-container-row-end" style="align-items: baseline">
+            <div class="flex-container-col margin-col">\[ {\color{red}{\phi^\star}} = \arg\!\max_{\phi\in\Phi} \ \mathbb{E}_{s_0 \sim \mu_0(s_0)} \big[ J^{\textrm{real}}\left( {\color{red} {\theta^\star}}, s_0\right) \big] \]</div>
+            <div class="flex-container-col margin-col">upper level</div>
+          </div>
+          <div class="flex-container-row">
+            <div class="flex-container-col">with</div>
+          </div>
+          <div class="flex-container-row-end" style="align-items: baseline">
+            <div class="flex-container-col margin-col">\[ {\color{red}{\theta^\star(\phi)}} = \arg\! \max_{\theta\in\Theta} \ \mathbb{E}_{\xi \sim \nu(\xi;{\color{red}\phi})} \! \left[ \mathbb{E}_{s_0 \sim \mu_0(s_0;\xi)} \left[ J(\theta, \xi, s_0) \right] \right] \]</div>
+            <div class="flex-container-col margin-col">lower level</div>
+          </div>
+        </section>
+
+        <section>
+          <h4>Bayesian Domain Randomization (BayRn)</h4>
+          <p>Bi-level optimization problem</p>
           <dl>
             <dt class="fragment fade-in" data-fragment-index="1" style="display: grid; align-content: end">upper level</dt>
             <dd class="fragment fade-in" data-fragment-index="1">\[ {\color{red}{\phi^\star}} = \arg\!\max_{\phi\in\Phi} \ \mathbb{E}_{s_0 \sim \mu_0(s_0)} \big[ J^{\textrm{real}}\left( {\color{red} {\theta^\star}}, s_0\right) \big] \]</dd>
@@ -110,18 +126,18 @@
         </section>
 
         <section data-background-color="black">
-          <div class="flex-container-row" style="width: 160%">
-            <div class="captioned">
-              <video autoplay muted controls width="480">
+          <div class="flex-container-row">
+            <div class="captioned" style="width: 50vw">
+              <video autoplay muted controls>
                 <source src="content/videos/WAM_MuJoCo_not_transferable.mp4" type="video/mp4" />
               </video>
               <div class="top-left-caption">Learned in nominal</div>
             </div>
-            <div class="captioned">
-              <video autoplay muted controls width="480">
+            <div class="captioned" style="width: 50vw">
+              <video autoplay muted controls>
                 <source src="content/videos/WAM_MuJoCo_transferable.mp4" type="video/mp4" />
               </video>
-              <p class="top-right-caption">Learned in with BayRn</p>
+              <div class="top-right-caption">Learned in with BayRn</div>
             </div>
           </div>
         </section>

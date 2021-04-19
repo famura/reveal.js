@@ -515,12 +515,20 @@ section.has-light-background h4 {
   justify-content: space-around; /* define how is distributed the remaining space */
 }
 
+.reveal .flex-container-row-end {
+  display: flex; /* first create a flex layout context */
+  flex-flow: row nowrap; /* define the flow direction and if we allow the items to wrap */
+  align-items: center; /* vertically alignment */
+  justify-content: flex-end; /* define how is distributed the remaining space */
+}
+
 .reveal .flex-container-col {
   display: flex; /* first create a flex layout context */
   flex-flow: column nowrap; /* define the flow direction and if we allow the items to wrap */
   align-items: center; /* vertically alignment */
   justify-content: space-around; /* define how is distributed the remaining space */
 }
+/* flex-basis: 20% sets the last column's with to 20% of the parent */
 
 .reveal .box {
   background-color: #444444;
@@ -528,6 +536,11 @@ section.has-light-background h4 {
   border-radius: 10px;
   display: flex;
   align-items: center;
+}
+
+.reveal .margin-col {
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 /*********************************************
