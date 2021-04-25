@@ -5,6 +5,7 @@
 
 <head>
   <style type="text/css">
+        body { background-color: rgb(34, 34, 34);}
         .node { stroke: #fff; color: #eee; fill:azure; font-size: 40px; }
 
         .link { stroke: #999; stroke-opacity: .6; stroke-width: 10px; }
@@ -31,30 +32,122 @@ var width = 960,
     var _transitions = [],
         _inverse_transitions = [];
 
+
+function getLinkAnchors(d) {
+  const srcEle = d3.select("#" + d.source.id).select("text");
+  const srcBB = srcEle.node().getBBox();
+  const dstEle = d3.select("#" + d.target.id).select("text");
+  const dstBB = dstEle.node().getBBox();
+  var result = {start: {x: 0, y: 0}, end: {x: 0, y:0}};
+
+  result.start.x = srcBB.x + 0.5*srcBB.width + d.source.x;
+  result.start.y = srcBB.y + 0.5*srcBB.height + d.source.y;
+  result.end.x = dstBB.x + 0.5*dstBB.width + d.target.x;
+  result.end.y = dstBB.y + 0.5*dstBB.height + d.target.y;
+
+  const srcPoints = [
+    {x: srcBB.x + d.source.x, y: srcBB.y + d.source.y},
+    {x: srcBB.x + srcBB.width + d.source.x, y: srcBB.y + d.source.y},
+    {x: srcBB.x + srcBB.width + d.source.x, y: srcBB.y + srcBB.height + d.source.y},
+    {x: srcBB.x + d.source.x, y: srcBB.y + srcBB.height + d.source.y}
+  ];
+  const dstPoints = [
+    {x: dstBB.x + d.target.x, y: dstBB.y + d.target.y},
+    {x: dstBB.x + dstBB.width + d.target.x, y: dstBB.y + d.target.y},
+    {x: dstBB.x + dstBB.width + d.target.x, y: dstBB.y + dstBB.height + d.target.y},
+    {x: dstBB.x + d.target.x, y: dstBB.y + dstBB.height + d.target.y}
+  ]
+
+  for (var i = 0; i < srcPoints.length; i++) {
+    var det, gamma, lambda;
+    var s1 = srcPoints[i];
+    var s2 = i == srcPoints.length - 1 ? srcPoints[0] : srcPoints[i+1];
+    det = (result.end.x - result.start.x) * (s2.y - s1.y) - (s2.x - s1.x) * (result.end.y - result.start.y);
+    if (det === 0)
+      continue;
+    lambda = ((s2.y - s1.y) * (s2.x - result.start.x) + (s1.x - s2.x) * (s2.y - result.start.y)) / det;
+    gamma = ((result.start.y - result.end.y) * (s2.x - result.start.x) + (result.end.x - result.start.x) * (s2.y - result.start.y)) / det;
+    if ((0 < lambda && lambda < 1) && (0 < gamma && gamma < 1)) {
+      // HIT!
+      result.start.x = result.start.x + lambda * (result.end.x - result.start.x);
+      result.start.y = result.start.y + lambda * (result.end.y - result.start.y);
+      break;
+    }
+  }
+
+  for (var i = 0; i < dstPoints.length; i++) {
+    var det, gamma, lambda;
+    var s1 = dstPoints[i];
+    var s2 = i == dstPoints.length - 1 ? dstPoints[0] : dstPoints[i+1];
+    det = (result.start.x - result.end.x) * (s2.y - s1.y) - (s2.x - s1.x) * (result.start.y - result.end.y);
+    if (det === 0)
+      continue;
+    lambda = ((s2.y - s1.y) * (s2.x - result.end.x) + (s1.x - s2.x) * (s2.y - result.end.y)) / det;
+    gamma = ((result.end.y - result.start.y) * (s2.x - result.end.x) + (result.start.x - result.end.x) * (s2.y - result.end.y)) / det;
+    if ((0 < lambda && lambda < 1) && (0 < gamma && gamma < 1)) {
+      // HIT!
+      result.end.x = result.end.x + lambda * (result.start.x - result.end.x);
+      result.end.y = result.end.y + lambda * (result.start.y - result.end.y);
+      break;
+    }
+  }
+  return result;
+}
+
 function linkArc(d) {
-    const r = Math.hypot(d.target.x - d.source.x, d.target.y - d.source.y);
-    return `
-      M${d.source.x},${d.source.y}
-      A${r},${r} 0 0,1 ${d.target.x},${d.target.y}
-    `;
+  var anchors = getLinkAnchors(d);
+  const r = Math.hypot(anchors.end.x - anchors.start.x, anchors.end.y - anchors.start.y);
+  return `
+    M${anchors.start.x},${anchors.start.y}
+    A${r},${r} 0 0,0 ${anchors.end.x},${anchors.end.y}
+  `;
 }
 
 data = {
-    nodes: [{id: "one", label: {math: "\\theta^\\star"}, opacity: 1},
-            {id: "two", label: {text: "two"}, opacity: 0},
-            {id: "three", label: {text: "other"}, opacity: 0},
-            {id: "big", label: {math: "{\\color{red}{\\phi^\\star}} = \\arg\\!\\max_{\\phi\\in\\Phi} \\ \\mathbb{E}_{s_0 \\sim \\mu_0(s_0)}"}, opacity: 1}
-            ],
-    links: [{source: "one", target: "two", type: "green"},
-            {source: "two", target: "three", type: "red"},
-            {source: "three", target: "one", type: "blue"},
-            {source: "big", target: "three", type: "amazing"},
-            {source: "big", target: "two", type: "red"}
+    nodes: [{id: "sample_domains",  opacity: 1, fx: 150, fy: 150, labels: [
+              {text: "sample domains"},
+              {math: "\\theta_{1:n_c}",                  offset: "-30px, 10px"},
+              {math: "\\theta^{1:n_G}_{\\xi_{1:n_r}}", offset: "30px, 8px"}
+            ]},
+            {id: "train_candidate", opacity: 0, fx: 250, fy: 300, labels: [
+              {text: "train candidate and"},
+              {text: "reference policies",             offset: "5px, 12px"},
+              {math: "\\theta^\\star_{n_c}",           offset: "-30px, 20px"},
+              {math: "\\theta^{1:n_{G,\\star}}_{n_r}", offset: "30px, 16px"}
+            ]},
+            {id: "evaluate",        opacity: 0, fx: 420, fy: 360, labels: [
+              {text: "evaluate in"},
+              {text: "reference domains", offset: "0px, 12px"},
+              {math: "G^{1:n_G}_{{n}_{r},1:n_{r}}", offset: "0px, 24px"}
+            ]},
+            {id: "bootstrap",       opacity: 0, fx: 650, fy: 300, labels: [
+              {text: "bootstrap upper"},
+              {text: "confidence bound", offset: "0px, 12px"},
+              {math: "G^U_{n_r}(\\theta^\\star_{n_c})", offset: "0px, 24px"}
+            ]},
+            {id: "small",       opacity: 0, fx: 650, fy: 160, labels: [
+              {text: "small enough?"}
+            ]},
+            {id: "increase",       opacity: 0, fx: 400, fy: 150, labels: [
+              {text: "increase number of domains"},
+              {math: "n_c,n_r\\leftarrow f(n_c),f(n_r)", offset: "-64px, 16px"}
+            ]},
+            {id: "done",       opacity: 0, fx: 750, fy: 100, labels: [
+              {text: "done"}
+            ]}
+          ],
+    links: [{source: "sample_domains", target: "train_candidate", type: "A"},
+            {source: "train_candidate", target: "evaluate", type: "A"},
+            {source: "evaluate", target: "bootstrap", type: "A"},
+            {source: "bootstrap", target: "small", type: "B"},
+            {source: "small", target: "done", type: "C"},
+            {source: "small", target: "increase", type: "D"},
+            {source: "increase", target: "sample_domains", type: "A"}
            ]
 };
 
 types = Array.from(new Set(data.links.map(d => d.type)));
-color = d3.scaleOrdinal(types, d3.schemeTableau10);
+color = d3.scaleOrdinal(types, d3.schemeCategory10);
 
   const links = data.links.map(d => Object.create(d));
   const nodes = data.nodes.map(d => Object.create(d));
@@ -102,7 +195,7 @@ drag = simulation => {
     .join("marker")
       .attr("id", d => `arrow-${d}`)
       .attr("viewBox", "0 -5 10 10")
-      .attr("refX", 15)
+      .attr("refX", 8)
       .attr("refY", -0.5)
       .attr("markerWidth", 6)
       .attr("markerHeight", 6)
@@ -113,7 +206,7 @@ drag = simulation => {
 
   const link = svg.append("g")
       .attr("fill", "none")
-      .attr("stroke-width", 1.5)
+      .attr("stroke-width", 2.0)
     .selectAll("path")
     .data(links)
     .join("path")
@@ -131,30 +224,41 @@ drag = simulation => {
       .join("g")
         .attr("id", d => d.id)
         .attr("opacity", d => d.opacity)
+        .attr("cx", d => d.x)
+        .attr("cy", d => d.y)
     .call(drag(simulation));
 
-  node.append("circle")
-      .attr("stroke", "white")
-      .attr("fill", "#99a")
-      .attr("stroke-width", 1.5)
-      .attr("r", 4);
+  // node.append("circle")
+  //     .attr("stroke", "white")
+  //     .attr("fill", "#99a")
+  //     .attr("stroke-width", 1.5)
+  //     .attr("r", 4);
 
   node.append(function(d) {
-    console.log(d.label);
-    if (d.label.math) {
-      const mathNode = d3.create("svg:g");
-      mathNode
-        .attr("color", "#eee")
-        .append(s => MathJax.tex2svg(d.label.math).querySelector("svg"));
-      return mathNode.node();
-    } else if (d.label.text) {
-      const textNode = d3.create("svg:text");
-      textNode
-        .attr("color", "#aae")
-        .text(d.label.text);
-      return textNode.node();
-    }
-    throw "Node label contains no supported data!";
+    const wrapNode = d3.create("svg:g");
+    d.labels.forEach((label) => {
+      console.log(label);
+      if (label.math) {
+        const mathNode = d3.create("svg:g");
+        mathNode
+          .style("transform", "translate(" + (label.offset || "0px, 0px") + ")")
+          .style("text-anchor", "middle")
+          .attr("color", "#eee")
+          .append(s => MathJax.tex2svg(label.math).querySelector("svg"));
+        wrapNode.append(() => mathNode.node());
+      } else if (label.text) {
+        const textNode = d3.create("svg:text");
+        textNode
+          .style("transform", "translate(" + (label.offset || "0px, 0px") + ")")
+          .style("text-anchor", "middle")
+          .attr("color", "#aae")
+          .text(label.text);
+        wrapNode.append(() => textNode.node());
+      } else {
+        throw "Node label contains no supported data!";
+      }
+    });
+    return wrapNode.node();
   });
 
   simulation.on("tick", () => {
@@ -194,16 +298,6 @@ function showNode(idx, show) {
 }
 
 _transitions.push(
-    () => {
-      showNode(0, true);
-      showNode(3, true);
-    }
-)
-_inverse_transitions.push(
-    () => showNode(0, false)
-)
-
-_transitions.push(
     () => showNode(1, true)
 )
 _inverse_transitions.push(
@@ -218,18 +312,31 @@ _inverse_transitions.push(
 )
 
 _transitions.push(
-    () => {
-        showNode(0, false);
-        showNode(1, false);
-        showNode(2, false);
-    }
+    () => showNode(3, true)
 )
 _inverse_transitions.push(
-    () => {
-        showNode(0, true);
-        showNode(1, true);
-        showNode(2, true);
-    }
+    () => showNode(3, false)
+)
+
+_transitions.push(
+    () => showNode(4, true)
+)
+_inverse_transitions.push(
+    () => showNode(4, false)
+)
+
+_transitions.push(
+    () => showNode(5, true)
+)
+_inverse_transitions.push(
+    () => showNode(5, false)
+)
+
+_transitions.push(
+    () => showNode(6, true)
+)
+_inverse_transitions.push(
+    () => showNode(6, false)
 )
 
 </script>
