@@ -1,0 +1,238 @@
+<!-- Source: https://bl.ocks.org/mbostock/3231298 -->
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+  <style type="text/css">
+        .node { stroke: #fff; color: #eee; fill:azure; font-size: 40px; }
+
+        .link { stroke: #999; stroke-opacity: .6; stroke-width: 10px; }
+
+        .MathJax_SVG svg > g, 
+        .MathJax_SVG_Display svg > g { 
+            fill: rgb(240, 182, 182);
+            stroke: rgb(235, 230, 230);
+        } 
+    </style>
+</head>
+<body>
+<script src="https://d3js.org/d3.v6.min.js"></script>
+
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg-full.js"></script>
+<script>
+
+
+
+var width = 960,
+    height = 700;
+
+    var _transitions = [],
+        _inverse_transitions = [];
+
+function linkArc(d) {
+    const r = Math.hypot(d.target.x - d.source.x, d.target.y - d.source.y);
+    return `
+      M${d.source.x},${d.source.y}
+      A${r},${r} 0 0,1 ${d.target.x},${d.target.y}
+    `;
+}
+
+data = {
+    nodes: [{id: "one", label: {math: "\\theta^\\star"}, opacity: 1},
+            {id: "two", label: {text: "two"}, opacity: 0},
+            {id: "three", label: {text: "other"}, opacity: 0},
+            {id: "big", label: {math: "{\\color{red}{\\phi^\\star}} = \\arg\\!\\max_{\\phi\\in\\Phi} \\ \\mathbb{E}_{s_0 \\sim \\mu_0(s_0)}"}, opacity: 1}
+            ],
+    links: [{source: "one", target: "two", type: "green"},
+            {source: "two", target: "three", type: "red"},
+            {source: "three", target: "one", type: "blue"},
+            {source: "big", target: "three", type: "amazing"},
+            {source: "big", target: "two", type: "red"}
+           ]
+};
+
+types = Array.from(new Set(data.links.map(d => d.type)));
+color = d3.scaleOrdinal(types, d3.schemeTableau10);
+
+  const links = data.links.map(d => Object.create(d));
+  const nodes = data.nodes.map(d => Object.create(d));
+
+  const simulation = d3.forceSimulation(nodes)
+      .force("link", d3.forceLink(links).id(d => d.id))
+      .force("charge", d3.forceManyBody().strength(-800))
+      .force("x", d3.forceX(width/2))
+      .force("y", d3.forceY(height/3));
+
+drag = simulation => {
+  
+  function dragstarted(event, d) {
+    if (!event.active) simulation.alphaTarget(0.3).restart();
+    d.fx = d.x;
+    d.fy = d.y;
+  }
+  
+  function dragged(event, d) {
+    d.fx = event.x;
+    d.fy = event.y;
+  }
+  
+  function dragended(event, d) {
+    if (!event.active) simulation.alphaTarget(0);
+    d.fx = null;
+    d.fy = null;
+  }
+  
+  return d3.drag()
+      .on("start", dragstarted)
+      .on("drag", dragged)
+      .on("end", dragended);
+}
+      
+  const svg = d3.select("body").append("div").append("svg")
+        .attr("viewBox", [0, 0, width, height]) //-width / 2, -height / 2, width, height])
+        .style("font", "12px sans-serif")
+        .style("width", "98%")
+        .style("height", "98%");
+
+  // Per-type markers, as they don't inherit styles.
+  svg.append("defs").selectAll("marker")
+    .data(types)
+    .join("marker")
+      .attr("id", d => `arrow-${d}`)
+      .attr("viewBox", "0 -5 10 10")
+      .attr("refX", 15)
+      .attr("refY", -0.5)
+      .attr("markerWidth", 6)
+      .attr("markerHeight", 6)
+      .attr("orient", "auto")
+    .append("path")
+      .attr("fill", color)
+      .attr("d", "M0,-5L10,0L0,5");
+
+  const link = svg.append("g")
+      .attr("fill", "none")
+      .attr("stroke-width", 1.5)
+    .selectAll("path")
+    .data(links)
+    .join("path")
+      .attr("stroke", d => color(d.type))
+      .attr("marker-end", d => `url(${new URL(`#arrow-${d.type}`, location)})`)
+      .attr("id", d => d.source.id + "-" + d.target.id)
+      .attr("opacity", 0.0);
+
+  const node = svg.append("g")
+      .attr("fill", "white")
+      .attr("stroke-linecap", "round")
+      .attr("stroke-linejoin", "round")
+    .selectAll("g")
+    .data(nodes)
+      .join("g")
+        .attr("id", d => d.id)
+        .attr("opacity", d => d.opacity)
+    .call(drag(simulation));
+
+  node.append("circle")
+      .attr("stroke", "white")
+      .attr("fill", "#99a")
+      .attr("stroke-width", 1.5)
+      .attr("r", 4);
+
+  node.append(function(d) {
+    console.log(d.label);
+    if (d.label.math) {
+      const mathNode = d3.create("svg:g");
+      mathNode
+        .attr("color", "#eee")
+        .append(s => MathJax.tex2svg(d.label.math).querySelector("svg"));
+      return mathNode.node();
+    } else if (d.label.text) {
+      const textNode = d3.create("svg:text");
+      textNode
+        .attr("color", "#aae")
+        .text(d.label.text);
+      return textNode.node();
+    }
+    throw "Node label contains no supported data!";
+  });
+
+  simulation.on("tick", () => {
+    link.attr("d", linkArc);
+    node.attr("transform", d => `translate(${d.x},${d.y})`);
+  });
+
+function showNode(idx, show) {
+    const node_id = nodes[idx].id;
+    const node = d3.select("#" + node_id);
+    
+    if (show) {
+        node.transition().attr("opacity", 1.0);
+        
+    } else {
+        node.transition().attr("opacity", 0.0);
+    }
+
+    setTimeout(function() {
+      var edges = [];
+      links.forEach(link => {
+          if (link.target.id == node_id && d3.select("#" + link.source.id).attr("opacity") > 0 ||
+              link.source.id == node_id && d3.select("#" + link.target.id).attr("opacity") > 0)
+            edges.push(link);
+      });
+
+      if (show) {
+        edges.forEach(e => {
+            d3.select("#" + e.source.id + "-" + e.target.id).transition().attr("opacity", 1.0);
+        });
+      } else {
+        edges.forEach(e => {
+            d3.select("#" + e.source.id + "-" + e.target.id).transition().attr("opacity", 0.0);
+        });
+      }
+    }, 50);
+}
+
+_transitions.push(
+    () => {
+      showNode(0, true);
+      showNode(3, true);
+    }
+)
+_inverse_transitions.push(
+    () => showNode(0, false)
+)
+
+_transitions.push(
+    () => showNode(1, true)
+)
+_inverse_transitions.push(
+    () => showNode(1, false)
+)
+
+_transitions.push(
+    () => showNode(2, true)
+)
+_inverse_transitions.push(
+    () => showNode(2, false)
+)
+
+_transitions.push(
+    () => {
+        showNode(0, false);
+        showNode(1, false);
+        showNode(2, false);
+    }
+)
+_inverse_transitions.push(
+    () => {
+        showNode(0, true);
+        showNode(1, true);
+        showNode(2, true);
+    }
+)
+
+</script>
+
+</body>
+
