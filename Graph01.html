@@ -34,9 +34,9 @@ var width = 960,
 
 
 function getLinkAnchors(d) {
-  const srcEle = d3.select("#" + d.source.id).select("text");
+  const srcEle = d3.select("#" + d.source.id);//.select("text");
   const srcBB = srcEle.node().getBBox();
-  const dstEle = d3.select("#" + d.target.id).select("text");
+  const dstEle = d3.select("#" + d.target.id);//.select("text");
   const dstBB = dstEle.node().getBBox();
   var result = {start: {x: 0, y: 0}, end: {x: 0, y:0}};
 
@@ -104,7 +104,7 @@ function linkArc(d) {
 }
 
 data = {
-    nodes: [{id: "sample_domains",  opacity: 1, fx: 150, fy: 150, labels: [
+    nodes: [{id: "sample_domains", opacity: 1, fx: 150, fy: 150, labels: [
               {text: "sample domains"},
               {math: "\\theta_{1:n_c}",                  offset: "-30px, 10px"},
               {math: "\\theta^{1:n_G}_{\\xi_{1:n_r}}", offset: "30px, 8px"}
@@ -115,12 +115,12 @@ data = {
               {math: "\\theta^\\star_{n_c}",           offset: "-30px, 20px"},
               {math: "\\theta^{1:n_{G,\\star}}_{n_r}", offset: "30px, 16px"}
             ]},
-            {id: "evaluate",        opacity: 0, fx: 420, fy: 360, labels: [
+            {id: "evaluate",     opacity: 0, fx: 420, fy: 360, labels: [
               {text: "evaluate in"},
               {text: "reference domains", offset: "0px, 12px"},
               {math: "G^{1:n_G}_{{n}_{r},1:n_{r}}", offset: "0px, 24px"}
             ]},
-            {id: "bootstrap",       opacity: 0, fx: 650, fy: 300, labels: [
+            {id: "bootstrap",    opacity: 0, fx: 650, fy: 300, labels: [
               {text: "bootstrap upper"},
               {text: "confidence bound", offset: "0px, 12px"},
               {math: "G^U_{n_r}(\\theta^\\star_{n_c})", offset: "0px, 24px"}
@@ -128,7 +128,7 @@ data = {
             {id: "small",       opacity: 0, fx: 650, fy: 160, labels: [
               {text: "small enough?"}
             ]},
-            {id: "increase",       opacity: 0, fx: 400, fy: 150, labels: [
+            {id: "increase",    opacity: 0, fx: 400, fy: 150, labels: [
               {text: "increase number of domains"},
               {math: "n_c,n_r\\leftarrow f(n_c),f(n_r)", offset: "-64px, 16px"}
             ]},
@@ -184,7 +184,7 @@ drag = simulation => {
 }
       
   const svg = d3.select("body").append("div").append("svg")
-        .attr("viewBox", [0, 0, width, height]) //-width / 2, -height / 2, width, height])
+        .attr("viewBox", [0, 0, width, height])
         .style("font", "12px sans-serif")
         .style("width", "98%")
         .style("height", "98%");
