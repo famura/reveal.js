@@ -65,12 +65,12 @@
         </section>
 
         <!-- d3 test slides -->
-        <section class="fig-container"
-               data-fig-id="fig-graph-test-2"
-               data-file="Graph01.html">
-               <div style="margin-top:-300px;">
+        <section>
+               <div>
                 <h5>Simulation-based Policy Optimization with Transferability Assessment (SPOTA)</h5>
               </div>
+              <div class="fig-container"
+                   data-file="Graph01.html" data-preload></div>
         </section>
         <!-- END d3 test slides -->
 
@@ -251,6 +251,7 @@
         // center: true,  // center vertically
         transition: "slide", // https://revealjs.com/transitions/
         slideNumber: "c", // https://revealjs.com/slide-numbers/
+        viewDistance: 3,
         math: {
           mathjax: "https://cdn.jsdelivr.net/gh/mathjax/mathjax@2.7.8/MathJax.js",
           // mathjax: 'plugin/math/MathJax/es5/tex-chtml-full.js',
@@ -294,10 +295,7 @@
               })
             },
           },
-
-          // Diagrams via d3js https://github.com/jlegewie/reveal.js-d3js-plugin
-          {src: "https://d3js.org/d3.v4.min.js"},
-          {src: "plugin/d3js/d3js.js"},
+          {src: "plugin/reveald3/reveald3.js"}, // https://github.com/gcalmettes/reveal.js-d3
         ],
       }) // end Reveal.initialize()
     </script>
