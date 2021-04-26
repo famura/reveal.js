@@ -19,11 +19,56 @@
 </head>
 <body>
 <script src="https://d3js.org/d3.v6.min.js"></script>
-
-
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg-full.js"></script>
 <script>
 
+/// @fabio: 
+/// Network description and initial state. Nodes describes the content of the diagram, and links contains a list of all arrows.
+data = {     // id can be any simple string, just make it unique. Used below for making connections between nodes.
+    nodes: [{id: "sample_domains", opacity: 1, fx: 150, fy: 150, labels: [
+              {text: "sample domains"},
+              {math: "\\theta_{1:n_c}",                offset: "-30, 10"},
+              {math: "\\theta^{1:n_G}_{\\xi_{1:n_r}}", offset: "30, 8"}
+            ]},                     // opacity sets initial visibility (when the slide is loaded)
+            {id: "train_candidate", opacity: 0, fx: 250, fy: 300, labels: [
+              {text: "train candidate and"},
+              {text: "reference policies",             offset: "5, 12"},
+              {math: "\\theta^\\star_{n_c}",           offset: "-30, 20"},
+              {math: "\\theta^{1:n_{G,\\star}}_{n_r}", offset: "30, 16"}
+            ]},                              // fx, fy set the (fixed) position of the node. Top-left corner is (0,0). If these are not set, nodes will attempt to position themselves.
+            {id: "evaluate",     opacity: 0, fx: 420, fy: 360, labels: [
+              {text: "evaluate in"},
+              {text: "reference domains",           offset: "0, 12"},
+              {math: "G^{1:n_G}_{{n}_{r},1:n_{r}}", offset: "0, 24"}
+            ]},                                                // labels is a list of stuff to display at the node location
+            {id: "bootstrap",    opacity: 0, fx: 650, fy: 300, labels: [
+              {text: "bootstrap upper"},                                  // text labels are normal text, and are used for drawing lines between nodes (i.e. links point at text)
+              {text: "confidence bound",                offset: "0, 12"}, // offset is a relative x,y transform to allow you to position several labels relative to each other. (0,0) is the node location.
+              {math: "G^U_{n_r}(\\theta^\\star_{n_c})", offset: "0, 24"}  // math labels will be passed through math-jax to produce an SVG-ified equation. They are ignored by lines connecting nodes.
+            ]},
+            {id: "small",       opacity: 0, fx: 650, fy: 160, labels: [
+              {text: "small enough?"}
+            ]},
+            {id: "increase",    opacity: 0, fx: 400, fy: 150, labels: [
+              {text: "increase number of domains"},
+              {math: "n_c,n_r\\leftarrow f(n_c),f(n_r)", offset: "-64, 16"}
+            ]},
+            {id: "done",       opacity: 0, fx: 750, fy: 100, labels: [
+              {text: "done"}
+            ]}
+          ],
+           // Each link will draw an arrow FROM source TO target.
+           // type can be any string and is used to determine the color/style of each arrow. Arrows with matching types will have the same style.
+           // Arrow colors are automatically selected from a standard pallette, see: https://github.com/d3/d3-scale-chromatic/blob/master/README.md#categorical
+    links: [{source: "sample_domains", target: "train_candidate", type: "A"},
+            {source: "train_candidate", target: "evaluate", type: "A"},
+            {source: "evaluate", target: "bootstrap", type: "A"},
+            {source: "bootstrap", target: "small", type: "B"},
+            {source: "small", target: "done", type: "C"},
+            {source: "small", target: "increase", type: "D"},
+            {source: "increase", target: "sample_domains", type: "A"}
+           ]
+};
 
 
 var width = 960,
@@ -44,7 +89,6 @@ function getTotalBBox(eles) {
     result.width = Math.max(result.width, bb.x + bb.width - result.x + Number(offset[0]));
     result.height = Math.max(result.height, bb.y + bb.height - result.y + Number(offset[1]))
   });
-  // console.log(result);
   return result;
 }
 
@@ -115,49 +159,6 @@ function linkArc(d) {
     A${r},${r} 0 0,0 ${anchors.end.x},${anchors.end.y}
   `;
 }
-
-data = {
-    nodes: [{id: "sample_domains", opacity: 1, fx: 150, fy: 150, labels: [
-              {text: "sample domains"},
-              {math: "\\theta_{1:n_c}",                offset: "-30, 10"},
-              {math: "\\theta^{1:n_G}_{\\xi_{1:n_r}}", offset: "30, 8"}
-            ]},
-            {id: "train_candidate", opacity: 0, fx: 250, fy: 300, labels: [
-              {text: "train candidate and"},
-              {text: "reference policies",             offset: "5, 12"},
-              {math: "\\theta^\\star_{n_c}",           offset: "-30, 20"},
-              {math: "\\theta^{1:n_{G,\\star}}_{n_r}", offset: "30, 16"}
-            ]},
-            {id: "evaluate",     opacity: 0, fx: 420, fy: 360, labels: [
-              {text: "evaluate in"},
-              {text: "reference domains",           offset: "0, 12"},
-              {math: "G^{1:n_G}_{{n}_{r},1:n_{r}}", offset: "0, 24"}
-            ]},
-            {id: "bootstrap",    opacity: 0, fx: 650, fy: 300, labels: [
-              {text: "bootstrap upper"},
-              {text: "confidence bound",                offset: "0, 12"},
-              {math: "G^U_{n_r}(\\theta^\\star_{n_c})", offset: "0, 24"}
-            ]},
-            {id: "small",       opacity: 0, fx: 650, fy: 160, labels: [
-              {text: "small enough?"}
-            ]},
-            {id: "increase",    opacity: 0, fx: 400, fy: 150, labels: [
-              {text: "increase number of domains"},
-              {math: "n_c,n_r\\leftarrow f(n_c),f(n_r)", offset: "-64, 16"}
-            ]},
-            {id: "done",       opacity: 0, fx: 750, fy: 100, labels: [
-              {text: "done"}
-            ]}
-          ],
-    links: [{source: "sample_domains", target: "train_candidate", type: "A"},
-            {source: "train_candidate", target: "evaluate", type: "A"},
-            {source: "evaluate", target: "bootstrap", type: "A"},
-            {source: "bootstrap", target: "small", type: "B"},
-            {source: "small", target: "done", type: "C"},
-            {source: "small", target: "increase", type: "D"},
-            {source: "increase", target: "sample_domains", type: "A"}
-           ]
-};
 
 types = Array.from(new Set(data.links.map(d => d.type)));
 color = d3.scaleOrdinal(types, d3.schemeCategory10);
@@ -241,12 +242,6 @@ drag = simulation => {
         .attr("cy", d => d.y)
     .call(drag(simulation));
 
-  // node.append("circle")
-  //     .attr("stroke", "white")
-  //     .attr("fill", "#99a")
-  //     .attr("stroke-width", 1.5)
-  //     .attr("r", 4);
-
   node.append(function(d) {
     const wrapNode = d3.create("svg:g");
     d.labels.forEach((label) => {
@@ -315,6 +310,12 @@ function showAllNodes(show) {
   }
 }
 
+/// @fabio:
+/// Slide transitions are defined here. Each transition is actually just a small lambda function. For both forward and backward steps through
+///   the presentation to work, you need to define a function both for each transition AND one to un-do each transition.
+/// Here I have provided a small function which will toggle the visibility of a node, using its index in data.nodes[] above.
+/// Arrow visibility is automatically set based on whether the nodes the arrow connects are visible.
+///   e.g. `showNode(2, true)` will make the "evaluate in reference domains" node visible along with any arrows that connect this node to another visible node.
 _transitions.push(
     () => showNode(1, true)
 )
