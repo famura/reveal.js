@@ -202,8 +202,8 @@ function getLinkAnchors(d) {
     gamma = ((result.end.y - result.start.y) * (s2.x - result.end.x) + (result.start.x - result.end.x) * (s2.y - result.end.y)) / det;
     if ((0 < lambda && lambda < 1) && (0 < gamma && gamma < 1)) {
       // HIT!
-      result.end.x = result.end.x + lambda * (result.start.x - result.end.x);
-      result.end.y = result.end.y + lambda * (result.start.y - result.end.y);
+      result.end.x = result.end.x + lambda * (result.start.x - result.end.x) - (0.1 * (result.end.x - result.start.x));
+      result.end.y = result.end.y + lambda * (result.start.y - result.end.y) - (0.1 * (result.end.y - result.start.y));
       break;
     }
   }
