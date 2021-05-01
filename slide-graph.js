@@ -122,6 +122,12 @@ function loadGraph(json) {
     node.attr("transform", d => `translate(${d.x},${d.y})`);
   });
 
+  // ensure all edges connecting visible nodes are also checked and made visible at the start
+  nodes.forEach(function(node) {
+    if (node.opacity > 0) {
+        showNode(node.id, true);
+    }
+  });
 }
 
 // load graph json if provided on parent of iframe element
@@ -331,3 +337,4 @@ function showAllNodes(show) {
     showNode(i, show);
   }
 }
+
