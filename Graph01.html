@@ -141,7 +141,22 @@ function loadGraph(json) {
     link.attr("d", linkArc);
     node.attr("transform", d => `translate(${d.x},${d.y})`);
   });
+
 }
+
+if (window.frameElement && window.frameElement.parentNode.dataset.graph) {
+    console.log("loading graph json:", window.frameElement.parentNode.dataset.graph);
+    d3.json(window.frameElement.parentNode.dataset.graph).then(function(data) {
+      loadGraph(data);
+    }).catch(function(error) {
+      console.log("Failed to load json file '" + window.frameElement.parentNode.dataset.graph + "'", error);
+    });
+  } else {
+    // load some default graph
+    d3.json("spota-graph.json").then(function(data) {
+      loadGraph(data)
+    });
+  }
 
 function getTotalBBox(eles) {
   let result = {x: 10000, y: 10000, width: 0, height: 0};
@@ -227,8 +242,13 @@ function linkArc(d) {
 
 
 function showNode(idx, show) {
-    const node_id = nodes[idx].id;
-    const node = d3.select("#" + node_id);
+    let node_id;
+    if (typeof idx == 'number') {
+      node_id = nodes[idx].id;
+    } else {
+      node_id = idx;
+    }
+    node = d3.select("#" + node_id);
     
     if (show) {
         node.transition().attr("opacity", 1.0);
@@ -328,16 +348,11 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
-window.addEventListener('load', function(e) {
-  if (window.frameElement.parentNode.dataset.graph) {
-    console.log("loading graph json:", window.frameElement.parentNode.dataset.graph);
-    d3.json(window.frameElement.parentNode.dataset.graph).then(function(data) {
-      loadGraph(data);
-    }).catch(function(error) {
-      console.log("Failed to load json file '" + window.frameElement.parentNode.dataset.graph + "'", error);
-    });
-  }
-});
+/// @fabio: To manually load graph data (i.e. this page is not loaded in an iframe with "data-graph='filename.json'")
+// d3.json("spota-graph.json").then(function(data) {
+//   loadGraph(data);
+// });
+
 </script>
 
 </body>
