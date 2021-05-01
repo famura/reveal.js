@@ -22,61 +22,126 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg-full.js"></script>
 <script>
 
-/// @fabio: 
-/// Network description and initial state. Nodes describes the content of the diagram, and links contains a list of all arrows.
-data = {     // id can be any simple string, just make it unique. Used below for making connections between nodes.
-    nodes: [{id: "sample_domains", opacity: 1, fx: 150, fy: 150, labels: [
-              {text: "sample domains"},
-              {math: "\\theta_{1:n_c}",                offset: "-30, 10"},
-              {math: "\\theta^{1:n_G}_{\\xi_{1:n_r}}", offset: "30, 8"}
-            ]},                     // opacity sets initial visibility (when the slide is loaded)
-            {id: "train_candidate", opacity: 0, fx: 250, fy: 300, labels: [
-              {text: "train candidate and"},
-              {text: "reference policies",             offset: "5, 12"},
-              {math: "\\theta^\\star_{n_c}",           offset: "-30, 20"},
-              {math: "\\theta^{1:n_{G,\\star}}_{n_r}", offset: "30, 16"}
-            ]},                              // fx, fy set the (fixed) position of the node. Top-left corner is (0,0). If these are not set, nodes will attempt to position themselves.
-            {id: "evaluate",     opacity: 0, fx: 420, fy: 360, labels: [
-              {text: "evaluate in"},
-              {text: "reference domains",           offset: "0, 12"},
-              {math: "G^{1:n_G}_{{n}_{r},1:n_{r}}", offset: "0, 24"}
-            ]},                                                // labels is a list of stuff to display at the node location
-            {id: "bootstrap",    opacity: 0, fx: 650, fy: 300, labels: [
-              {text: "bootstrap upper"},                                  // text labels are normal text, and are used for drawing lines between nodes (i.e. links point at text)
-              {text: "confidence bound",                offset: "0, 12"}, // offset is a relative x,y transform to allow you to position several labels relative to each other. (0,0) is the node location.
-              {math: "G^U_{n_r}(\\theta^\\star_{n_c})", offset: "0, 24"}  // math labels will be passed through math-jax to produce an SVG-ified equation. They are ignored by lines connecting nodes.
-            ]},
-            {id: "small",       opacity: 0, fx: 650, fy: 160, labels: [
-              {text: "small enough?"}
-            ]},
-            {id: "increase",    opacity: 0, fx: 400, fy: 150, labels: [
-              {text: "increase number of domains"},
-              {math: "n_c,n_r\\leftarrow f(n_c),f(n_r)", offset: "-64, 16"}
-            ]},
-            {id: "done",       opacity: 0, fx: 750, fy: 100, labels: [
-              {text: "done"}
-            ]}
-          ],
-           // Each link will draw an arrow FROM source TO target.
-           // type can be any string and is used to determine the color/style of each arrow. Arrows with matching types will have the same style.
-           // Arrow colors are automatically selected from a standard pallette, see: https://github.com/d3/d3-scale-chromatic/blob/master/README.md#categorical
-    links: [{source: "sample_domains", target: "train_candidate", type: "A"},
-            {source: "train_candidate", target: "evaluate", type: "A"},
-            {source: "evaluate", target: "bootstrap", type: "A"},
-            {source: "bootstrap", target: "small", type: "B"},
-            {source: "small", target: "done", type: "C"},
-            {source: "small", target: "increase", type: "D"},
-            {source: "increase", target: "sample_domains", type: "A"}
-           ]
-};
-
-
 var width = 960,
     height = 700;
 
-    var _transitions = [],
-        _inverse_transitions = [];
+data = undefined;
+links = undefined;
+nodes = undefined;
+function loadGraph(json) {
+  data = json;
+  types = Array.from(new Set(data.links.map(d => d.type)));
+  color = d3.scaleOrdinal(types, d3.schemeCategory10);
 
+  links = data.links.map(d => Object.create(d));
+  nodes = data.nodes.map(d => Object.create(d));
+
+  const simulation = d3.forceSimulation(nodes)
+      .force("link", d3.forceLink(links).id(d => d.id))
+      .force("charge", d3.forceManyBody().strength(-800))
+      .force("x", d3.forceX(width/2))
+      .force("y", d3.forceY(height/3));
+
+  drag = simulation => {
+    function dragstarted(event, d) {
+      if (!event.active) simulation.alphaTarget(0.3).restart();
+      d.fx = d.x;
+      d.fy = d.y;
+    }
+    
+    function dragged(event, d) {
+      d.fx = event.x;
+      d.fy = event.y;
+    }
+    
+    function dragended(event, d) {
+      if (!event.active) simulation.alphaTarget(0);
+      d.fx = null;
+      d.fy = null;
+    }
+    
+    return d3.drag()
+        .on("start", dragstarted)
+        .on("drag", dragged)
+        .on("end", dragended);
+  }
+      
+  const svg = d3.select("body").append("div").append("svg")
+        .attr("viewBox", [0, 0, width, height])
+        .style("font", "12px sans-serif")
+        .style("width", "98%")
+        .style("height", "98%");
+
+  // Per-type markers, as they don't inherit styles.
+  svg.append("defs").selectAll("marker")
+    .data(types)
+    .join("marker")
+      .attr("id", d => `arrow-${d}`)
+      .attr("viewBox", "0 -5 10 10")
+      .attr("refX", 8)
+      .attr("refY", -0.5)
+      .attr("markerWidth", 6)
+      .attr("markerHeight", 6)
+      .attr("orient", "auto")
+    .append("path")
+      .attr("fill", color)
+      .attr("d", "M0,-5L10,0L0,5");
+
+  const link = svg.append("g")
+      .attr("fill", "none")
+      .attr("stroke-width", 2.0)
+    .selectAll("path")
+    .data(links)
+    .join("path")
+      .attr("stroke", d => color(d.type))
+      .attr("marker-end", d => `url(${new URL(`#arrow-${d.type}`, location)})`)
+      .attr("id", d => d.source.id + "-" + d.target.id)
+      .attr("opacity", 0.0);
+
+  const node = svg.append("g")
+      .attr("fill", "white")
+      .attr("stroke-linecap", "round")
+      .attr("stroke-linejoin", "round")
+    .selectAll("g")
+    .data(nodes)
+      .join("g")
+        .attr("id", d => d.id)
+        .attr("opacity", d => d.opacity)
+        .attr("cx", d => d.x)
+        .attr("cy", d => d.y)
+    .call(drag(simulation));
+
+  node.append(function(d) {
+    const wrapNode = d3.create("svg:g");
+    d.labels.forEach((label) => {
+      if (label.math) {
+        const mathNode = d3.create("svg:g");
+        mathNode
+          .style("text-anchor", "middle")
+          .attr("transform", "translate(" + (label.offset || "0, 0") + ")")
+          .attr("color", "#eee")
+          .append(s => MathJax.tex2svg(label.math).querySelector("svg"));
+        wrapNode.append(() => mathNode.node());
+      } else if (label.text) {
+        const textNode = d3.create("svg:text");
+        textNode
+          .style("text-anchor", "middle")
+          .attr("transform", "translate(" + (label.offset || "0, 0") + ")")
+          .attr("color", "#aae")
+          .text(label.text);
+        wrapNode.append(() => textNode.node());
+      } else {
+        throw "Node label contains no supported data!";
+      }
+    });
+    return wrapNode.node();
+  });
+
+  simulation.on("tick", () => {
+    link.attr("d", linkArc);
+    node.attr("transform", d => `translate(${d.x},${d.y})`);
+  });
+}
 
 function getTotalBBox(eles) {
   let result = {x: 10000, y: 10000, width: 0, height: 0};
@@ -160,118 +225,6 @@ function linkArc(d) {
   `;
 }
 
-types = Array.from(new Set(data.links.map(d => d.type)));
-color = d3.scaleOrdinal(types, d3.schemeCategory10);
-
-  const links = data.links.map(d => Object.create(d));
-  const nodes = data.nodes.map(d => Object.create(d));
-
-  const simulation = d3.forceSimulation(nodes)
-      .force("link", d3.forceLink(links).id(d => d.id))
-      .force("charge", d3.forceManyBody().strength(-800))
-      .force("x", d3.forceX(width/2))
-      .force("y", d3.forceY(height/3));
-
-drag = simulation => {
-  
-  function dragstarted(event, d) {
-    if (!event.active) simulation.alphaTarget(0.3).restart();
-    d.fx = d.x;
-    d.fy = d.y;
-  }
-  
-  function dragged(event, d) {
-    d.fx = event.x;
-    d.fy = event.y;
-  }
-  
-  function dragended(event, d) {
-    if (!event.active) simulation.alphaTarget(0);
-    d.fx = null;
-    d.fy = null;
-  }
-  
-  return d3.drag()
-      .on("start", dragstarted)
-      .on("drag", dragged)
-      .on("end", dragended);
-}
-      
-  const svg = d3.select("body").append("div").append("svg")
-        .attr("viewBox", [0, 0, width, height])
-        .style("font", "12px sans-serif")
-        .style("width", "98%")
-        .style("height", "98%");
-
-  // Per-type markers, as they don't inherit styles.
-  svg.append("defs").selectAll("marker")
-    .data(types)
-    .join("marker")
-      .attr("id", d => `arrow-${d}`)
-      .attr("viewBox", "0 -5 10 10")
-      .attr("refX", 8)
-      .attr("refY", -0.5)
-      .attr("markerWidth", 6)
-      .attr("markerHeight", 6)
-      .attr("orient", "auto")
-    .append("path")
-      .attr("fill", color)
-      .attr("d", "M0,-5L10,0L0,5");
-
-  const link = svg.append("g")
-      .attr("fill", "none")
-      .attr("stroke-width", 2.0)
-    .selectAll("path")
-    .data(links)
-    .join("path")
-      .attr("stroke", d => color(d.type))
-      .attr("marker-end", d => `url(${new URL(`#arrow-${d.type}`, location)})`)
-      .attr("id", d => d.source.id + "-" + d.target.id)
-      .attr("opacity", 0.0);
-
-  const node = svg.append("g")
-      .attr("fill", "white")
-      .attr("stroke-linecap", "round")
-      .attr("stroke-linejoin", "round")
-    .selectAll("g")
-    .data(nodes)
-      .join("g")
-        .attr("id", d => d.id)
-        .attr("opacity", d => d.opacity)
-        .attr("cx", d => d.x)
-        .attr("cy", d => d.y)
-    .call(drag(simulation));
-
-  node.append(function(d) {
-    const wrapNode = d3.create("svg:g");
-    d.labels.forEach((label) => {
-      if (label.math) {
-        const mathNode = d3.create("svg:g");
-        mathNode
-          .style("text-anchor", "middle")
-          .attr("transform", "translate(" + (label.offset || "0, 0") + ")")
-          .attr("color", "#eee")
-          .append(s => MathJax.tex2svg(label.math).querySelector("svg"));
-        wrapNode.append(() => mathNode.node());
-      } else if (label.text) {
-        const textNode = d3.create("svg:text");
-        textNode
-          .style("text-anchor", "middle")
-          .attr("transform", "translate(" + (label.offset || "0, 0") + ")")
-          .attr("color", "#aae")
-          .text(label.text);
-        wrapNode.append(() => textNode.node());
-      } else {
-        throw "Node label contains no supported data!";
-      }
-    });
-    return wrapNode.node();
-  });
-
-  simulation.on("tick", () => {
-    link.attr("d", linkArc);
-    node.attr("transform", d => `translate(${d.x},${d.y})`);
-  });
 
 function showNode(idx, show) {
     const node_id = nodes[idx].id;
@@ -372,6 +325,17 @@ _transitions = [
 document.addEventListener('keydown', function(e) {
   if (e.key == "o") {
     showAllNodes(true);
+  }
+});
+
+window.addEventListener('load', function(e) {
+  if (window.frameElement.parentNode.dataset.graph) {
+    console.log("loading graph json:", window.frameElement.parentNode.dataset.graph);
+    d3.json(window.frameElement.parentNode.dataset.graph).then(function(data) {
+      loadGraph(data);
+    }).catch(function(error) {
+      console.log("Failed to load json file '" + window.frameElement.parentNode.dataset.graph + "'", error);
+    });
   }
 });
 </script>
