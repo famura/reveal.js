@@ -30,7 +30,7 @@
             "labels": [
                 {"text": "bootstrap upper"},
                 {"text": "confidence bound",                "offset": "0, 12"},
-                {"math": "G^U_{n_r}(\\theta^\\star_{n_c})", "offset": "0, 24"}
+                {"math": "G^U_{n_r}(\\theta^\\star_{n_c})", "offset": "0, 64", "class": "big-red-equations"}
             ]
         },
         {
@@ -47,19 +47,19 @@
             ]
         },
         {
-            "id": "done",       "opacity": 0, "fx": 750, "fy": 100,
+            "id": "done",       "opacity": 0, "fx": 750, "fy": 100, "class": "green",
             "labels": [
                 {"text": "done"}
             ]
         }
     ],
     "links": [
-        {"source": "sample_domains", "target": "train_candidate", "type": "A"},
-        {"source": "train_candidate", "target": "evaluate", "type": "A"},
-        {"source": "evaluate", "target": "bootstrap", "type": "A"},
-        {"source": "bootstrap", "target": "small", "type": "B"},
-        {"source": "small", "target": "done", "type": "C"},
-        {"source": "small", "target": "increase", "type": "D"},
-        {"source": "increase", "target": "sample_domains", "type": "A"}
+        {"source": "sample_domains", "target": "train_candidate"},
+        {"source": "train_candidate", "target": "evaluate"},
+        {"source": "evaluate", "target": "bootstrap"},
+        {"source": "bootstrap", "target": "small"},
+        {"source": "small", "target": "done", "class": "green"},
+        {"source": "small", "target": "increase", "class": "red"},
+        {"source": "increase", "target": "sample_domains"}
     ]
 }

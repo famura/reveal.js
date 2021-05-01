@@ -3,9 +3,6 @@ links = undefined;
 nodes = undefined;
 function loadGraph(json) {
   data = json;
-  types = Array.from(new Set(data.links.map(d => d.type)));
-  color = d3.scaleOrdinal(types, d3.schemeCategory10);
-
   links = data.links.map(d => Object.create(d));
   nodes = data.nodes.map(d => Object.create(d));
 
@@ -40,41 +37,36 @@ function loadGraph(json) {
   }
       
   const svg = d3.select("body").append("div").append("svg")
-        .attr("viewBox", [0, 0, width, height])
-        .style("font", "12px sans-serif")
-        .style("width", "98%")
-        .style("height", "98%");
+    .attr("viewBox", [0, 0, width, height])
+    .style("font", "12px sans-serif")
+    .style("width", "98%")
+    .style("height", "98%");
 
-  // Per-type markers, as they don't inherit styles.
-  svg.append("defs").selectAll("marker")
-    .data(types)
-    .join("marker")
-      .attr("id", d => `arrow-${d}`)
-      .attr("viewBox", "0 -5 10 10")
-      .attr("refX", 8)
-      .attr("refY", -0.5)
-      .attr("markerWidth", 6)
-      .attr("markerHeight", 6)
-      .attr("orient", "auto")
-    .append("path")
-      .attr("fill", color)
-      .attr("d", "M0,-5L10,0L0,5");
-
-  const link = svg.append("g")
-      .attr("fill", "none")
-      .attr("stroke-width", 2.0)
+  // create a group for all links
+  const linkParent = svg.append("g")
+    .attr("fill", "none")
+    .attr("stroke-width", 2.0)
+    .attr("class", "link")
     .selectAll("path")
-    .data(links)
-    .join("path")
-      .attr("stroke", d => color(d.type))
-      .attr("marker-end", d => `url(${new URL(`#arrow-${d.type}`, location)})`)
-      .attr("id", d => d.source.id + "-" + d.target.id)
-      .attr("opacity", 0.0);
+    .data(links);
+  // create a path for each linke to draw lines between nodes
+  const link = linkParent.join("path")
+    .attr("id", d => d.source.id + "-" + d.target.id)
+    .attr("class", d => d.class || '')
+    .attr("opacity", 0.0);
+  // create an arrow head for each path
+  const linkArrow = linkParent.join("path")
+    .attr("id", d => d.source.id + "-" + d.target.id + "-head")
+    .attr("class", d => d.class || '')
+    .attr("data-parent", d => d.source.id + "-" + d.target.id)
+    .attr("opacity", 0.0)
+    .attr("d", "M0,-5L10,0L0,5");
 
+  // create node groups
   const node = svg.append("g")
-      .attr("fill", "white")
-      .attr("stroke-linecap", "round")
-      .attr("stroke-linejoin", "round")
+    .attr("stroke-linecap", "round")
+    .attr("stroke-linejoin", "round")
+    .attr("class", "node")
     .selectAll("g")
     .data(nodes)
       .join("g")
@@ -82,8 +74,10 @@ function loadGraph(json) {
         .attr("opacity", d => d.opacity)
         .attr("cx", d => d.x)
         .attr("cy", d => d.y)
+        .attr("class", d => d.class || '')
     .call(drag(simulation));
 
+  // add labels to nodes
   node.append(function(d) {
     const wrapNode = d3.create("svg:g");
     d.labels.forEach((label) => {
@@ -91,16 +85,16 @@ function loadGraph(json) {
         const mathNode = d3.create("svg:g");
         mathNode
           .style("text-anchor", "middle")
+          .attr("class", s => label.class || '')
           .attr("transform", "translate(" + (label.offset || "0, 0") + ")")
-          .attr("color", "#eee")
           .append(s => MathJax.tex2svg(label.math).querySelector("svg"));
         wrapNode.append(() => mathNode.node());
       } else if (label.text) {
         const textNode = d3.create("svg:text");
         textNode
           .style("text-anchor", "middle")
+          .attr("class", s => label.class || '')
           .attr("transform", "translate(" + (label.offset || "0, 0") + ")")
-          .attr("color", "#aae")
           .text(label.text);
         wrapNode.append(() => textNode.node());
       } else {
@@ -112,12 +106,25 @@ function loadGraph(json) {
 
   simulation.on("tick", () => {
     link.attr("d", linkArc);
+    linkArrow.attr("transform", function(d) {
+        // get the relevant path arc for this arrowhead
+        let p = d3.select("#" +  this.dataset.parent).node();
+        // get the position at the end of the path
+        let length = p.getTotalLength() - 10; // offset from path end so arrow doesn't extend past path length
+        let pos = p.getPointAtLength(length);
+        
+        // estimate orientation at end of path based on tangent
+        let p1 = p.getPointAtLength(length),
+            p2 = p.getPointAtLength(length+1);
+        let angle = Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI;
+        return "translate(" + pos.x + ", " + pos.y + ")rotate(" + angle + ")";
+    });
     node.attr("transform", d => `translate(${d.x},${d.y})`);
   });
 
 }
 
-// load graph json if provided on parent of iframe ele
+// load graph json if provided on parent of iframe element
 if (window.frameElement && window.frameElement.parentNode.dataset.graph) {
     console.log("loading graph json:", window.frameElement.parentNode.dataset.graph);
     d3.json(window.frameElement.parentNode.dataset.graph).then(function(data) {
@@ -203,6 +210,7 @@ function getLinkAnchors(d) {
   return result;
 }
 
+// computes an elliptical arc between two nodes
 function linkArc(d) {
   var anchors = getLinkAnchors(d);
   const r = Math.hypot(anchors.end.x - anchors.start.x, anchors.end.y - anchors.start.y);
@@ -241,6 +249,7 @@ function showNode(idx, show) {
       if (show) {
         edges.forEach(e => {
           d3.select("#" + e.source.id + "-" + e.target.id).transition().attr("opacity", 1.0);
+          d3.select("#" + e.source.id + "-" + e.target.id + "-head").transition().attr("opacity", 1.0);
             // var edge = d3.select("#" + e.source.id + "-" + e.target.id);
             // edge.attr("opacity", 1.0);
             // var length = edge.node().getTotalLength();
@@ -251,6 +260,7 @@ function showNode(idx, show) {
       } else {
         edges.forEach(e => {
             d3.select("#" + e.source.id + "-" + e.target.id).transition().attr("opacity", 0.0);
+            d3.select("#" + e.source.id + "-" + e.target.id + "-head").transition().attr("opacity", 0.0);
         });
       }
     }, 50);
