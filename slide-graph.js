@@ -174,37 +174,76 @@ function getLinkAnchors(d) {
     {x: dstBB.x + d.target.x, y: dstBB.y + dstBB.height + d.target.y}
   ]
 
-  for (var i = 0; i < srcPoints.length; i++) {
-    var det, gamma, lambda;
-    var s1 = srcPoints[i];
-    var s2 = i == srcPoints.length - 1 ? srcPoints[0] : srcPoints[i+1];
-    det = (result.end.x - result.start.x) * (s2.y - s1.y) - (s2.x - s1.x) * (result.end.y - result.start.y);
-    if (det === 0)
-      continue;
-    lambda = ((s2.y - s1.y) * (s2.x - result.start.x) + (s1.x - s2.x) * (s2.y - result.start.y)) / det;
-    gamma = ((result.start.y - result.end.y) * (s2.x - result.start.x) + (result.end.x - result.start.x) * (s2.y - result.start.y)) / det;
-    if ((0 < lambda && lambda < 1) && (0 < gamma && gamma < 1)) {
-      // HIT!
-      result.start.x = result.start.x + lambda * (result.end.x - result.start.x);
-      result.start.y = result.start.y + lambda * (result.end.y - result.start.y);
-      break;
+  if (!d.waypoints) {
+    for (var i = 0; i < srcPoints.length; i++) {
+        var det, gamma, lambda;
+        var s1 = srcPoints[i];
+        var s2 = i == srcPoints.length - 1 ? srcPoints[0] : srcPoints[i+1];
+        det = (result.end.x - result.start.x) * (s2.y - s1.y) - (s2.x - s1.x) * (result.end.y - result.start.y);
+        if (det === 0)
+        continue;
+        lambda = ((s2.y - s1.y) * (s2.x - result.start.x) + (s1.x - s2.x) * (s2.y - result.start.y)) / det;
+        gamma = ((result.start.y - result.end.y) * (s2.x - result.start.x) + (result.end.x - result.start.x) * (s2.y - result.start.y)) / det;
+        if ((0 < lambda && lambda < 1) && (0 < gamma && gamma < 1)) {
+        // HIT!
+        result.start.x = result.start.x + lambda * (result.end.x - result.start.x);
+        result.start.y = result.start.y + lambda * (result.end.y - result.start.y);
+        break;
+        }
+    }
+  } else {
+    for (var i = 0; i < srcPoints.length; i++) {
+        var det, gamma, lambda;
+        var s1 = srcPoints[i];
+        var s2 = i == srcPoints.length - 1 ? srcPoints[0] : srcPoints[i+1];
+        det = (d.waypoints[0][0] - result.start.x) * (s2.y - s1.y) - (s2.x - s1.x) * (d.waypoints[0][1] - result.start.y);
+        if (det === 0)
+        continue;
+        lambda = ((s2.y - s1.y) * (s2.x - result.start.x) + (s1.x - s2.x) * (s2.y - result.start.y)) / det;
+        gamma = ((result.start.y - d.waypoints[0][1]) * (s2.x - result.start.x) + (d.waypoints[0][0] - result.start.x) * (s2.y - result.start.y)) / det;
+        if ((0 < lambda && lambda < 1) && (0 < gamma && gamma < 1)) {
+        // HIT!
+        result.start.x = result.start.x + lambda * (d.waypoints[0][0] - result.start.x);
+        result.start.y = result.start.y + lambda * (d.waypoints[0][1] - result.start.y);
+        break;
+        }
     }
   }
 
-  for (var i = 0; i < dstPoints.length; i++) {
-    var det, gamma, lambda;
-    var s1 = dstPoints[i];
-    var s2 = i == dstPoints.length - 1 ? dstPoints[0] : dstPoints[i+1];
-    det = (result.start.x - result.end.x) * (s2.y - s1.y) - (s2.x - s1.x) * (result.start.y - result.end.y);
-    if (det === 0)
-      continue;
-    lambda = ((s2.y - s1.y) * (s2.x - result.end.x) + (s1.x - s2.x) * (s2.y - result.end.y)) / det;
-    gamma = ((result.end.y - result.start.y) * (s2.x - result.end.x) + (result.start.x - result.end.x) * (s2.y - result.end.y)) / det;
-    if ((0 < lambda && lambda < 1) && (0 < gamma && gamma < 1)) {
-      // HIT!
-      result.end.x = result.end.x + lambda * (result.start.x - result.end.x) - (0.1 * (result.end.x - result.start.x));
-      result.end.y = result.end.y + lambda * (result.start.y - result.end.y) - (0.1 * (result.end.y - result.start.y));
-      break;
+
+  if (!d.waypoints) {
+    for (var i = 0; i < dstPoints.length; i++) {
+        var det, gamma, lambda;
+        var s1 = dstPoints[i];
+        var s2 = i == dstPoints.length - 1 ? dstPoints[0] : dstPoints[i+1];
+        det = (result.start.x - result.end.x) * (s2.y - s1.y) - (s2.x - s1.x) * (result.start.y - result.end.y);
+        if (det === 0)
+        continue;
+        lambda = ((s2.y - s1.y) * (s2.x - result.end.x) + (s1.x - s2.x) * (s2.y - result.end.y)) / det;
+        gamma = ((result.end.y - result.start.y) * (s2.x - result.end.x) + (result.start.x - result.end.x) * (s2.y - result.end.y)) / det;
+        if ((0 < lambda && lambda < 1) && (0 < gamma && gamma < 1)) {
+        // HIT!
+        result.end.x = result.end.x + lambda * (result.start.x - result.end.x) - (0.1 * (result.end.x - result.start.x));
+        result.end.y = result.end.y + lambda * (result.start.y - result.end.y) - (0.1 * (result.end.y - result.start.y));
+        break;
+        }
+    }
+  } else {
+    for (var i = 0; i < dstPoints.length; i++) {
+        var det, gamma, lambda;
+        var s1 = dstPoints[i];
+        var s2 = i == dstPoints.length - 1 ? dstPoints[0] : dstPoints[i+1];
+        det = (d.waypoints[d.waypoints.length-1][0] - result.end.x) * (s2.y - s1.y) - (s2.x - s1.x) * (d.waypoints[d.waypoints.length-1][1] - result.end.y);
+        if (det === 0)
+        continue;
+        lambda = ((s2.y - s1.y) * (s2.x - result.end.x) + (s1.x - s2.x) * (s2.y - result.end.y)) / det;
+        gamma = ((result.end.y - d.waypoints[d.waypoints.length-1][1]) * (s2.x - result.end.x) + (d.waypoints[d.waypoints.length-1][0] - result.end.x) * (s2.y - result.end.y)) / det;
+        if ((0 < lambda && lambda < 1) && (0 < gamma && gamma < 1)) {
+        // HIT!
+        result.end.x = result.end.x + lambda * (d.waypoints[d.waypoints.length-1][0] - result.end.x) - (0.1 * (result.end.x - d.waypoints[d.waypoints.length-1][0]));
+        result.end.y = result.end.y + lambda * (d.waypoints[d.waypoints.length-1][1] - result.end.y) - (0.1 * (result.end.y - d.waypoints[d.waypoints.length-1][1]));
+        break;
+        }
     }
   }
   return result;
@@ -213,6 +252,12 @@ function getLinkAnchors(d) {
 // computes an elliptical arc between two nodes
 function linkArc(d) {
   var anchors = getLinkAnchors(d);
+  var points = [[anchors.start.x, anchors.start.y], [anchors.end.x, anchors.end.y]];
+  if (d.waypoints)
+    points.splice(1, 0, ...d.waypoints);
+  var lineGen =  d3.line();
+  lineGen.curve(eval(d.curvetype) || d3.curveNatural);
+  return lineGen(points);
   const r = Math.hypot(anchors.end.x - anchors.start.x, anchors.end.y - anchors.start.y);
   return `
     M${anchors.start.x},${anchors.start.y}

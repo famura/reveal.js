@@ -4,7 +4,7 @@
             "id": "sample_domains", "opacity": 1, "fx": 150, "fy": 150,
             "labels": [
                 {"text": "sample domains"},
-                {"math": "\\theta_{1:n_c}",                "offset": "-30, 10"},
+                {"math": "\\theta_{1:n_c}",                "offset": "-48, 10"},
                 {"math": "\\theta^{1:n_G}_{\\xi_{1:n_r}}", "offset": "30, 8"}
             ]
         },
@@ -54,8 +54,17 @@
         }
     ],
     "links": [
-        {"source": "sample_domains", "target": "train_candidate"},
-        {"source": "train_candidate", "target": "evaluate"},
+        {"source": "sample_domains", "target": "train_candidate",
+            "waypoints": [
+                [150, 240],
+                [222, 240]
+            ]
+        },
+        {"source": "train_candidate", "target": "evaluate",
+            "waypoints": [
+                [270, 350]
+            ]
+        },
         {"source": "evaluate", "target": "bootstrap"},
         {"source": "bootstrap", "target": "small"},
         {"source": "small", "target": "done", "class": "green"},
