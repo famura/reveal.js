@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+  <style type="text/css">
+        body { background-color: rgb(34, 34, 34);}
+
+        .node { stroke: #fff; color: #eee; fill:azure; font-size: 12px; }
+        .link { stroke: rgb(246, 178, 107); stroke-opacity: 1.0; stroke-width: 5px; transition: 400ms all;}
+
+        .red { stroke: rgb(179, 35, 35); stroke-width: 3px; }
+        .green { stroke: rgb(30, 141, 50); font-size: 16px;}
+        .dashed { stroke-dasharray: 5,5;}
+        .fat {stroke-width: 12px; transition: stroke-width 400ms;}
+        .thin {stroke-width: 1px; transition: stroke-width 400ms;}
+
+        .bigtext {font-size: 36px; transition: font-size 1000ms;}
+    </style>
+</head>
+<body>
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg-full.js"></script>
+<script type="text/javascript" src="slide-graph.js"></script>
+<script>
+
+var width = 960,
+    height = 700;
+
+/// @fabio: Three ways to provide graph data:
+//          1. In index.html, add `data-graph="filename.json"` to the slide including this file
+//          2. Load a json file directly here:
+//             d3.json("spota-graph.json").then(function(data) {
+//               loadGraph(data);
+//             });
+//          3. Construct the data here and pass it to `loadGraph`:
+//              var data = { nodes: [
+//                              {id: "test1", opacity: 1, fx: 200, fy: 160, labels: [{text: "Test1"}]},
+//                              {id: "test2", opacity: 1, fx: 400, fy: 200, labels: [{text: "Test2"}]}],
+//                            links: [
+//                              {source: "test1", target: "test2", class: "css-class"},
+//                              {source: "test2", target: "test1", waypoints: [[x,y], [x,y]]}
+//                            ]
+//                          };
+//              loadGraph(data);  
+
+data = {
+  nodes: [
+    {id: "t1", opacity: 1, fx: 100, fy: 100, labels: [{text: "This is a test"}]},
+    {id: "t2", opacity: 1, fx: 300, fy: 300, labels: [{text: "Do not be alarmed"}]},
+    {id: "t3", opacity: 0, fx: 400, fy: 150, labels: [{text: "Everything is fine."}]}
+  ],
+  links: [
+    {source: "t1", target: "t2", class: "red",
+      waypoints: [
+        [100, 200], [150, 200], [150, 140], [100,200]
+      ]
+    },
+    {source: "t2", target: "t3", curvetype: "d3.curveStep",
+      waypoints: [
+        [300, 400], [400, 400], [450, 380], [400, 350]
+      ]
+    },
+    {source: "t3", target: "t1", curvetype: "d3.curveMonotoneY",
+      waypoints: [
+        [300, 200], [200, 50]
+      ]
+    },
+    {source: "t3", target: "t3", curvetype: "d3.curveBasis",
+      waypoints: [
+        [420, 75], [360, 60]
+      ]
+    }
+  ]
+}
+loadGraph(data);
+
+/// @fabio:
+/// Slide transitions are defined here. Each transition is actually just a small lambda function. For both forward and backward steps through
+///   the presentation to work, you need to define a function both for each transition AND one to un-do each transition (but the backward steps ARE optional if you don't care).
+/// EXTRA NOTE: if you move INTO this slide by going BACKWARDS through the presentation, the LAST `transitionForward()` will be invoked. This gives you the
+///   chance to build the final slide state and keep everything nice and continuous. This is why the last transition below enables ALL nodes instead of just the last one.
+/// Here I have provided a small function which will toggle the visibility of a node, using its index in data.nodes[] above.
+/// Arrow visibility is automatically set based on whether the nodes the arrow connects are visible.
+///   e.g. `showNode(2, true)` will make the "evaluate in reference domains" node visible along with any arrows that connect this node to another visible node.
+_transitions = [
+  {
+    transitionForward: () => {
+      showNode('t3', true);
+      d3.select('#t1-t2').classed('dashed', true); // add 'dashed' class to the edge from t1 to t2
+    },
+    transitionBackward: () => {
+      showNode('t3', false);
+      d3.select('#t1-t2').classed('dashed', false); // remove 'dashed class from the edge from t1 to t2'
+    }
+  },
+  {
+    transitionForward: () => {
+      d3.select('#t2').classed('bigtext', true);
+      d3.select('#t2-t3').transition().style('stroke', 'green');
+      d3.select('#t2-t3-head').transition().style('stroke', 'green');
+
+      d3.select('#t3-t1').classed('thin', true);
+      d3.select('#t1-t2').classed('fat', true);
+      d3.select('#t3-t3').classed('dashed', true).transition().duration(6000).ease(d3.easeBackOut).attr("stroke-dashoffset", 1000);
+    },
+    transitionBackward: () => {
+      d3.select('#t2').classed('bigtext', false);
+      d3.select('#t2-t3').transition().style('stroke', 'rgb(246, 178, 107)');
+      d3.select('#t2-t3-head').transition().style('stroke', 'rgb(246, 178, 107)');
+
+      d3.select('#t3-t1').classed('thin', false);
+      d3.select('#t1-t2').classed('fat', false);
+      d3.select('#t3-t3').classed('dashed', false).transition().duration(6).ease(d3.easeBackOut).attr("stroke-dashoffset", 0);
+    }
+  }
+];
+
+document.addEventListener('keydown', function(e) {
+  if (e.key == "o") {
+    showAllNodes(true);
+  }
+});
+
+</script>
+
+</body>
+
