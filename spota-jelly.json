@@ -1,0 +1,74 @@
+{
+    "nodes": [
+        {
+            "id": "sample_domains", "opacity": 1, "x": 150, "y": 150,
+            "labels": [
+                {"text": "sample domains"},
+                {"math": "\\theta_{1:n_c}",                "offset": "-48, 10"},
+                {"math": "\\theta^{1:n_G}_{\\xi_{1:n_r}}", "offset": "30, 8"}
+            ]
+        },
+        {
+            "id": "train_candidate", "opacity": 0, "x": 250, "y": 300,
+            "labels": [
+                {"text": "train candidate and"},
+                {"text": "reference policies",             "offset": "5, 12"},
+                {"math": "\\theta^\\star_{n_c}",           "offset": "-30, 20"},
+                {"math": "\\theta^{1:n_{G,\\star}}_{n_r}", "offset": "30, 16"}
+            ]
+        },
+        {
+            "id": "evaluate",     "opacity": 0, "x": 420, "y": 360,
+            "labels": [
+                {"text": "evaluate in"},
+                {"text": "reference domains",           "offset": "0, 12"},
+                {"math": "G^{1:n_G}_{{n}_{r},1:n_{r}}", "offset": "0, 24"}
+            ]
+        },
+        {
+            "id": "bootstrap",    "opacity": 0, "x": 650, "y": 300,
+            "labels": [
+                {"text": "bootstrap upper"},
+                {"text": "confidence bound",                "offset": "0, 12"},
+                {"math": "G^U_{n_r}(\\theta^\\star_{n_c})", "offset": "0, 64", "class": "big-red-equations"}
+            ]
+        },
+        {
+            "id": "small",       "opacity": 0, "x": 650, "y": 160,
+            "labels": [
+                {"text": "small enough?"}
+            ]
+        },
+        {
+            "id": "increase",    "opacity": 0, "x": 400, "y": 150,
+            "labels": [
+                {"text": "increase number of domains"},
+                {"math": "n_c,n_r\\leftarrow f(n_c),f(n_r)", "offset": "-64, 16"}
+            ]
+        },
+        {
+            "id": "done",       "opacity": 0, "x": 750, "y": 100, "class": "green",
+            "labels": [
+                {"text": "done"}
+            ]
+        }
+    ],
+    "links": [
+        {"source": "sample_domains", "target": "train_candidate",
+            "waypoints": [
+                [190, 240],
+                [222, 240]
+            ]
+        },
+        {"source": "train_candidate", "target": "evaluate",
+            "waypoints": [
+                [270, 350]
+            ]
+        },
+        {"source": "evaluate", "target": "bootstrap"},
+        {"source": "bootstrap", "target": "small"},
+        {"source": "small", "target": "done", "class": "green"},
+        {"source": "small", "target": "increase", "class": "red"},
+        {"source": "increase", "target": "sample_domains"}
+    ]
+}
