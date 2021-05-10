@@ -82,6 +82,20 @@ loadGraph(data);
 /// Here I have provided a small function which will toggle the visibility of a node, using its index in data.nodes[] above.
 /// Arrow visibility is automatically set based on whether the nodes the arrow connects are visible.
 ///   e.g. `showNode(2, true)` will make the "evaluate in reference domains" node visible along with any arrows that connect this node to another visible node.
+///
+/// NOTE ON SELECTING STUFF TO PERFORM YOUR OWN CUSTOM CRAZINESS IN TRANSITIONS:
+///   All nodes have an id matching the one you specified in `data` which allows them to be selected with `d3.select('#id')`
+///   All arrows have an id made from the ids of their connected nodes: `source-target`, so you can select `d3.select('#source_id-target_id')` to get a specific arrow
+///   All arrow HEADS use the id of the line suffixed with `-head`, i.e. `d3.select('#source_id-target_id-head')`
+///
+/// You can then leverage d3's `.attr()` and `.style()` methods to set arbitrary properties on any node/edge,
+///    e.g. `d3.select('#t1-t2').style('stroke', 'green')` sets the color of the line connecting `t1` and `t2` to green.
+///   `.style()` lets you reconfigure any CSS property, while `.attr()` lets you reconfigure any SVG property (including `fx`,`fy`, or `x`,`y` if you want to MOVE a node)
+/// And if you call `.transition()` first, you can ANIMATE almost any property change (d3 handles this internally for you),
+///   e.g. `d3.select('#t1-t2').transition().duration(5000).style('stroke', 'green')` will smoothly interpolate from the current color to green over 5 seconds.
+/// If you prefer, however, pure CSS animations also work in the same way they work on normal HTML elements. Define the transition in CSS (see .bigtext class above), and then
+///   when you add that class to a node or link (see use of `.classed('bigtext')` below) it will perform the CSS transition automatically.
+
 _transitions = [
   {
     transitionForward: () => {
