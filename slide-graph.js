@@ -7,7 +7,7 @@ function loadGraph(json) {
   nodes = data.nodes.map(d => Object.create(d));
 
   const simulation = d3.forceSimulation(nodes)
-      .force("link", d3.forceLink(links).id(d => d.id))                   // attractive force between connected nodes
+      .force("link", d3.forceLink(links).strength(0.001).id(d => d.id))   // attractive force between connected nodes (link is like a spring, adjust strength() to make it stiffer or more relaxed)
       .force("charge", d3.forceManyBody().strength(-800))                 // force to repel overlapping nodes from each other
       .force("x", d3.forceX(d => d.fx || (d.x || width/2)).strength(1))   // force to push nodes towards their defined x position, or center if no position specified
       .force("y", d3.forceY(d => d.fy || (d.y || height/3)).strength(1)); // force to push nodes towards their defined y position, or center if no position specified
