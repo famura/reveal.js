@@ -1,89 +1,109 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
+<meta charset="utf-8" />
 
 <head>
+  <!-- Link custom css files (not necessary?!) -->
+  <!-- <link rel="stylesheet" href="dist/reveal.css" /> -->
+  <!-- <link rel="stylesheet" href="dist/theme/famura.css" id="theme" /> -->
+
   <style type="text/css">
-        body { background-color: rgb(34, 34, 34);}
+    /* body {
+      background-color: rgb(34, 34, 34);
+    } */
 
-        .node { stroke: #fff; color: #eee; fill:azure; font-size: 12px; }
-        .link { stroke: rgb(246, 178, 107); stroke-opacity: 1.0; stroke-width: 5px; }
+    .node {
+      stroke: #fff;
+      color: #eee;
+      fill: azure;
+      font: inherit;
+      font-weight: lighter;
+    }
+    .link {
+      stroke: rgb(246, 178, 107);
+      stroke-opacity: 1;
+      stroke-width: 5px;
+    }
 
-        .red { stroke: rgb(246, 50, 50); }
-        .green { stroke: rgb(40, 200, 70); font-size: 16px;}
-        .big-red-equations {color: red; transform: translateY(24px) scale(2.0); }
-    </style>
+    .red {
+      stroke: rgb(246, 50, 50);
+    }
+    .green {
+      stroke: rgb(40, 200, 70);
+      /* font-size: 26px; */
+    }
+    .big-red-equations {
+      color: red;
+      transform: translateY(24px) scale(2);
+    }
+  </style>
 </head>
 <body>
-<script src="https://d3js.org/d3.v6.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg-full.js"></script>
-<script type="text/javascript" src="slide-graph.js"></script>
-<script>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg-full.js"></script>
+  <script type="text/javascript" src="slide-graph.js"></script>
+  <script>
+    var width = 960, // slide width is 960
+      height = 650 // slide height is 700
 
-var width = 960,
-    height = 700;
+    /// @fabio: Three ways to provide graph data:
+    //          1. In index.html, add `data-graph="filename.json"` to the slide including this file
+    //          2. Load a json file directly here:
+    //             d3.json("spota-graph.json").then(function(data) {
+    //               loadGraph(data);
+    //             });
+    //          3. Construct the data here and pass it to `loadGraph`:
+    //              var data = { nodes: [
+    //                              {id: "test1", opacity: 1, fx: 200, fy: 160, labels: [{text: "Test1"}]},
+    //                              {id: "test2", opacity: 1, fx: 400, fy: 200, labels: [{text: "Test2"}]}],
+    //                            links: [
+    //                              {source: "test1", target: "test2", type: "A"},
+    //                              {source: "test2", target: "test1", type: "B"}
+    //                            ]
+    //                          };
+    //              loadGraph(data);
 
-/// @fabio: Three ways to provide graph data:
-//          1. In index.html, add `data-graph="filename.json"` to the slide including this file
-//          2. Load a json file directly here:
-//             d3.json("spota-graph.json").then(function(data) {
-//               loadGraph(data);
-//             });
-//          3. Construct the data here and pass it to `loadGraph`:
-//              var data = { nodes: [
-//                              {id: "test1", opacity: 1, fx: 200, fy: 160, labels: [{text: "Test1"}]},
-//                              {id: "test2", opacity: 1, fx: 400, fy: 200, labels: [{text: "Test2"}]}],
-//                            links: [
-//                              {source: "test1", target: "test2", type: "A"},
-//                              {source: "test2", target: "test1", type: "B"}
-//                            ]
-//                          };
-//              loadGraph(data);  
+    /// @fabio:
+    /// Slide transitions are defined here. Each transition is actually just a small lambda function. For both forward and backward steps through
+    ///   the presentation to work, you need to define a function both for each transition AND one to un-do each transition (but the backward steps ARE optional if you don't care).
+    /// EXTRA NOTE: if you move INTO this slide by going BACKWARDS through the presentation, the LAST `transitionForward()` will be invoked. This gives you the
+    ///   chance to build the final slide state and keep everything nice and continuous. This is why the last transition below enables ALL nodes instead of just the last one.
+    /// Here I have provided a small function which will toggle the visibility of a node, using its index in data.nodes[] above.
+    /// Arrow visibility is automatically set based on whether the nodes the arrow connects are visible.
+    ///   e.g. `showNode(2, true)` will make the "evaluate in reference domains" node visible along with any arrows that connect this node to another visible node.
+    _transitions = [
+      {
+        transitionForward: () => {
+          showNodes([1], true)
+        },
+        transitionBackward: () => showNodes([1], false),
+        index: 0,
+      },
+      {
+        transitionForward: () => showNode(2, true),
+        transitionBackward: () => showNode(2, false),
+      },
+      {
+        transitionForward: () => showNode(3, true),
+        transitionBackward: () => showNode(3, false),
+      },
+      {
+        transitionForward: () => showNode(4, true),
+        transitionBackward: () => showNode(4, false),
+      },
+      {
+        transitionForward: () => showNode(5, true),
+        transitionBackward: () => showNode(5, false),
+      },
+      {
+        transitionForward: () => showNodes([6, 5, 4, 3, 2, 1], true, 100),
+        transitionBackward: () => showNode(6, false),
+      },
+    ]
 
-/// @fabio:
-/// Slide transitions are defined here. Each transition is actually just a small lambda function. For both forward and backward steps through
-///   the presentation to work, you need to define a function both for each transition AND one to un-do each transition (but the backward steps ARE optional if you don't care).
-/// EXTRA NOTE: if you move INTO this slide by going BACKWARDS through the presentation, the LAST `transitionForward()` will be invoked. This gives you the
-///   chance to build the final slide state and keep everything nice and continuous. This is why the last transition below enables ALL nodes instead of just the last one.
-/// Here I have provided a small function which will toggle the visibility of a node, using its index in data.nodes[] above.
-/// Arrow visibility is automatically set based on whether the nodes the arrow connects are visible.
-///   e.g. `showNode(2, true)` will make the "evaluate in reference domains" node visible along with any arrows that connect this node to another visible node.
-_transitions = [
-  {
-    transitionForward: () => {
-      showNodes([1], true);
-    },
-    transitionBackward: () => showNodes([1], false),
-    index: 0
-  },
-  {
-    transitionForward: () => showNode(2, true),
-    transitionBackward: () => showNode(2, false)
-  },
-  {
-    transitionForward: () => showNode(3, true),
-    transitionBackward: () => showNode(3, false)
-  },
-  {
-    transitionForward: () => showNode(4, true),
-    transitionBackward: () => showNode(4, false)
-  },
-  {
-    transitionForward: () => showNode(5, true),
-    transitionBackward: () => showNode(5, false)
-  },
-  {
-    transitionForward: () => showNodes([6,5,4,3,2,1], true, 100),
-    transitionBackward: () => showNode(6, false)
-  }
-];
-
-document.addEventListener('keydown', function(e) {
-  if (e.key == "o") {
-    showAllNodes(true);
-  }
-});
-
-</script>
-
+    document.addEventListener("keydown", function (e) {
+      if (e.key == "o") {
+        showAllNodes(true)
+      }
+    })
+  </script>
 </body>
-

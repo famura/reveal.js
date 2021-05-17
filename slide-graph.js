@@ -38,7 +38,8 @@ function loadGraph(json) {
       
   const svg = d3.select("body").append("div").append("svg")
     .attr("viewBox", [0, 0, width, height])
-    .style("font", "12px sans-serif")
+    .style("font", "24px sans-serif")
+    // .style("math-font", "24px")  // @Tamas: how do I figure out if this property exists? The math looks a bit bigger...
     .style("width", "98%")
     .style("height", "98%");
 
