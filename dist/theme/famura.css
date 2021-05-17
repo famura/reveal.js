@@ -559,16 +559,30 @@ section.has-light-background h4 {
   font-size: 22px;
 }
 
-.reveal .top-left-caption {
+.reveal .inner-top-left-caption {
   position: absolute;
   top: 8px;
   left: 16px;
   font-size: 22px;
 }
 
-.reveal .top-right-caption {
+.reveal .outer-top-left-caption {
+  position: absolute;
+  top: -32px;
+  left: 16px;
+  font-size: 22px;
+}
+
+.reveal .inner-top-right-caption {
   position: absolute;
   top: 8px;
+  right: 16px;
+  font-size: 22px;
+}
+
+.reveal .outer-top-right-caption {
+  position: absolute;
+  top: -32px;
   right: 16px;
   font-size: 22px;
 }

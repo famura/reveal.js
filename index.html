@@ -66,28 +66,23 @@
 
         <!-- d3 test slides -->
         <section>
-               <div>
-                <h5>Simulation-based Policy Optimization with Transferability Assessment (SPOTA)</h5>
-              </div>
-              <div class="fig-container"
-                   data-file="spota-graph.html" data-preload
-                   data-graph="spota-graph.json"></div>
-        </section>
-        <section>
-               <div>
-                <h5>Using `x,y` instead of `fx,fy` for nodes</h5>
-              </div>
-              <div class="fig-container"
-                   data-file="spota-graph.html" data-preload
-                   data-graph="spota-jelly.json"></div>
+          <div>
+            <h5>Simulation-based Policy Optimization with Transferability Assessment (SPOTA)</h5>
+          </div>
+          <div class="fig-container" data-file="spota-graph.html" data-preload data-graph="spota-graph.json"></div>
         </section>
         <section>
           <div>
-           <h5>Link curve testing</h5>
-         </div>
-         <div class="fig-container"
-              data-file="test-graph.html" data-preload></div>
-   </section>
+            <h5>Using `x,y` instead of `fx,fy` for nodes</h5>
+          </div>
+          <div class="fig-container" data-file="spota-graph.html" data-preload data-graph="spota-jelly.json"></div>
+        </section>
+        <section>
+          <div>
+            <h5>Link curve testing</h5>
+          </div>
+          <div class="fig-container" data-file="test-graph.html" data-preload></div>
+        </section>
         <!-- END d3 test slides -->
 
         <section>
@@ -157,25 +152,31 @@
               <video autoplay muted controls>
                 <source src="content/videos/WAM_MuJoCo_not_transferable.mp4" type="video/mp4" />
               </video>
-              <div class="top-left-caption">Learned in nominal</div>
+              <div class="inner-top-left-caption">Learned in nominal</div>
             </div>
             <div class="captioned" style="width: 50vw">
               <video autoplay muted controls>
                 <source src="content/videos/WAM_MuJoCo_transferable.mp4" type="video/mp4" />
               </video>
-              <div class="top-right-caption">Learned in with BayRn</div>
+              <div class="inner-top-right-caption">Learned in with BayRn</div>
             </div>
           </div>
         </section>
 
         <section data-background-color="black">
-          <div class="flex-container-row" style="width: 160%">
-            <video autoplay muted controls width="480">
-              <source src="content/videos/nominal--WAM_fail.mp4" type="video/mp4" />
-            </video>
-            <video autoplay muted controls width="480">
-              <source src="content/videos/BayRn--WAM_iter_9.mp4" type="video/mp4" />
-            </video>
+          <div class="flex-container-row">
+            <div class="captioned" style="width: 50vw">
+              <video autoplay muted controls width="480">
+                <source src="content/videos/nominal--WAM_fail.mp4" type="video/mp4" />
+              </video>
+              <div class="outer-top-left-caption">Learned in nominal</div>
+            </div>
+            <div class="captioned" style="width: 50vw">
+              <video autoplay muted controls width="480">
+                <source src="content/videos/BayRn--WAM_iter_9.mp4" type="video/mp4" />
+              </video>
+              <div class="outer-top-right-caption">Learned in with BayRn</div>
+            </div>
           </div>
         </section>
 
@@ -184,7 +185,7 @@
             <video autoplay muted controls height="540">
               <source src="content/videos/BayRn--QQ_recover.mp4" type="video/mp4" />
             </video>
-            <div class="top-right-caption">Evaluating BayRn on the Furuta Pendulum</div>
+            <div class="outer-top-left-caption">Evaluating BayRn on the Furuta Pendulum</div>
           </div>
         </section>
 
@@ -214,9 +215,8 @@
             </div>
             <div>
               <ul>
-                <li>github.com/famura</li>
+                <li>github.com/famura/SimuRLacra</li>
                 <li>open-source</li>
-                <li>based on PyTorch</li>
                 <li>modular and tested code</li>
               </ul>
             </div>
