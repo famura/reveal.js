@@ -93,7 +93,11 @@ section.has-light-background h6 {
 }
 
 .famurablue {
-  color: #87ceeb; /* #9ed8f0 */
+  color: #47abd3; /* #87ceeb */
+}
+
+.famuradarkblue {
+  color: #3333b3;
 }
 
 .famurawhite {
