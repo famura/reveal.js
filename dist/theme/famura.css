@@ -573,6 +573,13 @@ section.has-light-background h4 {
   font-size: 22px;
 }
 
+.reveal .outer-top-center-caption {
+  position: relative; /* put this caption div before the video because it is relative*/
+  top: -2px;
+  font-size: 22px;
+  text-align: center;
+}
+
 .reveal .inner-top-right-caption {
   position: absolute;
   top: 8px;

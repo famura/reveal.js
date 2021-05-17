@@ -121,30 +121,30 @@
         <section>
           <h4>Bayesian Domain Randomization (BayRn)</h4>
           <p>Bi-level optimization problem</p>
-          <div class="flex-container-row-end" style="align-items: baseline">
+          <div class="flex-container-row-end fragment fade-in" data-fragment-index="1" style="align-items: baseline">
             <div class="flex-container-col margin-col">\[ {\color{red}{\phi^\star}} = \arg\!\max_{\phi\in\Phi} \ \mathbb{E}_{s_0 \sim \mu_0(s_0)} \big[ J^{\textrm{real}}\left( {\color{red} {\theta^\star}}, s_0\right) \big] \]</div>
             <div class="flex-container-col margin-col">upper level</div>
           </div>
-          <div class="flex-container-row">
+          <div class="flex-container-row fragment fade-in" data-fragment-index="2">
             <div class="flex-container-col">with</div>
           </div>
-          <div class="flex-container-row-end" style="align-items: baseline">
+          <div class="flex-container-row-end fragment fade-in" data-fragment-index="2" style="align-items: baseline">
             <div class="flex-container-col margin-col">\[ {\color{red}{\theta^\star(\phi)}} = \arg\! \max_{\theta\in\Theta} \ \mathbb{E}_{\xi \sim \nu(\xi;{\color{red}\phi})} \! \left[ \mathbb{E}_{s_0 \sim \mu_0(s_0;\xi)} \left[ J(\theta, \xi, s_0) \right] \right] \]</div>
             <div class="flex-container-col margin-col">lower level</div>
           </div>
         </section>
 
-        <section>
+        <!-- <section>
           <h4>Bayesian Domain Randomization (BayRn)</h4>
           <p>Bi-level optimization problem</p>
           <dl>
-            <dt class="fragment fade-in" data-fragment-index="1" style="display: grid; align-content: end">upper level</dt>
+            <dt class="fragment fade-in" data-fragment-index="1" style="display: grid; align-content: center">upper level</dt>
             <dd class="fragment fade-in" data-fragment-index="1">\[ {\color{red}{\phi^\star}} = \arg\!\max_{\phi\in\Phi} \ \mathbb{E}_{s_0 \sim \mu_0(s_0)} \big[ J^{\textrm{real}}\left( {\color{red} {\theta^\star}}, s_0\right) \big] \]</dd>
             <dt class="fragment fade-in" data-fragment-index="2">with</dt>
-            <dt class="fragment fade-in" data-fragment-index="2">lower level</dt>
+            <dt class="fragment fade-in" data-fragment-index="2" style="display: grid; align-content: center">lower level</dt>
             <dd class="fragment fade-in" data-fragment-index="2">\[ {\color{red}{\theta^\star(\phi)}} = \arg\! \max_{\theta\in\Theta} \ \mathbb{E}_{\xi \sim \nu(\xi;{\color{red}\phi})} \! \left[ \mathbb{E}_{s_0 \sim \mu_0(s_0;\xi)} \left[ J(\theta, \xi, s_0) \right] \right] \]</dd>
           </dl>
-        </section>
+        </section> -->
 
         <section data-background-color="black">
           <div class="flex-container-row">
@@ -182,10 +182,10 @@
 
         <section data-background-color="black">
           <div class="captioned">
+            <div class="outer-top-center-caption">Evaluating BayRn on the Furuta Pendulum</div>
             <video autoplay muted controls height="540">
               <source src="content/videos/BayRn--QQ_recover.mp4" type="video/mp4" />
             </video>
-            <div class="outer-top-left-caption">Evaluating BayRn on the Furuta Pendulum</div>
           </div>
         </section>
 
@@ -306,7 +306,7 @@
                   background: "rgba(170, 34, 51, 0)", // = #a23
                   // logoRight: './content/images/TUD--logo_cropped_inverted_transparent.png',
                   // logoLeft: './content/images/HRI--logo_cropped_inverted_transparent.png',
-                  text: "Fabio Muratore &ensp; | &ensp; Intelligent Autonomous Systems Group &ensp; | &ensp; Honda Research Institute Europe &ensp; | &ensp; XX.XX.2021",
+                  text: "Fabio Muratore &ensp; | &ensp; Intelligent Autonomous Systems Group &ensp; | &ensp; Honda Research Institute Europe &ensp; | &ensp; 2021-07-03",
                 },
               })
             },
