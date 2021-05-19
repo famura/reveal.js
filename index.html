@@ -93,10 +93,10 @@
           <h4>Bayesian Domain Randomization (BayRn)</h4>
           <dl>
             <dt class="fragment" data-fragment-index="1">goal</dt>
-            <dd class="fragment" data-fragment-index="1">learn a policy in <span class="famurablue">sim</span>ulation such that transfers <span class="famurablue">to</span> the <span class="famurablue">real</span> robot</dd>
+            <dd class="fragment" data-fragment-index="1">learn a control policy in <span class="famurablue">sim</span>ulation such that it transfers <span class="famurablue">to</span> the <span class="famurablue">real</span> robot</dd>
             <dt class="fragment" data-fragment-index="2">idea</dt>
-            <dd class="fragment" data-fragment-index="2">model connection between return and domain distribution parameters using a <span class="famurablue">Gaussian process</span></dd>
-            <dd class="fragment" data-fragment-index="3">update the model based on <span class="famurablue">sparse real-world data</span></dd>
+            <dd class="fragment" data-fragment-index="2">model the connection between return and domain distribution parameters using a <span class="famurablue">Gaussian process</span></dd>
+            <dd class="fragment" data-fragment-index="3">update this model based on <span class="famurablue">sparse real-world data</span></dd>
           </dl>
         </section>
 
@@ -105,7 +105,7 @@
           <div style="text-align: left">
             <div class="fragment fade-in">
               <p>Time-discrete stochastic dynamical system</p>
-              \[ {\color{red} {\xi \sim \nu \left( \xi; \phi \right)}}, \ s_{t+1} \sim \mathcal{P} \left(s_{t+1} \big| s_t, a_t, {\color{red} \xi} \right), \ s_0 \sim\mu_0 \left( s_0, {\color{red} \xi} \right), \ a_t \sim \pi\left( s_t; \theta \right) \]
+              \[ {\color{red} {\xi \sim p \left( \xi; \phi \right)}}, \ s_{t+1} \sim \mathcal{P} \left(s_{t+1} \big| s_t, a_t, {\color{red} \xi} \right), \ s_0 \sim\mu_0 \left( s_0, {\color{red} \xi} \right), \ a_t \sim \pi\left( s_t; \theta \right) \]
             </div>
             <div class="fragment fade-in">
               <p>Expected return for one domain</p>
@@ -113,7 +113,7 @@
             </div>
             <div class="fragment fade-in">
               <p>Augmentation of the standard RL objective</p>
-              $$ \theta^\star = \arg\!\max_{\theta\in\Theta} \ {\color{red}{\mathbb{E}_{\xi \sim \nu(\xi;\phi)}}} \left[ \mathbb{E}_{s_0 \sim \mu_0({\color{red}\xi}; s_0)} \left[ J(\theta, {\color{red}\xi}, s_0) \right] \right] $$
+              $$ \theta^\star = \arg\!\max_{\theta\in\Theta} \ {\color{red}{\mathbb{E}_{\xi \sim p(\xi;\phi)}}} \left[ \mathbb{E}_{s_0 \sim \mu_0({\color{red}\xi}; s_0)} \left[ J(\theta, {\color{red}\xi}, s_0) \right] \right] $$
             </div>
           </div>
         </section>
@@ -129,7 +129,7 @@
             <div class="flex-container-col">with</div>
           </div>
           <div class="flex-container-row-end fragment fade-in" data-fragment-index="2" style="align-items: baseline">
-            <div class="flex-container-col margin-col">\[ {\color{red}{\theta^\star(\phi)}} = \arg\! \max_{\theta\in\Theta} \ \mathbb{E}_{\xi \sim \nu(\xi;{\color{red}\phi})} \! \left[ \mathbb{E}_{s_0 \sim \mu_0(s_0;\xi)} \left[ J(\theta, \xi, s_0) \right] \right] \]</div>
+            <div class="flex-container-col margin-col">\[ {\color{red}{\theta^\star(\phi)}} = \arg\! \max_{\theta\in\Theta} \ \mathbb{E}_{\xi \sim p(\xi;{\color{red}\phi})} \! \left[ \mathbb{E}_{s_0 \sim \mu_0(s_0;\xi)} \left[ J(\theta, \xi, s_0) \right] \right] \]</div>
             <div class="flex-container-col margin-col">lower level</div>
           </div>
         </section>
@@ -142,7 +142,7 @@
             <dd class="fragment fade-in" data-fragment-index="1">\[ {\color{red}{\phi^\star}} = \arg\!\max_{\phi\in\Phi} \ \mathbb{E}_{s_0 \sim \mu_0(s_0)} \big[ J^{\textrm{real}}\left( {\color{red} {\theta^\star}}, s_0\right) \big] \]</dd>
             <dt class="fragment fade-in" data-fragment-index="2">with</dt>
             <dt class="fragment fade-in" data-fragment-index="2" style="display: grid; align-content: center">lower level</dt>
-            <dd class="fragment fade-in" data-fragment-index="2">\[ {\color{red}{\theta^\star(\phi)}} = \arg\! \max_{\theta\in\Theta} \ \mathbb{E}_{\xi \sim \nu(\xi;{\color{red}\phi})} \! \left[ \mathbb{E}_{s_0 \sim \mu_0(s_0;\xi)} \left[ J(\theta, \xi, s_0) \right] \right] \]</dd>
+            <dd class="fragment fade-in" data-fragment-index="2">\[ {\color{red}{\theta^\star(\phi)}} = \arg\! \max_{\theta\in\Theta} \ \mathbb{E}_{\xi \sim p(\xi;{\color{red}\phi})} \! \left[ \mathbb{E}_{s_0 \sim \mu_0(s_0;\xi)} \left[ J(\theta, \xi, s_0) \right] \right] \]</dd>
           </dl>
         </section> -->
 
@@ -190,8 +190,22 @@
         </section>
 
         <section>
-          <img src="content/images/BayRn--returns_wam-bic_violinplot.png" width="300px" />
-          <img src="content/images/BayRn--returns_qq-su_violinplot.png" width="400px" />
+          <h4>Evaluation</h4>
+          <div style="display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: center; margin-top: 40px">
+            <div class="captioned">
+              <img src="content/images/BayRn--returns_wam-bic_violinplot.png" height="190px" style="margin: 0px; left: 6px" />
+              <div class="outer-top-left-caption">Ball-in-a-cup</div>
+            </div>
+            <div class="captioned">
+              <img src="content/images/BayRn--returns_qq-su_violinplot.png" height="190px" style="margin: 0px; left: 6px" />
+              <div class="outer-top-right-caption">Swing-up and balance</div>
+            </div>
+          </div>
+          <p>
+            20 policies for each algorithm <br />
+            5 rollouts for each policy <br />
+            white circles mark the median
+          </p>
         </section>
 
         <section>

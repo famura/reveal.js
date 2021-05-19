@@ -45,31 +45,36 @@
     var width = 960, // slide width is 960
       height = 650 // slide height is 700
 
-    /// @fabio: Three ways to provide graph data:
-    //          1. In index.html, add `data-graph="filename.json"` to the slide including this file
-    //          2. Load a json file directly here:
-    //             d3.json("spota-graph.json").then(function(data) {
-    //               loadGraph(data);
-    //             });
-    //          3. Construct the data here and pass it to `loadGraph`:
-    //              var data = { nodes: [
-    //                              {id: "test1", opacity: 1, fx: 200, fy: 160, labels: [{text: "Test1"}]},
-    //                              {id: "test2", opacity: 1, fx: 400, fy: 200, labels: [{text: "Test2"}]}],
-    //                            links: [
-    //                              {source: "test1", target: "test2", type: "A"},
-    //                              {source: "test2", target: "test1", type: "B"}
-    //                            ]
-    //                          };
-    //              loadGraph(data);
+    // @NOTE:
+    // Three ways to provide graph data:
+    // 1. In index.html, add `data-graph="filename.json"` to the slide including this file
+    // 2. Load a json file directly here:
+    //   d3.json("spota-graph.json").then(function(data) {
+    //     loadGraph(data);
+    //   });
+    // 3. Construct the data here and pass it to `loadGraph`:
+    //     var data = { nodes: [
+    //                     {id: "test1", opacity: 1, fx: 200, fy: 160, labels: [{text: "Test1"}]},
+    //                     {id: "test2", opacity: 1, fx: 400, fy: 200, labels: [{text: "Test2"}]}],
+    //                   links: [
+    //                     {source: "test1", target: "test2", type: "A"},
+    //                     {source: "test2", target: "test1", type: "B"}
+    //                   ]
+    //                 };
+    //     loadGraph(data);
 
-    /// @fabio:
-    /// Slide transitions are defined here. Each transition is actually just a small lambda function. For both forward and backward steps through
-    ///   the presentation to work, you need to define a function both for each transition AND one to un-do each transition (but the backward steps ARE optional if you don't care).
-    /// EXTRA NOTE: if you move INTO this slide by going BACKWARDS through the presentation, the LAST `transitionForward()` will be invoked. This gives you the
-    ///   chance to build the final slide state and keep everything nice and continuous. This is why the last transition below enables ALL nodes instead of just the last one.
-    /// Here I have provided a small function which will toggle the visibility of a node, using its index in data.nodes[] above.
-    /// Arrow visibility is automatically set based on whether the nodes the arrow connects are visible.
-    ///   e.g. `showNode(2, true)` will make the "evaluate in reference domains" node visible along with any arrows that connect this node to another visible node.
+    // NOTE:
+    // Slide transitions are defined here. Each transition is actually just a small lambda function. For both forward and
+    // backward steps through the presentation to work, you need to define a function both for each transition AND one
+    // to un-do each transition (but the backward steps ARE optional if you don't care).
+    //
+    // EXTRA NOTE: if you move INTO this slide by going BACKWARDS through the presentation, the LAST `transitionForward()`
+    // will be invoked. This gives you the chance to build the final slide state and keep everything nice and continuous.
+    // This is why the last transition below enables ALL nodes instead of just the last one. Here I have provided a small
+    // function which will toggle the visibility of a node, using its index in data.nodes[] above. Arrow visibility is
+    // automatically set based on whether the nodes the arrow connects are visible. e.g. `showNode(2, true)` will make
+    // the "evaluate in reference domains" node visible along with any arrows that connect this node to another visible node.
+
     _transitions = [
       {
         transitionForward: () => {
