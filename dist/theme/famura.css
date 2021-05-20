@@ -461,9 +461,33 @@ section.has-light-background h4 {
   /* float: inherit; */
   clear: both;
   padding-top: 5vh;
-  vertical-align: bottom !important;
-  /* bottom: 0px !important; */
+  vertical-align: bottom !important; /* bottom: 0px !important; */
   font-size: 22px;
+}
+
+.reveal .references-in-one-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.reveal .references-in-one-row-left-col {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  margin-right: 20px;
+}
+
+.reveal .references-in-one-row-right-col {
+  /*put item in <span>*/
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.reveal .authorname {
+  color: #47abd3; /* #famurablue */
 }
 
 /*********************************************
@@ -489,9 +513,9 @@ section.has-light-background h4 {
 /*********************************************
  * Global Center Class
  *********************************************/
-/*.center {*/
-/*  text-align: center;*/
-/*}*/
+.center {
+  margin: auto;
+}
 
 /*********************************************
  * In Line Descriptive List
@@ -526,6 +550,13 @@ section.has-light-background h4 {
   justify-content: flex-end; /* define how is distributed the remaining space */
 }
 
+reveal .flex-container-row-center {
+  display: flex; /* first create a flex layout context */
+  flex-flow: row nowrap; /* define the flow direction and if we allow the items to wrap */
+  align-items: center; /* vertically alignment */
+  justify-content: center; /* define how is distributed the remaining space */
+}
+
 .reveal .flex-container-col {
   display: flex; /* first create a flex layout context */
   flex-flow: column nowrap; /* define the flow direction and if we allow the items to wrap */
@@ -553,14 +584,14 @@ section.has-light-background h4 {
  *********************************************/
 .reveal .captioned {
   position: relative;
-  text-align: center;
 }
 
-.reveal .bottom-left-caption {
+.reveal .inner-bottom-left-caption {
   position: absolute;
   bottom: 8px;
   left: 16px;
   font-size: 22px;
+  text-align: left;
 }
 
 .reveal .inner-top-left-caption {
@@ -568,18 +599,12 @@ section.has-light-background h4 {
   top: 8px;
   left: 16px;
   font-size: 22px;
+  text-align: left;
 }
 
-.reveal .outer-top-left-caption {
-  position: absolute;
-  top: -32px;
-  left: 16px;
-  font-size: 22px;
-}
-
-.reveal .outer-top-center-caption {
-  position: relative; /* put this caption div before the video because it is relative*/
-  top: -2px;
+.reveal .inner-top-center-caption {
+  position: relative;
+  top: 8px;
   font-size: 22px;
   text-align: center;
 }
@@ -589,6 +614,22 @@ section.has-light-background h4 {
   top: 8px;
   right: 16px;
   font-size: 22px;
+  text-align: right;
+}
+
+.reveal .outer-top-left-caption {
+  position: absolute;
+  top: -32px;
+  left: 16px;
+  font-size: 22px;
+  text-align: left;
+}
+
+.reveal .outer-top-center-caption {
+  position: relative; /* put this caption div before the video because it is relative*/
+  top: -2px;
+  font-size: 22px;
+  text-align: center;
 }
 
 .reveal .outer-top-right-caption {
@@ -596,13 +637,15 @@ section.has-light-background h4 {
   top: -32px;
   right: 16px;
   font-size: 22px;
+  text-align: right;
 }
 
-.reveal .bottom-right-caption {
+.reveal .inner-bottom-right-caption {
   position: absolute;
   bottom: 8px;
   right: 16px;
   font-size: 22px;
+  text-align: right;
 }
 
 .reveal .centered-caption {

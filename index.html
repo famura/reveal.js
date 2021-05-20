@@ -133,7 +133,6 @@
             <div class="flex-container-col margin-col">lower level</div>
           </div>
         </section>
-
         <!-- <section>
           <h4>Bayesian Domain Randomization (BayRn)</h4>
           <p>Bi-level optimization problem</p>
@@ -148,41 +147,36 @@
 
         <section data-background-color="black">
           <div class="flex-container-row">
-            <div class="captioned" style="width: 50vw">
-              <video autoplay muted controls>
+            <div class="captioned" style="width: 42vw">
+              <div class="inner-top-left-caption">Learned in nominal</div>
+              <video autoplay loop muted controls width="100%">
                 <source src="content/videos/WAM_MuJoCo_not_transferable.mp4" type="video/mp4" />
               </video>
-              <div class="inner-top-left-caption">Learned in nominal</div>
             </div>
-            <div class="captioned" style="width: 50vw">
-              <video autoplay muted controls>
+            <div class="captioned" style="width: 42vw">
+              <div class="inner-top-right-caption">Learned in with BayRn</div>
+              <video autoplay loop muted controls width="100%">
                 <source src="content/videos/WAM_MuJoCo_transferable.mp4" type="video/mp4" />
               </video>
-              <div class="inner-top-right-caption">Learned in with BayRn</div>
             </div>
           </div>
-        </section>
-
-        <section data-background-color="black">
           <div class="flex-container-row">
-            <div class="captioned" style="width: 50vw">
-              <video autoplay muted controls width="480">
+            <div style="width: 42vw">
+              <video loop muted controls width="100%">
                 <source src="content/videos/nominal--WAM_fail.mp4" type="video/mp4" />
               </video>
-              <div class="outer-top-left-caption">Learned in nominal</div>
             </div>
-            <div class="captioned" style="width: 50vw">
-              <video autoplay muted controls width="480">
+            <div style="width: 42vw">
+              <video loop muted controls width="100%">
                 <source src="content/videos/BayRn--WAM_iter_9.mp4" type="video/mp4" />
               </video>
-              <div class="outer-top-right-caption">Learned in with BayRn</div>
             </div>
           </div>
         </section>
 
         <section data-background-color="black">
           <div class="captioned">
-            <div class="outer-top-center-caption">Evaluating BayRn on the Furuta Pendulum</div>
+            <div class="outer-top-center-caption">Evaluating BayRn on the Furuta pendulum</div>
             <video autoplay muted controls height="540">
               <source src="content/videos/BayRn--QQ_recover.mp4" type="video/mp4" />
             </video>
@@ -201,11 +195,21 @@
               <div class="outer-top-right-caption">Swing-up and balance</div>
             </div>
           </div>
-          <p>
-            20 policies for each algorithm <br />
-            5 rollouts for each policy <br />
-            white circles mark the median
-          </p>
+          <p>20 policies for each algorithm<br />5 rollouts for each policy</p>
+          <div class="references">
+            <div class="references-in-one-row">
+              <div class="references-in-one-row-left-col">
+                <span>SimOpt</span>
+                <span>PoWER</span>
+                <span>PPO</span>
+              </div>
+              <div class="references-in-one-row-right-col">
+                <span><span class="authorname">Chebotar et al.</span> ICRA 2019</span>
+                <span><span class="authorname">Kober et al.</span> Machine Learning 2011</span>
+                <span><span class="authorname">Schulman et al.</span> ArXiv 2017</span>
+              </div>
+            </div>
+          </div>
         </section>
 
         <section>
