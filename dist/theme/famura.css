@@ -24,11 +24,11 @@ section.has-light-background h6 {
   --background-color: #222;
   --main-font: Ubuntu, sans-serif;
   --main-font-size: 40px;
-  --main-color: #eee;
+  --main-color: #f2f2f2;
   --block-margin: 20px;
   --heading-margin: 0 0 20px 0;
   --heading-font: Ubuntu, sans-serif;
-  --heading-color: #eee;
+  --heading-color: #f2f2f2;
   --heading-line-height: 1.2;
   --heading-letter-spacing: normal;
   --heading-text-transform: uppercase;
@@ -56,7 +56,7 @@ section.has-light-background h6 {
   font-family: Ubuntu, "sans-serif";
   font-size: 34px;
   font-weight: normal;
-  color: #eee;
+  color: #f2f2f2;
 }
 
 .reveal ::selection {
@@ -101,7 +101,7 @@ section.has-light-background h6 {
 }
 
 .famurawhite {
-  color: #f3f3f3;
+  color: #f2f2f2;
 }
 
 /*********************************************
@@ -336,7 +336,7 @@ section.has-light-background h6 {
 }
 
 .reveal img {
-  margin: 20px 0;
+  margin: 20px 0; /*former: 20px*/
 }
 
 /*********************************************
@@ -363,7 +363,7 @@ section.has-light-background h6 {
 * Frame Helper
 *********************************************/
 .reveal .r-frame {
-  border: 4px solid #eee;
+  border: 4px solid #f2f2f2;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 }
 
@@ -443,7 +443,7 @@ section.has-light-background h4 {
 }
 
 /*********************************************
- * Fragmented Slides
+ * Fragment
  *********************************************/
 .reveal .slides section .fragment.step-fade-in-then-out {
   opacity: 0;
@@ -452,6 +452,14 @@ section.has-light-background h4 {
 .reveal .slides section .fragment.step-fade-in-then-out.current-fragment {
   opacity: 1;
   display: inline;
+}
+
+.reveal .slides section .fragment.highlight-gray {
+  opacity: 1;
+  visibility: inherit;
+}
+.reveal .slides section .fragment.highlight-gray.visible {
+  color: #b8b8b8;
 }
 
 /*********************************************
@@ -530,6 +538,7 @@ section.has-light-background h4 {
 }
 .reveal dd {
   grid-column-start: 2;
+  margin-bottom: 10px; /*<p> has a top and bottom margin of 10px*/
 }
 
 /*********************************************
@@ -586,12 +595,25 @@ reveal .flex-container-row-center {
   position: relative;
 }
 
+/* if image is in a captioned <div>*/
+.reveal .captioned img {
+  margin: 0px 0;
+}
+
 .reveal .inner-bottom-left-caption {
   position: absolute;
   bottom: 8px;
   left: 16px;
   font-size: 22px;
   text-align: left;
+}
+
+.reveal .inner-bottom-right-caption {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+  font-size: 22px;
+  text-align: right;
 }
 
 .reveal .inner-top-left-caption {
@@ -617,6 +639,14 @@ reveal .flex-container-row-center {
   text-align: right;
 }
 
+.reveal .inner-center-caption {
+  position: absolute;
+  font-size: 22px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .reveal .outer-top-left-caption {
   position: absolute;
   top: -32px;
@@ -626,7 +656,7 @@ reveal .flex-container-row-center {
 }
 
 .reveal .outer-top-center-caption {
-  position: relative; /* put this caption div before the video because it is relative*/
+  position: relative; /* put this caption div before the div-to-be-captioned because it is relative*/
   top: -2px;
   font-size: 22px;
   text-align: center;
@@ -640,18 +670,9 @@ reveal .flex-container-row-center {
   text-align: right;
 }
 
-.reveal .inner-bottom-right-caption {
-  position: absolute;
-  bottom: 8px;
-  right: 16px;
+.reveal .outer-bottom-center-caption {
+  position: relative; /* put this caption div after the div-to-be-captioned because it is relative*/
+  bottom: 0px;
   font-size: 22px;
-  text-align: right;
-}
-
-.reveal .centered-caption {
-  position: absolute;
-  font-size: 22px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  text-align: center;
 }

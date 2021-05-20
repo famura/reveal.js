@@ -65,7 +65,7 @@
         </section>
 
         <!-- d3 test slides -->
-        <section>
+        <!-- <section>
           <div>
             <h5>Simulation-based Policy Optimization with Transferability Assessment (SPOTA)</h5>
           </div>
@@ -82,21 +82,48 @@
             <h5>Link curve testing</h5>
           </div>
           <div class="fig-container" data-file="test-graph.html" data-preload></div>
-        </section>
+        </section> -->
         <!-- END d3 test slides -->
 
         <section>
-          <h4>Motivation</h4>
+          <h4>Sim-to-Real Robot Learning</h4>
+          <div style="width: 56%; float: left; text-align: left">
+            <p style="margin-top: 50px"><span class="fragment highlight-gray" data-fragment-index="1">State-of-the-art learning algorithms require vast amounts of of data</span></p>
+            <p class="fragment" data-fragment-index="1"><span class="fragment highlight-gray" data-fragment-index="2">Real-world is very expensive</span></p>
+            <p class="fragment" data-fragment-index="2"><span class="fragment highlight-gray" data-fragment-index="3">Physics simulators generate diverse data at low cost</span></p>
+            <p class="fragment" data-fragment-index="3">Safe exploration in simulation</p>
+          </div>
+          <div style="width: 44%; float: left">
+            <div style="display: flex; flex-direction: row; justify-content: center">
+              <div class="captioned">
+                <img src="content/images/Levine--arm_farm_2.png" width="300px" alt="Google 'Arm Farm'" />
+                <div class="outer-bottom-center-caption">Levine et al., Robotics Res., 2018</div>
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: row; justify-content: center">
+              <div class="captioned fragment" data-fragment-index="2" style="margin-top: 30px">
+                <img src="content/images/OpenAI--multiple_hands_3.png" width="300px" alt="Google 'Arm Farm'" />
+                <div class="outer-bottom-center-caption">Andrychowicz et al., Robotics Res., 2020</div>
+              </div>
+            </div>
+          </div>
         </section>
 
         <section>
           <h4>Bayesian Domain Randomization (BayRn)</h4>
           <dl>
             <dt class="fragment" data-fragment-index="1">goal</dt>
-            <dd class="fragment" data-fragment-index="1">learn a control policy in <span class="famurablue">sim</span>ulation such that it transfers <span class="famurablue">to</span> the <span class="famurablue">real</span> robot</dd>
+            <dd class="fragment" data-fragment-index="1">
+              <span class="fragment highlight-gray" data-fragment-index="2">Learn a control policy in <span class="famurablue">sim</span>ulation such that it transfers <span class="famurablue">to</span> the <span class="famurablue">real</span> robot</span>
+            </dd>
             <dt class="fragment" data-fragment-index="2">idea</dt>
-            <dd class="fragment" data-fragment-index="2">model the connection between return and domain distribution parameters using a <span class="famurablue">Gaussian process</span></dd>
-            <dd class="fragment" data-fragment-index="3">update this model based on <span class="famurablue">sparse real-world data</span></dd>
+            <dd class="fragment" data-fragment-index="2">
+              <span class="fragment highlight-gray" data-fragment-index="3">Gather the data from a <span class="famurablue">distribution over simulators</span></span>
+            </dd>
+            <dd class="fragment" data-fragment-index="3">
+              <span class="fragment highlight-gray" data-fragment-index="4">Model the connection between return and domain distribution parameters using a <span class="famurablue">Gaussian process</span></span>
+            </dd>
+            <dd class="fragment" data-fragment-index="4">Update this model based on <span class="famurablue">sparse real-world data</span></dd>
           </dl>
         </section>
 
@@ -123,14 +150,14 @@
           <p>Bi-level optimization problem</p>
           <div class="flex-container-row-end fragment fade-in" data-fragment-index="1" style="align-items: baseline">
             <div class="flex-container-col margin-col">\[ {\color{red}{\phi^\star}} = \arg\!\max_{\phi\in\Phi} \ \mathbb{E}_{s_0 \sim \mu_0(s_0)} \big[ J^{\textrm{real}}\left( {\color{red} {\theta^\star}}, s_0\right) \big] \]</div>
-            <div class="flex-container-col margin-col">upper level</div>
+            <div class="flex-container-col margin-col famurablue">upper level</div>
           </div>
           <div class="flex-container-row fragment fade-in" data-fragment-index="2">
             <div class="flex-container-col">with</div>
           </div>
           <div class="flex-container-row-end fragment fade-in" data-fragment-index="2" style="align-items: baseline">
             <div class="flex-container-col margin-col">\[ {\color{red}{\theta^\star(\phi)}} = \arg\! \max_{\theta\in\Theta} \ \mathbb{E}_{\xi \sim p(\xi;{\color{red}\phi})} \! \left[ \mathbb{E}_{s_0 \sim \mu_0(s_0;\xi)} \left[ J(\theta, \xi, s_0) \right] \right] \]</div>
-            <div class="flex-container-col margin-col">lower level</div>
+            <div class="flex-container-col margin-col famurablue">lower level</div>
           </div>
         </section>
         <!-- <section>
@@ -185,28 +212,32 @@
 
         <section>
           <h4>Evaluation</h4>
-          <div style="display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: center; margin-top: 40px">
+          <div style="display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: center; margin-top: 50px">
             <div class="captioned">
-              <img src="content/images/BayRn--returns_wam-bic_violinplot.png" height="190px" style="margin: 0px; left: 6px" />
+              <img src="content/images/BayRn--returns_wam-bic_violinplot.png" alt="Returns wam-bic" height="190px" style="left: 6px" />
               <div class="outer-top-left-caption">Ball-in-a-cup</div>
             </div>
             <div class="captioned">
-              <img src="content/images/BayRn--returns_qq-su_violinplot.png" height="190px" style="margin: 0px; left: 6px" />
+              <img src="content/images/BayRn--returns_qq-su_violinplot.png" alt="Returns qq-su" height="190px" style="left: 6px" />
               <div class="outer-top-right-caption">Swing-up and balance</div>
             </div>
           </div>
-          <p>20 policies for each algorithm<br />5 rollouts for each policy</p>
+          <!-- <p>20 policies for each algorithm<br />5 rollouts for each policy</p> -->
           <div class="references">
             <div class="references-in-one-row">
               <div class="references-in-one-row-left-col">
-                <span>SimOpt</span>
-                <span>PoWER</span>
-                <span>PPO</span>
+                <span style="color: #1f77b4">BayRn (adaptive randomization)</span>
+                <span style="color: #ff7f0e">UDR (fixed randomization)</span>
+                <span style="color: #2ca02c">PoWER (no randomization)</span>
+                <span style="color: #2ca02c">PPO (no randomization)</span>
+                <span style="color: #d62728">SimOpt (adaptive randomization)</span>
               </div>
               <div class="references-in-one-row-right-col">
-                <span><span class="authorname">Chebotar et al.</span> ICRA 2019</span>
-                <span><span class="authorname">Kober et al.</span> Machine Learning 2011</span>
-                <span><span class="authorname">Schulman et al.</span> ArXiv 2017</span>
+                <span>ours</span>
+                <span> &ndash; </span>
+                <span>Kober et al., Machine Learning, 2011</span>
+                <span>Schulman et al., ArXiv, 2017</span>
+                <span>Chebotar et al., ICRA, 2019</span>
               </div>
             </div>
           </div>
@@ -216,12 +247,12 @@
           <h4>Bayesian Domain Randomization (BayRn)</h4>
           <dl>
             <dt>pros</dt>
-            <dd class="famuragreen">yields a probabilistic model of the uncertainty over domain parameters</dd>
-            <dd class="famuragreen fragment" data-fragment-index="1">works with very spare data (scalar returns)</dd>
+            <dd class="famuragreen">Yields a probabilistic model of the uncertainty over domain parameters</dd>
+            <dd class="famuragreen fragment" data-fragment-index="1">Works with very spare data (scalar returns)</dd>
             <dt class="fragment" data-fragment-index="2">cons</dt>
             <dd class="fragment" data-fragment-index="2">
               <span class="famurared">
-                scalability is bounded by GP input dimension, i.e. <br />
+                Scalability is bounded by GP input dimension, i.e. <br />
                 &#10886; 50 domain parameters will require tricks
               </span>
             </dd>
@@ -231,22 +262,20 @@
         <section>
           <h4>Implementation</h4>
           <div class="flex-container-row" style="align-content: flex-start; justify-content: space-evenly">
-            <div style="max-width: 25%">
+            <div style="max-width: 28%">
               <a href="https://github.com/famura/SimuRLacra">
                 <img src="content/images/SimuRLacra--logo.png" alt="SimuRLacra" style="display: block" />
               </a>
             </div>
-            <div>
-              <ul>
-                <li>github.com/<span class="famurablue">famura</span>/SimuRLacra</li>
-                <li>open-source</li>
-                <li>modular and tested code</li>
-              </ul>
+            <div style="text-align: left">
+              <p>github.com/<span class="famurablue">famura</span>/SimuRLacra</p>
+              <p>BSD3 license</p>
+              <p>modular and tested code</p>
             </div>
           </div>
         </section>
 
-        <section data-background-image="content/images/Bayrn--WAM_bic_sequence.png" data-background-size="contain">
+        <section data-background-image="content/images/Bayrn--WAM_bic_sequence.png" data-background-size="contain" data-state="no-slide-footer">
           <h3 class="title">
             Data-efficient <br />
             Domain Randomization <br />
