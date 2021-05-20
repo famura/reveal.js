@@ -91,7 +91,7 @@
             <p style="margin-top: 50px"><span class="fragment highlight-gray" data-fragment-index="1">State-of-the-art learning algorithms require vast amounts of of data</span></p>
             <p class="fragment" data-fragment-index="1"><span class="fragment highlight-gray" data-fragment-index="2">Real-world is very expensive</span></p>
             <p class="fragment" data-fragment-index="2"><span class="fragment highlight-gray" data-fragment-index="3">Physics simulators generate diverse data at low cost</span></p>
-            <p class="fragment" data-fragment-index="3">Safe exploration in simulation</p>
+            <p class="fragment" data-fragment-index="3">Exploration in simulation is safe</p>
           </div>
           <div style="width: 44%; float: left">
             <div style="display: flex; flex-direction: row; justify-content: center">
@@ -132,7 +132,7 @@
           <div style="text-align: left">
             <div class="fragment fade-in">
               <p>Time-discrete stochastic dynamical system</p>
-              \[ {\color{red} {\xi \sim p \left( \xi; \phi \right)}}, \ s_{t+1} \sim \mathcal{P} \left(s_{t+1} \big| s_t, a_t, {\color{red} \xi} \right), \ s_0 \sim\mu_0 \left( s_0, {\color{red} \xi} \right), \ a_t \sim \pi\left( s_t; \theta \right) \]
+              \[ {\color{red} {\xi \sim p \left( \xi; \phi \right)}}, \ s_{t+1} \sim \mathcal{P} \left(s_{t+1} \big| s_t, a_t, {\color{red} \xi} \right), \ s_0 \sim \mu_0 \left( s_0, {\color{red} \xi} \right), \ a_t \sim \pi\left( s_t; \theta \right) \]
             </div>
             <div class="fragment fade-in">
               <p>Expected return for one domain</p>
@@ -160,16 +160,15 @@
             <div class="flex-container-col margin-col famurablue">lower level</div>
           </div>
         </section>
+
         <!-- <section>
           <h4>Bayesian Domain Randomization (BayRn)</h4>
-          <p>Bi-level optimization problem</p>
-          <dl>
-            <dt class="fragment fade-in" data-fragment-index="1" style="display: grid; align-content: center">upper level</dt>
-            <dd class="fragment fade-in" data-fragment-index="1">\[ {\color{red}{\phi^\star}} = \arg\!\max_{\phi\in\Phi} \ \mathbb{E}_{s_0 \sim \mu_0(s_0)} \big[ J^{\textrm{real}}\left( {\color{red} {\theta^\star}}, s_0\right) \big] \]</dd>
-            <dt class="fragment fade-in" data-fragment-index="2">with</dt>
-            <dt class="fragment fade-in" data-fragment-index="2" style="display: grid; align-content: center">lower level</dt>
-            <dd class="fragment fade-in" data-fragment-index="2">\[ {\color{red}{\theta^\star(\phi)}} = \arg\! \max_{\theta\in\Theta} \ \mathbb{E}_{\xi \sim p(\xi;{\color{red}\phi})} \! \left[ \mathbb{E}_{s_0 \sim \mu_0(s_0;\xi)} \left[ J(\theta, \xi, s_0) \right] \right] \]</dd>
-          </dl>
+          <div class="fig-container" data-file="content/graphs/BayRn.html" data-preload data-graph="content/graphs/BayRn.json"></div>
+        </section>
+
+        <section>
+          <h4>a a a (BayRn)</h4>
+          <div class="fig-container" data-file="spota-graph.html" data-preload data-graph="spota-graph.json"></div>
         </section> -->
 
         <section data-background-color="black">
