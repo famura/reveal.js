@@ -38,9 +38,9 @@ function loadGraph(json) {
       
   const svg = d3.select("body").append("div").append("svg")
     .attr("viewBox", [0, 0, width, height])
-    .style("font", "24px sans-serif")
+    // .style("font", "24px sans-serif")
     // .style("math-font", "24px")  // @Tamas: how do I figure out if this property exists? The math looks a bit bigger...
-    .style("width", "98%")
+    .style("width", "98%")          // @Fabio: Math is not text, so it does not have any "font" properties after mathjax has done its thing, it's an SVG figure and can be scaled arbitrarily (see the big-red-equations CSS class)
     .style("height", "98%");
 
   // create a group for all links
