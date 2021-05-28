@@ -82,12 +82,15 @@ function loadGraph(json) {
   node.append(function(d) {
     const wrapNode = d3.create("svg:g");
     d.labels.forEach((label) => {
+      let lblOffset = label.offset ? label.offset.split(',') : ["0", "0"];
+      lblOffset = [eval(lblOffset[0]), eval(lblOffset[1])];
+      console.log((label.text || "some math"), lblOffset);
       if (label.math) {
         const mathNode = d3.create("svg:g");
         mathNode
           .style("text-anchor", "middle")
           .attr("class", s => label.class || '')
-          .attr("transform", "translate(" + (label.offset || "0, 0") + ")")
+          .attr("transform", "translate(" + lblOffset.join(",") + ")")
           .append(s => MathJax.tex2svg(label.math).querySelector("svg"));
         wrapNode.append(() => mathNode.node());
       } else if (label.text) {
@@ -95,7 +98,7 @@ function loadGraph(json) {
         textNode
           .style("text-anchor", "middle")
           .attr("class", s => label.class || '')
-          .attr("transform", "translate(" + (label.offset || "0, 0") + ")")
+          .attr("transform", "translate(" + lblOffset.join(",") + ")")
           .text(label.text);
         wrapNode.append(() => textNode.node());
       } else {
