@@ -1,7 +1,7 @@
 {
     "nodes": [
         {
-            "id": "sample_domains", "opacity": 1, "fx": 150, "fy": 150,
+            "id": "sample_domains", "opacity": 1, "fx": 125, "fy": 50,
             "labels": [
                 {"text": "sample domains"},
                 {"math": "\\theta_{1:n_c}",                "offset": "-80, 0.5*font_height"},
@@ -9,7 +9,7 @@
             ]
         },
         {
-            "id": "train_candidate", "opacity": 0, "fx": 250, "fy": 300,
+            "id": "train_candidate", "opacity": 0, "fx": 250, "fy": 250,
             "labels": [
                 {"text": "train candidate and"},
                 {"text": "reference policies",             "offset": "5,   font_height"},
@@ -18,7 +18,7 @@
             ]
         },
         {
-            "id": "evaluate",     "opacity": 0, "fx": 420, "fy": 360,
+            "id": "evaluate",     "opacity": 0, "fx": 460, "fy": 460,
             "labels": [
                 {"text": "evaluate in"},
                 {"text": "reference domains",           "offset": "0, font_height"},
@@ -26,7 +26,7 @@
             ]
         },
         {
-            "id": "bootstrap",    "opacity": 0, "fx": 650, "fy": 300,
+            "id": "bootstrap",    "opacity": 0, "fx": 700, "fy": 300,
             "labels": [
                 {"text": "bootstrap upper"},
                 {"text": "confidence bound",                "offset": "0, font_height"},
@@ -34,20 +34,20 @@
             ]
         },
         {
-            "id": "small",       "opacity": 0, "fx": 650, "fy": 160,
+            "id": "small",       "opacity": 0, "fx": 700, "fy": 180,
             "labels": [
                 {"text": "small enough?"}
             ]
         },
         {
-            "id": "increase",    "opacity": 0, "fx": 400, "fy": 150,
+            "id": "increase",    "opacity": 0, "fx": 470, "fy": 50,
             "labels": [
                 {"text": "increase number of domains"},
                 {"math": "n_c,n_r\\leftarrow f(n_c),f(n_r)", "offset": "-64, 0.5*font_height"}
             ]
         },
         {
-            "id": "done",       "opacity": 0, "fx": 750, "fy": 100, "class": "green",
+            "id": "done",       "opacity": 0, "fx": 850, "fy": 50, "class": "green",
             "labels": [
                 {"text": "done"}
             ]
@@ -56,8 +56,8 @@
     "links": [
         {"source": "sample_domains", "target": "train_candidate",
             "waypoints": [
-                [150, 240],
-                [222, 240]
+                [150, 140],
+                [222, 140]
             ]
         },
         {"source": "train_candidate", "target": "evaluate",
