@@ -4,33 +4,33 @@
             "id": "sample_domains", "opacity": 1, "fx": 150, "fy": 150,
             "labels": [
                 {"text": "sample domains"},
-                {"math": "\\theta_{1:n_c}",                "offset": "-48, 10"},
-                {"math": "\\theta^{1:n_G}_{\\xi_{1:n_r}}", "offset": "30, 8"}
+                {"math": "\\theta_{1:n_c}",                "offset": "-80, 0.5*font_height"},
+                {"math": "\\theta^{1:n_G}_{\\xi_{1:n_r}}", "offset": "30,  0.5*font_height"}
             ]
         },
         {
             "id": "train_candidate", "opacity": 0, "fx": 250, "fy": 300,
             "labels": [
                 {"text": "train candidate and"},
-                {"text": "reference policies",             "offset": "5, 12"},
-                {"math": "\\theta^\\star_{n_c}",           "offset": "-30, 20"},
-                {"math": "\\theta^{1:n_{G,\\star}}_{n_r}", "offset": "30, 16"}
+                {"text": "reference policies",             "offset": "5,   font_height"},
+                {"math": "\\theta^\\star_{n_c}",           "offset": "-60, 1.5*font_height"},
+                {"math": "\\theta^{1:n_{G,\\star}}_{n_r}", "offset": "60,  1.5*font_height"}
             ]
         },
         {
             "id": "evaluate",     "opacity": 0, "fx": 420, "fy": 360,
             "labels": [
                 {"text": "evaluate in"},
-                {"text": "reference domains",           "offset": "0, 12"},
-                {"math": "G^{1:n_G}_{{n}_{r},1:n_{r}}", "offset": "0, 24"}
+                {"text": "reference domains",           "offset": "0, font_height"},
+                {"math": "G^{1:n_G}_{{n}_{r},1:n_{r}}", "offset": "0, 1.5*font_height"}
             ]
         },
         {
             "id": "bootstrap",    "opacity": 0, "fx": 650, "fy": 300,
             "labels": [
                 {"text": "bootstrap upper"},
-                {"text": "confidence bound",                "offset": "0, 12"},
-                {"math": "G^U_{n_r}(\\theta^\\star_{n_c})", "offset": "0, 64", "class": "big-red-equations"}
+                {"text": "confidence bound",                "offset": "0, font_height"},
+                {"math": "G^U_{n_r}(\\theta^\\star_{n_c})", "offset": "0, 80", "class": "big-red-equations"}
             ]
         },
         {
@@ -43,7 +43,7 @@
             "id": "increase",    "opacity": 0, "fx": 400, "fy": 150,
             "labels": [
                 {"text": "increase number of domains"},
-                {"math": "n_c,n_r\\leftarrow f(n_c),f(n_r)", "offset": "-64, 16"}
+                {"math": "n_c,n_r\\leftarrow f(n_c),f(n_r)", "offset": "-64, 0.5*font_height"}
             ]
         },
         {
