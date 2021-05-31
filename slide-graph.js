@@ -84,7 +84,6 @@ function loadGraph(json) {
     d.labels.forEach((label) => {
       let lblOffset = label.offset ? label.offset.split(',') : ["0", "0"];
       lblOffset = [eval(lblOffset[0]), eval(lblOffset[1])];
-      console.log((label.text || "some math"), lblOffset);
       if (label.math) {
         const mathNode = d3.create("svg:g");
         mathNode
@@ -117,10 +116,7 @@ function loadGraph(json) {
         let length = p.getTotalLength() - 10; // offset from path end so arrow doesn't extend past path length
         let pos = p.getPointAtLength(length);
         
-        // estimate orientation at end of path based on tangent
-        let p1 = p.getPointAtLength(length),
-            p2 = p.getPointAtLength(length+1);
-        let angle = Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI;
+        let angle = getAngleAt(p, length);
         return "translate(" + pos.x + ", " + pos.y + ")rotate(" + angle + ")";
     });
     node.attr("transform", d => `translate(${d.x},${d.y})`);
@@ -142,6 +138,14 @@ if (window.frameElement && window.frameElement.parentNode.dataset.graph) {
     }).catch(function(error) {
         console.log("Failed to load json file '" + window.frameElement.parentNode.dataset.graph + "'", error);
     });
+}
+
+// Estimates the angle at a specified length on a path
+function getAngleAt(path, l) {
+  var a = path.getPointAtLength(Math.max(l - 0.01,0)), // this could be slightly negative
+      b = path.getPointAtLength(l + 0.01); // browsers cap at total length
+
+  return Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
 }
 
 // Given a collection of elements, computes the bounding box enclosing them all
@@ -265,14 +269,14 @@ function linkArc(d) {
   var points = [[anchors.start.x, anchors.start.y], [anchors.end.x, anchors.end.y]];
   if (d.waypoints)
     points.splice(1, 0, ...d.waypoints);
-  var lineGen =  d3.line();
-  lineGen.curve(eval(d.curvetype) || d3.curveNatural);
+  var lineGen = d3.line();
+  lineGen.curve(eval(d.curvetype) || d3.curveCardinal);
   return lineGen(points);
-  const r = Math.hypot(anchors.end.x - anchors.start.x, anchors.end.y - anchors.start.y);
-  return `
-    M${anchors.start.x},${anchors.start.y}
-    A${r},${r} 0 0,0 ${anchors.end.x},${anchors.end.y}
-  `;
+  // const r = Math.hypot(anchors.end.x - anchors.start.x, anchors.end.y - anchors.start.y);
+  // return `
+  //   M${anchors.start.x},${anchors.start.y}
+  //   A${r},${r} 0 0,0 ${anchors.end.x},${anchors.end.y}
+  // `;
 }
 
 // Shows/hides the specified node
