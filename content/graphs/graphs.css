@@ -1,0 +1,29 @@
+
+.node {
+  color: #f2f2f2;
+  fill: azure;
+  font: inherit;
+  font-size: 24px;
+  font-weight: lighter;
+}
+
+.link {
+  stroke: rgb(246, 178, 107);
+  stroke-opacity: 1;
+  stroke-width: 5px;
+}
+
+.red {
+  stroke: rgb(246, 50, 50);
+}
+
+.green {
+  stroke: rgb(40, 200, 70);
+  fill: rgb(40, 200, 40);
+  font-size: 26px;
+}
+
+.big-red-equations {
+  color: red;
+  transform: translateY(24px) scale(2);
+}
