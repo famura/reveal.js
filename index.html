@@ -141,7 +141,7 @@
             </div>
             <div class="fragment fade-in">
               <p>Augmentation of the standard RL objective</p>
-              $$ \theta^\star = \arg\!\max_{\theta\in\Theta} \ {\color{red}{\mathbb{E}_{\xi \sim p(\xi;\phi)}}} \left[ \mathbb{E}_{s_0 \sim \mu_0(s_0; {\color{red}\xi})} \left[ J(\theta, {\color{red}\xi}, s_0) \right] \right] $$
+              $$ \theta^\star = \arg\!\max_{\theta\in\Theta} \ {\color{red}{\mathbb{E}_{\xi \sim p(\xi;\phi)}}} \left[ \mathbb{E}_{s_0 \sim \mu_0(s_0, {\color{red}\xi})} \left[ J(\theta, {\color{red}\xi}, s_0) \right] \right] $$
             </div>
           </div>
         </section>
@@ -160,7 +160,7 @@
             <div class="flex-container-col">with</div>
           </div>
           <div class="flex-container-row-end fragment fade-in" data-fragment-index="2" style="align-items: baseline">
-            <div class="flex-container-col margin-col">\[ {\color{red}{\theta^\star(\phi)}} = \arg\! \max_{\theta\in\Theta} \ \mathbb{E}_{\xi \sim p(\xi;{\color{red}\phi})} \! \left[ \mathbb{E}_{s_0 \sim \mu_0(s_0;\xi)} \left[ J(\theta, \xi, s_0) \right] \right] \]</div>
+            <div class="flex-container-col margin-col">\[ {\color{red}{\theta^\star(\phi)}} = \arg\! \max_{\theta\in\Theta} \ \mathbb{E}_{\xi \sim p(\xi;{\color{red}\phi})} \! \left[ \mathbb{E}_{s_0 \sim \mu_0(s_0, \xi)} \left[ J(\theta, \xi, s_0) \right] \right] \]</div>
             <div class="flex-container-col margin-col famurablue">
               lower level <br />
               (RL)
