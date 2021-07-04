@@ -33,6 +33,9 @@
     
     <!-- Theme used for syntax highlighted code -->
     <link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme"> <!-- alternatively zenburn -->
+
+    <!-- Diagrams -->
+    <link rel="stylesheet" href="plugin/diagram/revealjs-diagram.css">
 </head>
 
 <!-- =============================================================================================================== -->
@@ -58,6 +61,18 @@
                     <dd> Dr. Markus Olhofer </dd>
                 </dl>
             </div>
+        </section>
+
+        <section>
+            <div class="fig-container"
+                 data-fig-id="fig-collision-detection"
+                 data-file="plugin/d3js/demo/Collision-Detection.html"></div>
+        </section>
+
+        <section>
+            <div class="fig-container"
+                 data-fig-id="fig-collision-detection"
+                 data-file="content/diagrams/diagram.html"></div>
         </section>
         
         <section>
@@ -212,6 +227,7 @@
 <script src="plugin/markdown/markdown.js"></script>
 <script src="plugin/highlight/highlight.js"></script>
 <script src="plugin/math/math.js"></script>
+<!--<script src="plugin/diagram/demo/reveal.js/lib/js/head.min.js"></script> &lt;!&ndash; from diagrams &ndash;&gt;-->
 <script>
     // More info about initialization & config:
     // - https://revealjs.com/initialization/
@@ -244,7 +260,7 @@
             [
                 // { src: 'plugin/math/math.js', async: true }, // loads MathJax from the internet if not specified above (math: { ... mathjax: ... ) )
 
-                // Header-Footer plugin
+                // Headers and footers
                 {
                     src: 'plugin/header-footer/header-footer.js', async: true, callback: function () {
                         slide_header.initialize({
@@ -261,7 +277,11 @@
                             }
                         });
                     }
-                }
+                },
+
+                // Diagrams via d3js https://github.com/jlegewie/reveal.js-d3js-plugin
+                { src: 'https://d3js.org/d3.v4.min.js' },
+		        { src: 'plugin/d3js/d3js.js' },
             ]
     }); // end Reveal.initialize()
 </script>

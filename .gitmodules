@@ -1,3 +1,9 @@
-[submodule "plugin/math/MathJax"]
+[submodule "MathJax"]
 	path = plugin/math/MathJax
 	url = https://github.com/mathjax/MathJax.git
+[submodule "d3js"]
+	path = plugin/d3js
+	url = https://github.com/jlegewie/reveal.js-d3js-plugin
+[submodule "diagram"]
+	path = plugin/diagram
+	url = https://github.com/teone/reveal.js-diagram-plugin
